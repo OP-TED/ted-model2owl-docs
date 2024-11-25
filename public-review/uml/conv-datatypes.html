@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: model2owl documentation</title>
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">  </head>
+  <body class="article">
+<header class="header">
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../..">
+            </a>
+        </div>
+    </nav>
+<nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="public-review">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">model2owl Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../epo-context.html">Context: model2owl and eProcurement ontology </a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="definitions.html">Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="conceptual-model-conventions.html">UML Model Conventions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="conv-general.html">General Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="conv-classes.html">Classes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="conv-attributes.html">Class Attributes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="conv-connectors.html">Connectors</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="conv-conn-association.html">Association</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="conv-conn-dependency.html">Dependency</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="conv-conn-generalization.html">Generalization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="conv-conn-realization.html">Realization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="conv-datatypes.html">Data Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="conv-enumerations.html">Enumerations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="conv-objects.html">Objects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="conv-packages.html">Packages</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../checkers/model2owl-checkers.html">UML convention checking rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../transformation/uml2owl-transformation.html">Transformation Rules</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformation/transf-rules1.html">Rules for UML Classes and Attributes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformation/transf-rules2.html">Rules for UML Connectors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformation/transf-rules3.html">Rules for UML Datatypes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformation/transf-rules4.html">Rules for UML Descriptors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../references.html">References</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">model2owl Documentation</span>
+    <span class="version">public-review</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">model2owl Documentation</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">public-review</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">model2owl Documentation</a></li>
+    <li><a href="conceptual-model-conventions.html">UML Model Conventions</a></li>
+    <li><a href="conv-datatypes.html">Data Types</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/meaningfy-ws/ted-model2owl-docs/edit/main/docs/modules/ROOT/pages/uml/conv-datatypes.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div class="sect1">
+<h2 id="_conventions_on_umldatatype_elements"><a class="anchor" href="#_conventions_on_umldatatype_elements"></a>Conventions on uml:DataType elements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_conventional_recommendations_on_datatypes"><a class="anchor" href="#_conventional_recommendations_on_datatypes"></a>Conventional recommendations on datatypes</h3>
+<table id="rule:datatypes-composite" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #a8c6f7;"><p class="tableblock"> <strong>Title:</strong> Primitive vs. composite datatypes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Identifier:</strong> rule:datatypes-composite</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Statement:</strong>
+Composite data types shall be represented as uml:Class elements. Primitive data types, if needed to be modelled, shall be represented as uml:DataType elements.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Description:</strong></p>
+</div>
+<div class="paragraph">
+<p>This convention draws the distinction between primitive (or atomic) types (consisting of single literal value) and composite types (consisting of multiple attributes) [<a href="../references.html#ref:isaHandbook2015" class="xref page">isaHandbook2015</a>]. In fact, the composite datatypes must be defined as classes and handled as such. For example: AmountType, Identifier, Quantity and Measure are to be treated as classes even if conceptually they could be seen as composite data types.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:uml-datatype"><a class="anchor" href="#sec:uml-datatype"></a>Technical conventions on uml:DataType elements</h3>
+<table id="rule:datatypes-primitive" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #a8c6f7;"><p class="tableblock"> <strong>Title:</strong> XSD and RDF datatypes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Identifier:</strong> rule:datatypes-primitive</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Statement:</strong>
+For primitive data types the already existing (standardized or commonly used) datatypes, in particular those from XSD and RDF, shall be reused.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Description:</strong></p>
+</div>
+<div class="paragraph">
+<p>It is recommended to employ the primitive datatypes that are already defined in XSD [<a href="../references.html#ref:xsd1.1-spec" class="xref page">xsd1.1-spec</a>] and RDF [<a href="../references.html#ref:rdf11" class="xref page">rdf11</a>], which cover the standard and most common types. Thus, definitions of custom data types shall be avoided unless the model really needs them. Such cases are, however, rare.</p>
+</div>
+<div class="paragraph">
+<p>The data types defined in the UML model (and custom ones) are resolved into their XSD equivalent using the correspondences from the <a href="#tab:uml2xsd">Table 1</a> table below. Note that the family of string datatypes is mapped to <em>rdf:langString</em>. This means that the instance data should provide a language tag for the textual data indicating how it should be read. This enables multilingual data specification. Also, note that Date is mapped to <code>xsd:date</code> and DateTime is mapped to <code>xsd:dateTime</code>. However, the <code>xsd:date</code> is not included in the OWL2 interpretation and instead a strong preference is expressed for <code>xsd:dateTime</code>. Therefore, it is recommended to follow the OWL2 specification, although the <code>xsd:date</code> is a valid datatype in the RDF data and in SPARQL queries.</p>
+</div>
+<div class="paragraph">
+<p>Note that from the family of string datatypes we recommend using the following ones (in this order of preference): <code>rdf:PlainLiteral</code>, <code>rdfs:Literal</code>, <code>xsd:string</code>, and <code>rdf:langString</code>. Often enabling multilingual data specification is a necessity.</p>
+</div>
+<table id="tab:uml2xsd" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. UML to XSD datatype correspondences</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;">UML</th>
+<th class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;">XSD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Float</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:float</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:integer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Char, Character, String</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">rdf:langString</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Short</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:short</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Long</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:long</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Decimal</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:decimal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:date</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">DateTime</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:dateTime</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">xsd:anyURI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">Code</p></td>
+<td class="tableblock halign-center valign-top" style="background-color:  #f5f8fc;"><p class="tableblock">skos:Concept</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The table above provides a simplified correspondence between UML and XSD datatypes, but for a complete list of available recommended datatypes the standard specifications shall be consulted:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes">RDF working group XSD Datatype maps</a></p>
+</li>
+<li>
+<p><a href="https://www.w3.org/TR/rdf11-concepts/#section-Datatypes">RDF 1.1 Datatypes section</a></p>
+</li>
+<li>
+<p><a href="https://www.w3.org/TR/owl2-syntax/#Datatype_Maps">OWL 2 Datatype Maps</a></p>
+</li>
+</ul>
+</div>
+<table id="rule:datatypes-owl2" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #a8c6f7;"><p class="tableblock"> <strong>Title:</strong> OWL 2 datatypes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Identifier:</strong> rule:datatypes-owl2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Statement:</strong>
+Whenever possible, OWL 2 compliant XSD and RDF datatypes shall be used.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Description:</strong></p>
+</div>
+<div class="paragraph">
+<p>We strongly recommended the use of OWL 2 compliant XSD and RDF standard datatypes, if possible. They might be useful also for indicating a specific datatype, which is impossible with the UML ones. For example, making a distinction between a general string (<code>xsd:string</code>) and a literal with a language tag (<code>rdf:langString</code>), or XML encoded ones such as <code>rdf:HTML</code> and <code>rdf:XMLLiteral</code>.</p>
+</div>
+<table id="rule:datatypes-proxy" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #a8c6f7;"><p class="tableblock"> <strong>Title:</strong> Proxy datatypes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Identifier:</strong> rule:datatypes-proxy</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Statement:</strong>
+For already existing datatypes proxy uml:DataType elements should be defined.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Description:</strong></p>
+</div>
+<div class="paragraph">
+<p>For the model consistency, it is recommended that the proxy data types be defined in the model for the XSD<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> and RDF data types<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> used in the model. The proxies must follow the standard namespace convention using the <code>rdf:</code> and <code>xsd:</code> prefixes.</p>
+</div>
+<table id="rule:datatypes-references" class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #a8c6f7;"><p class="tableblock"> <strong>Title:</strong> Datatypes references</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Identifier:</strong> rule:datatypes-references</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color:  #f5f8fc;"><p class="tableblock"><strong>Statement:</strong>
+uml:DataType elements shall not connect to other elements. They can only be referred to.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Description:</strong></p>
+</div>
+<div class="paragraph">
+<p>There should be no outgoing connector from a uml:DataType element. uml:DataType elements should only be referred to, most commonly, by being used as the type of a uml:Attribute element. Declarations of uml:DataType elements that are not referred to should be avoided in order to keep the model lean and clean.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. <a href="https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes" class="bare">https://www.w3.org/2011/rdf-wg/wiki/XSD_Datatypes</a>
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. <a href="https://www.w3.org/TR/rdf11-concepts/#section-Datatypes" class="bare">https://www.w3.org/TR/rdf11-concepts/#section-Datatypes</a>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+    <p style="text-align:center">This document is created by the European Commission and is licensed under the terms of
+        EUPL-1.2 license</a>.
+        <br/>This page was built using the Antora default UI. The source code for this UI is licensed under the terms of
+        the MPL-2.0 license.
+    </p>
+
+        <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="150" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="150" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

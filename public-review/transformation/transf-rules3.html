@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: model2owl documentation</title>
+    <meta name="generator" content="Antora 3.1.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">  </head>
+  <body class="article">
+<header class="header">
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="../..">
+            </a>
+        </div>
+    </nav>
+<nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="public-review">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">model2owl Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../epo-context.html">Context: model2owl and eProcurement ontology </a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../uml/definitions.html">Definitions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../uml/conceptual-model-conventions.html">UML Model Conventions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-general.html">General Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-classes.html">Classes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-attributes.html">Class Attributes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../uml/conv-connectors.html">Connectors</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../uml/conv-conn-association.html">Association</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../uml/conv-conn-dependency.html">Dependency</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../uml/conv-conn-generalization.html">Generalization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../uml/conv-conn-realization.html">Realization</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-datatypes.html">Data Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-enumerations.html">Enumerations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-objects.html">Objects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../uml/conv-packages.html">Packages</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../checkers/model2owl-checkers.html">UML convention checking rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="uml2owl-transformation.html">Transformation Rules</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="transf-rules1.html">Rules for UML Classes and Attributes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="transf-rules2.html">Rules for UML Connectors</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="transf-rules3.html">Rules for UML Datatypes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="transf-rules4.html">Rules for UML Descriptors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../references.html">References</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">model2owl Documentation</span>
+    <span class="version">public-review</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">model2owl Documentation</a></div>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">public-review</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">model2owl Documentation</a></li>
+    <li><a href="uml2owl-transformation.html">Transformation Rules</a></li>
+    <li><a href="transf-rules3.html">Rules for UML Datatypes</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="https://github.com/meaningfy-ws/ted-model2owl-docs/edit/main/docs/modules/ROOT/pages/transformation/transf-rules3.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div class="sect1">
+<h2 id="sec:tran-rules3"><a class="anchor" href="#sec:tran-rules3"></a>Transformation of UML datatypes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this section are specified transformation rules for UML datatypes and enumerations. <a href="#tab:datatype-overview">Table 1</a> provides an overview of the section coverage.</p>
+</div>
+<table id="tab:datatype-overview" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Overview of transformation rules for UML datatypes</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">UML element</th>
+<th class="tableblock halign-left valign-top">Rules in core ontology layer</th>
+<th class="tableblock halign-left valign-top">Rules in data shape layer</th>
+<th class="tableblock halign-left valign-top">Rules in reasoning layer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primitive datatype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#rule:datatype-core">Rule D.01</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Structured datatype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#rule:datatype-structured-core">Rule D.02</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enumeration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#rule:enumeration-core">Rule D.03</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#rule:enumeration-rc">Rule D.04</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enumeration item</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#rule:enumeration-item-core">Rule D.05</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="sec:primitive-type"><a class="anchor" href="#sec:primitive-type"></a>Primitive datatype</h3>
+<div class="paragraph">
+<p>The UML primitive type defines a predefined datatype without any substructure. The UML specification [<a href="../references.html#ref:uml2.5" class="xref page">uml2.5</a>] predefines five primitive types: String, Integer, Boolean, UnlimitedNatural and Real. Here we extended those to the list provided in <a href="#tab:type-mapping">Table 2</a>.</p>
+</div>
+<div id="fig:datatype-visual" class="imageblock">
+<div class="content">
+<img src="../_images/f16.png" alt="16">
+</div>
+<div class="title">Figure 1. Visual representation of a UML Datatype (on the left) and an OWL Datatype (on the right)</div>
+</div>
+<div id="rule:datatype-core" class="exampleblock">
+<div class="title">Rule D.01. Datatype&#8201;&#8212;&#8201;in core ontology layer</div>
+<div class="content">
+<div class="paragraph">
+<p>Specify datatype declaration axiom for UML datatype as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>UML primitive datatypes are declared as the mapped XSD datatype in <a href="#tab:type-mapping">Table 2</a>.</p>
+</li>
+<li>
+<p>XSD and RDF(S) datatypes are declared as such.</p>
+</li>
+<li>
+<p>Model specific datatypes are declared as such.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Ideally, in the implementation, this rule would be combined with the relevant rules (those for the core ontology layer) in the <a href="transf-rules4.html" class="xref page">Transformation of UML descriptors</a> section, to provide labels and documentation for the datatype at the time of its creation.
+</td>
+</tr>
+</table>
+</div>
+<table id="tab:type-mapping" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Mapping of UML primitive types to XSD datatypes</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">UML datatype</th>
+<th class="tableblock halign-left valign-top">XSD datatype</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Float</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:float</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:integer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Char</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Short</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:short</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:long</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:decimal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Real</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:float</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:date</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Numeric</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:integer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Text</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">xsd:string</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 1. UML primitive datatype declaration (String) in Turtle syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Turtle hljs" data-lang="Turtle">xsd:string a rdfs:Datatype .</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 2. UML primitive datatype declaration (String) in RDF/XML syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-XML hljs" data-lang="XML">&lt;rdfs:Datatype rdf:about = "http://www.w3.org/2001/XMLSchema#string"&gt;
+&lt;/rdfs:Datatype&gt;</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 3. XSD and RDF(S) datatype declaration in Turtle syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Turtle hljs" data-lang="Turtle">xsd:boolean a rdfs:Datatype .</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 4. XSD and RDF(S) datatype declaration in RDF/XML syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-XML hljs" data-lang="XML">&lt;rdfs:Datatype rdf:about = "http://www.w3.org/2001/XMLSchema#boolean"&gt;
+&lt;/rdfs:Datatype&gt;</code></pre>
+</div>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 5. Model specific datatype declaration in Turtle syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Turtle hljs" data-lang="Turtle">:DatatypeName a rdfs:Datatype .</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 6. Model specific datatype declaration in RDF/XML syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-XML hljs" data-lang="XML">&lt;rdfs:Datatype rdf:about = "http://base.onto.uri/DatatypeName"&gt;
+&lt;/rdfs:Datatype&gt;</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_structured_datatypes"><a class="anchor" href="#_structured_datatypes"></a>Structured datatypes</h3>
+<div class="paragraph">
+<p>The UML structured datatype [<a href="../references.html#ref:uml2.5" class="xref page">uml2.5</a>] has attributes and is used to define complex data types. The structured datatypes should be treated as classes.</p>
+</div>
+<div id="rule:datatype-structured-core" class="exampleblock">
+<div class="title">Rule D.02. Structured Datatype&#8201;&#8212;&#8201;in core ontology layer</div>
+<div class="content">
+<div class="paragraph">
+<p>Specify OWL class declaration axiom for UML structured datatype.</p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>See applicable rules in Section on <a href="transf-rules1.html#sec:class" class="xref page">Class Rules</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enumeration"><a class="anchor" href="#_enumeration"></a>Enumeration</h3>
+<div class="paragraph">
+<p>UML Enumerations [<a href="../references.html#ref:uml2.5" class="xref page">uml2.5</a>] are kinds of datatypes, whose values correspond to one of user-defined literals. They should be transformed into SKOS [<a href="../references.html#ref:skos-spec" class="xref page">skos-spec</a>] concept schemes comprising the concepts corresponding to enumerated items.</p>
+</div>
+<div id="fig:enumeration-uml-visual" class="imageblock">
+<div class="content">
+<img src="../_images/f17.png" alt="17">
+</div>
+<div class="title">Figure 2. Visual representation of a UML Enumeration</div>
+</div>
+<div id="fig:enumeration-owl-visual" class="imageblock">
+<div class="content">
+<img src="../_images/f18.png" alt="18">
+</div>
+<div class="title">Figure 3. Visual representation of a SKOS concept scheme with concepts</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Normally, the controlled list represented by UML Enumerations will be defined externally. In order to be ale to validate some data against the generate SHACL shapes, these controlled lists need to be imported into the SHACL shapes. Moreover, the restriction module should be also imported into the SHACL module, alongside the OWL core module.
+</td>
+</tr>
+</table>
+</div>
+<div id="rule:enumeration-core" class="exampleblock">
+<div class="title">Rule D.03. Enumeration&#8201;&#8212;&#8201;in core ontology layer</div>
+<div class="content">
+<div class="paragraph">
+<p>Specify SKOS concept scheme instantiation axiom for a UML enumeration.</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Ideally, in the implementation, this rule would be combined with the relevant rules (those for the core ontology layer) in the <a href="transf-rules4.html" class="xref page">Transformation of UML descriptors</a> section, to provide labels and documentation for the class/individual representing the enumeration at the time of its creation.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 7. Concept scheme instantiation in Turtle syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Turtle hljs" data-lang="Turtle">:EnumerationName a skos:ConceptScheme .</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 8. Concept scheme instantiation in RDF/XML syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-XML hljs" data-lang="XML">&lt;skos:ConceptScheme rdf:about = "http://base.onto.uri/EnumerationName"&gt;
+&lt;/skos:ConceptScheme&gt;</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="rule:enumeration-rc" class="exampleblock">
+<div class="title">Rule D.04. Enumeration&#8201;&#8212;&#8201;in reasoning layer</div>
+<div class="content">
+<div class="paragraph">
+<p>For a UML enumeration, specify an equivalent class restriction covering the set of individuals that are <code>skos:inScheme</code> of this enumeration.</p>
+</div>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 9. In-scheme equivalent class in Turtle syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Turtle hljs" data-lang="Turtle">@prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+:EnumerationName a owl:Class ;
+  owl:equivalentClass [
+    rdf:type owl:Restriction ;
+    owl:allValuesFrom :EnumerationName ;
+    owl:onProperty skos:inScheme ;
+  ] ;
+  rdfs:subClassOf skos:Concept;
+.</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 10. In-scheme equivalent class in RDF/XML syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-XML hljs" data-lang="XML">&lt;owl:Class rdf:about = "http://base.onto.uri/EnumerationName"&gt;
+    &lt;owl:equivalentClass&gt;
+        &lt;owl:Restriction&gt;
+            &lt;owl:onProperty rdf:resource = ".../02/skos/core#inScheme"/&gt;
+            &lt;owl:hasValue rdf:resource = "http://base.onto.uri/EnumerationName"/&gt;
+        &lt;/owl:Restriction&gt;
+    &lt;/owl:equivalentClass&gt;
+    &lt;rdfs:subClassOf rdf:resource = ".../02/skos/core#Concept"/&gt;
+&lt;/owl:Class&gt;</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="rule:enumeration-item-core" class="exampleblock">
+<div class="title">Rule D.05. Enumeration items&#8201;&#8212;&#8201;in core ontology layer</div>
+<div class="content">
+<div class="paragraph">
+<p>Specify SKOS concept instantiation axiom for each UML enumeration item.</p>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Ideally, in the implementation, this rule would be combined with the relevant rules (those for the core ontology layer) in the <a href="transf-rules4.html" class="xref page">Transformation of UML descriptors</a> section, to provide labels and documentation for the individual representing the enumeration item at the time of its creation.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 11. Concept scheme items instantiation in Turtle syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-Turtle hljs" data-lang="Turtle">:itemA a skos:Concept ;
+  skos:inScheme :EnumerationName ;
+.
+
+:itemB a skos:Concept ;
+  skos:inScheme :EnumerationName ;
+.</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="title">Listing 12. Concept scheme items instantiation in RDF/XML syntax</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-XML hljs" data-lang="XML">&lt;skos:Concept rdf:about = "http://base.onto.uri/itemA"&gt;
+    &lt;skos:inScheme rdf:resource = "http://base.onto.uri/EnumerationName"/&gt;
+&lt;/skos:Concept&gt;
+
+&lt;skos:Concept rdf:about = "http://base.onto.uri/itemB"&gt;
+    &lt;skos:inScheme rdf:resource = "http://base.onto.uri/EnumerationName"/&gt;
+&lt;/skos:Concept&gt;</code></pre>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+    <p style="text-align:center">This document is created by the European Commission and is licensed under the terms of
+        EUPL-1.2 license</a>.
+        <br/>This page was built using the Antora default UI. The source code for this UI is licensed under the terms of
+        the MPL-2.0 license.
+    </p>
+
+        <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="150" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="150" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
