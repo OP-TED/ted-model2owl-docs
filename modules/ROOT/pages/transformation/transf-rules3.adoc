@@ -11,7 +11,7 @@ In this section are specified transformation rules for UML datatypes and enumera
 |Primitive datatype |<<rule:datatype-core>> | |
 |Structured datatype |<<rule:datatype-structured-core>> | |
 |Enumeration |<<rule:enumeration-core>> | |<<rule:enumeration-rc>>
-|Enumeration item |<<rule:enumeration-item-core>> | |
+|Enumeration item |<<rule:enumeration-item-core>> | <<rule:enumeration-item-ds>> |
 |===
 
 [[sec:primitive-type]]
@@ -115,20 +115,31 @@ Specify OWL class declaration axiom for UML structured datatype.
 
 See applicable rules in Section on xref:transformation/transf-rules1.adoc#sec:class[Class Rules].
 
+[[sec:enumeration]]
 === Enumeration
 
-UML Enumerations [xref:references.adoc#ref:uml2.5[uml2.5]] are kinds of datatypes, whose values correspond to one of user-defined literals. They should be transformed into SKOS [xref:references.adoc#ref:skos-spec[skos-spec]] concept schemes comprising the concepts corresponding to enumerated items.
+UML Enumerations [xref:references.adoc#ref:uml2.5[uml2.5]] are kinds of datatypes, having zero or more values that correspond to one of user-defined literals. They are transformed into SKOS [xref:references.adoc#ref:skos-spec[skos-spec]] concept schemes comprising enumeration values represented as SKOS concepts. 
 
 
-.Visual representation of a UML Enumeration
-[#fig:enumeration-uml-visual]
+Two possible cases of UML enumerations can be identified:
+
+1. enumeration without items: such an enumeration is used as a reference to an externally defined controlled list.
+2. enumeration with items: such an enumeration serves as a complete representation of a controlled list defined within the UML model.
+
+.Visual representation of a UML Enumeration without items
+[#fig:enumeration-uml-visual-wo-items]
+image::f20.png[20]
+
+.Visual representation of a UML Enumeration with items
+[#fig:enumeration-uml-with-items]
 image::f17.png[17]
+
 
 .Visual representation of a SKOS concept scheme with concepts
 [#fig:enumeration-owl-visual]
 image::f18.png[18]
 
-IMPORTANT: Normally, the controlled list represented by UML Enumerations will be defined externally. In order to be ale to validate some data against the generate SHACL shapes, these controlled lists need to be imported into the SHACL shapes. Moreover, the restriction module should be also imported into the SHACL module, alongside the OWL core module.
+IMPORTANT: Normally, the controlled list represented by UML Enumerations will be defined externally and represented as an enumeration without items in the UML model. In order to be able to validate some data against the generated SHACL shapes, these controlled lists need to be imported. Moreover, the restriction module should be also imported into the SHACL module, alongside the OWL core module.
 
 
 [#rule:enumeration-core,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration -- in core ontology layer',reftext='{example-caption} {rule-cnt}']
@@ -155,6 +166,11 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
 </skos:ConceptScheme>
 ----
 |===
+
+
+[TIP]
+The tool does not generate SHACL shapes for concept schemes (`skos:ConceptScheme`) used to represent controlled lists. It is recommended to download the SHACL shapes for SKOS [xref:references.adoc#ref:skos-shapes[skos-shacl]] and use these for validation purposes. 
+
 
 [#rule:enumeration-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
@@ -227,4 +243,44 @@ Ideally, in the implementation, this rule would be combined with the relevant ru
     <skos:inScheme rdf:resource = "http://base.onto.uri/EnumerationName"/>
 </skos:Concept>
 ----
+|===
+
+
+[#rule:enumeration-item-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D01}. Enumeration item -- in data shape layer',reftext='{example-caption} {rule-cnt}']
+====
+Specify a _restrictive_ SHACL NodeShape for items of an enumeration for each UML Enumeration in the _defining_ mode (based on the _constraint level_ set for the UML Enumeration as defined in xref:../uml/conv-enumerations.adoc#rule:enumeration-constraint-level[rule:enumeration-constraint-level]). The URIs of the node shape is deterministically generated from the UML Enumeration name. 
+Set a constraint for the enumeration item belonging to a concept scheme represented by the enumeration URI.
+====
+
+[cols="a,a", options="noheader"]
+|===
+|
+.Restrictive shape in Turtle syntax
+[source,Turtle]
+----
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+@prefix : <http://base.onto.uri/> .
+@prefix shape: <http://base.shape.uri/> .
+
+shape:EnumName-itemShape a sh:NodeShape ;
+    sh:property [
+        sh:path skos:inScheme ;
+        sh:hasValue :EnumName ;
+    ] .
+----
+|
+.Restrictive shape in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.shape.uri/EnumName-itemShape">
+  <rdf:type rdf:resource = "http://...shacl#NodeShape"/>
+  <sh:property rdf:parseType = "Resource">
+    <sh:path rdf:resource = "http://...skos/core#inScheme"/>
+    <sh:hasValue rdf:resource = "http://base.onto.uri/EnumName"/>
+  </sh:property>
+</rdf:Description>
+----
+
 |===

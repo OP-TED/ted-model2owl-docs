@@ -32,3 +32,34 @@ In a uml:Enumeration element, the name shall be interpreted as the controlled li
 In case no attribute alias is specified then the attribute name is used as preferred label of the skos:Concept. This happens as skos:prefLabel is a mandatory property in the SKOS model.
 
 It is possible to employ the enumerations for class properties by drawing a dependency (uml:Dependency) relation from the class to the enumeration and provide a relation target role. However, the enumeration should not connect to other elements.
+
+
+[[rule:enumeration-constraint-level]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* uml:Enumeration constraint level
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:enumeration-constraint-level
+
+|*Statement:*
+An uml:Enumeration items are restricted according to one of two constraint levels set for their uml:Enumeration element.
+|===
+
+*Description:*
+
+Formal specification of a controlled list is important for enabling validation of data described with the model. Particularly, this is required for the purpose of validating values of properties expecting a controlled list values (as described in xref:../transformation/transf-rules2.adoc#rule:dependency-uni-range-ds[rule:dependency-uni-range-ds]). 
+
+However, providing such a formal specification (incorporated into the conceptual model as described in xref:./conv-general.adoc#rule:incorporation-of-controlled-list[rule:incorporation-of-controlled-list]) for validation purposes is not always possible or desirable. For example, a SKOS specification of the controlled list may not exist. Therefore, SHACL shapes for corresponding enumerations, that implements constraints for validation purposes, accomodate for both _referencing_ and _defining_ usage cases. 
+It is done by introducing a concept of a _constraint level_ that is used to specify restrictiveness of a NodeShape for an enumeration. Every UML Enumeration element is expected to specify the constraint level. There are two constraint levels that are suitable for the use cases:
+
+1. `permissive`: Suitable when a controlled list specification is not available. Causes generation of a permissive shape for items of the corresponding enumeration. The generated constraint makes no assumptions about the corresponding controlled list and sets `skos:Concept` as the expected type for an item.
+2. `restrictive`: Suitable when a controlled list specification is available. Causes generation of a restrictive shape for items of the corresponding enumeration. The generated constraints assume that an item belongs to a concept scheme (`skos:ConceptScheme`) identified by the URI used as the name of the corresponding UML Enumeration element.
+
+Every UML Enumeration element have to specify the constraint level as a tag, using a datatype property of choice for that purpose (set in configuration). The following example use a hypothetical `ex:constraintLevel` property to set _restrictive_ level for `at-voc:applicability` enumeration.
+
+image::conv-enum-constr-level.png["constraint level set for an enum"]
+
+Details on how to configure model2owl can be found in the User Guide section.
+
+A tag with the specified key is not materialized in model2owl artefacts. It is used only to control what SHACL shapes should be generated.
