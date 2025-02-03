@@ -484,29 +484,60 @@ NOTE: In OWL we want to state only that the range of a Dependency connector is a
 
 [#rule:dependency-uni-range-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Dependency range shape -- in data shape layer',reftext='{example-caption} {rule-cnt}']
 ====
-Within the SHACL PropertyShape corresponding to a dependency relation linked to a given source UML Class, specify property constraints indicating the range class.
+
+Within the SHACL PropertyShape corresponding to a dependency relation linked to a given source UML Class, constraint the range of the dependency. 
+
+Specify the suitable constraint based on the _constraint level_ set for the UML Enumeration (as defined in xref:../uml/conv-enumerations.adoc#rule:enumeration-constraint-level[rule:enumeration-constraint-level]):
+
+1. _permissive_: set `skos:Concept` as the expected type of an enumeration item
+2. _restrictive_: refer to a NodeShape for an enumeration item that further restricts allowed values (see the xref:./transf-rules3.adoc#rule:enumeration-item-ds[transformation rule for enumeration item]).
 ====
 
 [cols="a,a", options="noheader"]
 |===
 |
-.Property class constraint in Turtle syntax
+.Permissive shape in Turtle syntax
+[source,Turtle]
+----
+@prefix : <http://base.onto.uri/> .
+@prefix shape: <http://base.shape.uri/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+shape:ClassName-relationName a sh:PropertyShape ;
+    sh:path :relationName;
+    sh:class skos:Concept .
+----
+|
+.Permissive shape in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.shape.uri/ClassName-relationName">
+  <rdf:type rdf:resource = "http://...shacl#PropertyShape"/>
+  <sh:path rdf:resource = "http://base.onto.uri/relationName"/>
+  <sh:class rdf:resource = "http://...skos/core#Concept"/>
+</rdf:Description>
+----
+|
+.Restrictive shape in Turtle syntax
 [source,Turtle]
 ----
 @prefix : <http://base.onto.uri/> .
 @prefix shape: <http://base.shape.uri/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 
-shape:ClassName-relationName
-  sh:class :EnumerationName ;
-.
+shape:ClassName-relationName a sh:PropertyShape ;
+    sh:path :relationName;
+    sh:node shape:EnumName-itemShape .
 ----
 |
-.Property class constraint in RDF/XML syntax
+.Restrictive shape in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.shape.uri/ClassName-relationName">
-    <sh:class rdf:resource = "http://base.onto.uri/EnumerationName"/>
+  <rdf:type rdf:resource = "http://...shacl#PropertyShape"/>
+  <sh:path rdf:resource = "http://base.onto.uri/relationName"/>
+  <sh:node rdf:resource = "http://base.shape.uri/EnumName-itemShape"/>
 </rdf:Description>
 ----
 |===
