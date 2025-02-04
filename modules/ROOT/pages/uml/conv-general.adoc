@@ -653,19 +653,23 @@ The following UML types are supported:
 * attributes
 * connectors: association, dependency
 
-The below images demonstrate tags set for example UML elements from each of the above groups. <<fig:element-tag>> shows a tag for UML class, <<fig:attribute-tag>> for UML attribute and <<fig:dependency-tag>> for UML dependency connector.
+The <<fig:element-tag>>, <<fig:attribute-tag>> and <<fig:dependency-tag>> demonstrate tags set for example UML elements from each of the above groups.
 
+.Example depicting a tag for UML class
 [#fig:element-tag]
 image::class-tag.png[element-tag]
 
+.Example depicting a tag for UML attribute
 [#fig:attribute-tag]
 image::attribute-tag.png[attribute-tag]
 
+.Example depicting a tag for UML dependency connector
 [#fig:dependency-tag]
 image::dependency-tag.png[dependency-tag]
 
 Although technically possible, the convention for UML association connector is to set tags for association roles (either source or target) rather than the association itself, as presented in <<fig:association-role-tag>>. 
 
+.Example depicting a tag for UML association connector
 [#fig:association-role-tag]
 image::association-role-tag.png[association-role-tag]
 

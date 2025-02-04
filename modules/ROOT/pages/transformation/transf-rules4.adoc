@@ -304,7 +304,8 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 .Tag for a plain literal in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
+<rdf:Description rdf:about = 
+"http://base.onto.uri/ClassName">
     <tagName>tag value</tagName>
 </rdf:Description>
 ----
@@ -320,8 +321,9 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 .Tag for a literal with a language tag in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
-    <tagProperty xml:lang = "langTag">tag value</tagProperty>
+<rdf:Description rdf:about = 
+"http://base.onto.uri/ClassName">
+    <tagProperty xml:lang = "langTag" >tag value</tagProperty>
 </rdf:Description>
 ----
 |
@@ -336,8 +338,9 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 .Tag for a typed value in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
-  <tagProperty rdf:datatype = "http://www.w3.org/2001/XMLSchema#boolean">false</tagProperty>
+<rdf:Description rdf:about = 
+"http://base.onto.uri/ClassName">
+  <tagProperty rdf:datatype = "http://www.w3.org/2001/XMLSchema#boolean" >false</tagProperty>
 </rdf:Description>
 ----
 |
@@ -352,8 +355,10 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 .Tag for a URI value in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
-  <tagProperty rdf:resource = "https://www.example.org"/>
+<rdf:Description rdf:about =
+"http://base.onto.uri/ClassName">
+  <tagProperty rdf:resource = 
+  "https://www.example.org"/>
 </rdf:Description>
 ----
 |===
