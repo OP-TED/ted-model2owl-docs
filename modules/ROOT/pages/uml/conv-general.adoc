@@ -340,6 +340,7 @@ Generation of annotation axioms for comments is configurable.
 *Description:*
 By default, we recommend a use of the SKOS lexicalization (`skos:editorialNote`) for representing comments in the core ontology layer.
 However, a different property can be used for that purpose. For example `rdfs:comment` to apply RDFS lexicalization instead of SKOS lexicalization.
+
 The property used in an RDF statement to describe a comment can be configured by `commentProperty` configuration property. In addition, generation of RDF statements for comments can be disabled by using `commmentsGeneration` configuration parameter (enabled by default). 
 Specification of these configuration parameters can be found in the User guide.
 //TODO provide reference once the mentioned page is created

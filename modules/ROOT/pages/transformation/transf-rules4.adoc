@@ -297,8 +297,7 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 [source,Turtle]
 ----
 :ClassName
-  tagName "tag value" ;
-.
+  tagName "tag value" .
 ----
 |
 .Tag for a plain literal in RDF/XML syntax
@@ -314,8 +313,7 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 [source,Turtle]
 ----
 :ClassName
-  tagProperty "tag value"@langTag ;
-.
+  tagProperty "tag value"@langTag .
 ----
 |
 .Tag for a literal with a language tag in RDF/XML syntax
@@ -331,8 +329,7 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 [source,Turtle]
 ----
 :ClassName
-  tagProperty false ;
-.
+  tagProperty "false"^^xsd:boolean .
 ----
 |
 .Tag for a typed value in RDF/XML syntax
@@ -348,8 +345,7 @@ The `tagProperty` indicates a part of a tag name with a compact URI (for example
 [source,Turtle]
 ----
 :ClassName
-  tagProperty <https://www.example.org> ;
-.
+  tagProperty <https://www.example.org> .
 ----
 |
 .Tag for a URI value in RDF/XML syntax
