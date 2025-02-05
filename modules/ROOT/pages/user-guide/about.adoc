@@ -1,0 +1,38 @@
+= Introduction
+
+This project provides a set of tools for transforming a UML (v2.5) model from its XMI (v2.5.1) serialisation into a formal OWL ontology and a SHACL shape. This approach adheres to the SEMIC Style Guide and the eProcurement Ontology (ePO) Architecture Specification.
+
+The UML transformation is carried out using XSLT stylesheets, assuming that the UML model follows the conventions defined in the ePO UML Conventions documentation. These conventions extend those specified in the SEMIC Style Guide.
+
+== Key Capabilities
+
+The project supports the following transformations:
+
+* **UML → Compliance Report** – Validates the UML model against predefined conventions.
+* **UML → Glossary** – Generates a glossary of terms based on the UML model.
+* **UML → OWL 2 (Core Vocabulary)** – Produces a lightweight ontology suitable for semantic interoperability.
+* **UML → OWL 2 (Extended Ontology)** – Generates an enriched ontology with additional axioms for reasoning.
+* **UML → SHACL** – Defines SHACL shapes for data validation.
+* **UML → SVRL** – Outputs a compliance report in SVRL format.
+
+This work is developed within the **eProcurement Ontology Project**, funded by the **Digital Europe Programme** and led by the **Publications Office of the European Union**.
+
+== Scripts
+
+The following XSLT scripts perform the transformations:
+
+* **`html-conventions-report.xsl`** – Checks the UML model’s conformance to technical conventions and generates an HTML report.
+* **`html-model-glossary.xsl`** – Creates a glossary of the UML conceptual model.
+* **`owl-core.xsl`** – Transforms the UML model into the core OWL ontology.
+* **`shacl-shapes.xsl`** – Produces SHACL constraints from the UML model.
+* **`owl-restrictions.xsl`** – Generates OWL restrictions for classes and properties.
+* **`svrl-conventions-report.xsl`** – Checks the UML model’s compliance with technical conventions and generates an SVRL report.
+
+== Script Unit Tests
+
+Unit tests are provided for validating the transformation scripts:
+
+* **`test/unitTest/test-html-conventions-lib`** – Tests the script that checks UML conformance to technical conventions.
+* **`test/unitTest/test-owl-core-lib`** – Tests the transformation of the UML model into the core OWL ontology.
+* **`test/unitTest/test-shacl-shape-lib`** – Tests the SHACL data shape constraints transformation.
+* **`test/unitTest/test-reasoning-layer-lib`** – Tests the transformation of OWL restrictions on classes and properties.

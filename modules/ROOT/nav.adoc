@@ -22,4 +22,7 @@
 ** xref:transformation/transf-rules2.adoc[Rules for UML Connectors]
 ** xref:transformation/transf-rules3.adoc[Rules for UML Datatypes]
 ** xref:transformation/transf-rules4.adoc[Rules for UML Descriptors]
+* xref:user-guide/about.adoc[User guide]
+** xref:user-guide/how-to-use.adoc[How to use]
+** xref:user-guide/about.adoc[Configuration parameters]
 * xref:references.adoc[References]

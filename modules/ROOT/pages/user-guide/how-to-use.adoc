@@ -1,0 +1,194 @@
+= How to Use model2owl
+
+model2owl can be used in two ways:
+
+1. **Locally** – Running the transformations on your own machine.
+2. **Online** – Using the link:https://github.com/OP-TED/model2owl-boilerplate[model2owl-boilerplate] repository for automated execution.
+
+== Using model2owl Locally
+
+=== Makefile
+
+The `Makefile` automates various tasks such as running transformations, generating documentation, and executing tests. All commands are executed using the `make` build automation tool, which must be installed if not already available on your system.
+
+Some `make` targets allow optional parameters. The project provides default values for parameters where applicable.
+
+Example usage:
+
+```
+Without parameters
+
+make install
+
+With parameters
+
+make owl-core XMI_INPUT_FILE_PATH=/home/mypc/work/model2owl/file1.xml OUTPUT_FOLDER_PATH=./my-folder
+```
+
+=== Setting Up Commands
+
+The following commands are available for setting up dependencies:
+
+* `get-saxon` – Installs Saxon inside the project folder.
+* `get-rdflib` – Installs the RDFLib library.
+* `get-widoco` – Installs Widoco inside the project folder.
+* `install` – Executes all the above installation steps automatically.
+* `create-virtual-env` – Creates a Python virtual environment for the project.
+
+=== Functional Commands
+
+These commands execute transformations and generate outputs:
+
+* `generate-glossary` – Generates a glossary from the UML export (XML/XMI).
+  * **Parameters:**
+    `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    `OUTPUT_GLOSSARY_PATH` – Path to the output folder.
+
+* `generate-convention-report` – Generates a compliance report from the UML export in HTML format.
+  * **Parameters:**
+    `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    `OUTPUT_CONVENTION_REPORT_PATH` – Path to the output folder.
+
+* `generate-convention-SVRL-report` – Generates a compliance report from the UML export in SVRL format.
+  * **Parameters:**
+    `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    `OUTPUT_CONVENTION_REPORT_PATH` – Path to the output folder.
+
+* `owl-core` – Generates a lightweight ontology from the UML export.
+  * **Parameters:**
+    `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    `OUTPUT_FOLDER_PATH` – Path to the output folder.
+
+* `owl-restrictions` – Generates a heavyweight ontology with additional axioms for reasoning.
+  * **Parameters:**
+    `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    `OUTPUT_FOLDER_PATH` – Path to the output folder.
+
+* `shacl` – Generates SHACL data shapes suitable for validation.
+  * **Parameters:**
+    `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    `OUTPUT_FOLDER_PATH` – Path to the output folder.
+
+* `generate-html-docs-from-rdf` – Generates HTML documentation using Widoco from an RDF file.
+  * **Parameters:**
+    `WIDOCO_RDF_INPUT_FILE_PATH` – Path to the RDF file.
+    `OUTPUT_FOLDER_PATH` – Path to the output folder.
+
+* `merge-xmi` – Merges XMI files from a specified folder.
+  * **Parameters:**
+    `FIRST_XMI_TO_BE_MERGED_FILE_PATH` – Path to the first XMI file.
+    `XMI_MERGED_OUTPUT_FOLDER_PATH` – Path to the output folder.
+
+* `convert-to-turtle` – Converts RDF files to Turtle format.
+  * **Parameters:**
+    `ONTOLOGY_FOLDER_PATH` – Path to the folder containing RDF files.
+
+* `convert-to-rdf` – Converts Turtle files to RDF format.
+  * **Parameters:**
+    `ONTOLOGY_FOLDER_PATH` – Path to the folder containing Turtle files.
+
+== Installation
+
+=== Prerequisites
+
+Ensure the following are installed on your system:
+
+* `make`
+* `Python 3`
+
+=== Installation Steps
+
+1.Clone model2owl repository:
+```
+git clone https://github.com/example/model2owl.git
+```
+
+2.Run the installation command:
+```
+make install
+```
+
+**Note:** If you do not have a virtual environment set up, create one using:
+```
+make create-virtual-env
+
+Then activate it:
+
+source model2owl-venv/bin/activate
+```
+
+== Configuration
+
+The model2owl configuration consists of four files, which should be placed in a single folder:
+
+* `config-parameters.xsl` – Defines main configuration variables.
+* `namespaces.xml` – Lists namespaces used in the UML model.
+* `umlToXsdDataTypes.xml` – Maps UML data types to XSD.
+* `xsdAndRdfDataTypes.xml` – Defines data types used.
+
+To set up, copy the default configuration files from the `ePO-default-config` folder to your new configuration folder.
+
+=== Configuration Parameters
+
+To adjust configuration settings, edit the `config-parameters.xsl` file.
+**Important notes:**
+* Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, or `xsdAndRdfDataTypes` variables.
+* Ensure any modified variable retains its original datatype (boolean, string, list).
+
+.Example of correct and incorrect datatype modification:
+```xml
+# Correct
+<xsl:variable name="defaultNamespaceInterpretation" select="fn:true()"/>
+
+# Incorrect (datatype mismatch)
+<xsl:variable name="defaultNamespaceInterpretation" select="'new-value'"/>
+```
+
+== Namespaces Configuration
+
+To add namespaces, edit namespaces.xml:
+```
+# Define a namespace prefix and its URI
+<prefix name="foaf" value="http://xmlns.com/foaf/0.1/"/>
+
+# Include an import statement in the final output
+<prefix name="dct" value="http://purl.org/dc/terms/" importURI="http://purl.org/dc/terms/"/>
+
+This will result in the following OWL import statement:
+
+<owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+```
+
+== XSD and RDF Data Types
+
+To define datatypes used in the UML model, edit xsdAndRdfDataTypes.xml:
+
+```
+<datatype namespace="xsd" qname="xsd:date"/>
+```
+
+=== UML to XSD Mappings
+
+If the UML model uses custom datatypes, map them in umlToXsdDataTypes.xml:
+```
+<mapping>
+    <from qname="epo:Date"/>
+    <to qname="xsd:date"/>
+</mapping>
+```
+All configuration files should be stored in one folder. Once the configuration is set, update config-proxy.xsl to point to the new configuration folder.
+
+Example:
+```
+# Update the path in config-proxy.xsl:
+<xsl:import href="my-pc/user/my-config-folder/config-parameters.xsl"/>
+```
+
+== Running Transformations
+
+Once installed and configured, run transformations using make commands.
+
+Example:
+```
+make owl-core XMI_INPUT_FILE_PATH=/home/mypc/work/model2owl/file1.xml OUTPUT_FOLDER_PATH=./my-folder
+```
