@@ -14,7 +14,7 @@ with their requirements. Parameters are primarily stored in `config-parameters.x
 
 
 
-=== Configuration links to the other configuration files
+=== Core parameter mappings
 These parameters ensure that the system retrieves and applies predefined namespace prefixes, UML-to-XSD datatype mappings,
 and XSD-to-RDF datatype definitions from their respective configuration files.
 
@@ -84,7 +84,7 @@ ontology.
 | `abstractClassesStereotypes` | List | Defines which stereotypes classify a class as abstract. | `('Abstract', 'abstract class', 'abstract')`
 
 |===
-=== Controlled Vocabulary Parameters
+=== Controlled vocabulary parameters
 
 This section defines settings for handling controlled vocabularies in Model2OWL. These parameters determine whether
 enumeration items are converted into SKOS concepts and whether entire enumerations are structured as SKOS concept schemes.
@@ -200,7 +200,7 @@ Additionally, elements **without a status tag** will be assigned a **default sta
 in the configuration (`unspecifiedStatusInterpretation`). This ensures that even elements
 missing an explicit status can be processed consistently.
 
-===== **Model2OWL Status Configuration Parameters**
+===== **Model2owl status configuration parameters**
 
 [options="header"]
 |===
@@ -304,7 +304,7 @@ included in the report.
 | `conventionReportUMLModelName` | String | Defines the name of the UML model in the report. | `eProcurement`
 |===
 
-### Metadata Section Variables
+=== Metadata parameters
 
 This section defines metadata parameters used in the generation of **OWL Core, OWL Restrictions, and SHACL Shapes** artefacts.
 Metadata plays a crucial role in **identifying, describing, and managing ontology components**,

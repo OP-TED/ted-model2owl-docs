@@ -131,6 +131,7 @@ To set up, copy the default configuration files from the `ePO-default-config` fo
 === Configuration Parameters
 
 To adjust configuration settings, edit the `config-parameters.xsl` file.
+
 **Important notes:**
 
 * Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, or `xsdAndRdfDataTypes` variables.
@@ -146,9 +147,9 @@ To adjust configuration settings, edit the `config-parameters.xsl` file.
 ```
 
 For more details about available variables and how they work, please visit
-the link:configuration-file.adoc[configuration parameters page]
+the link:user-guide/configuration-file.adoc[configuration parameters page]
 
-== Namespaces Configuration
+=== Namespaces Configuration
 
 To add namespaces, edit namespaces.xml:
 ```
@@ -163,7 +164,7 @@ This will result in the following OWL import statement:
 <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
 ```
 
-== XSD and RDF Data Types
+=== XSD and RDF Data Types
 
 To define datatypes used in the UML model, edit xsdAndRdfDataTypes.xml:
 
