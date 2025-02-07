@@ -15,7 +15,6 @@ The project supports the following transformations:
 * **UML → SHACL** – Defines SHACL shapes for data validation.
 * **UML → SVRL** – Outputs a compliance report in SVRL format.
 
-This work is developed within the **eProcurement Ontology Project**, funded by the **Digital Europe Programme** and led by the **Publications Office of the European Union**.
 
 == Scripts
 

@@ -132,6 +132,7 @@ To set up, copy the default configuration files from the `ePO-default-config` fo
 
 To adjust configuration settings, edit the `config-parameters.xsl` file.
 **Important notes:**
+
 * Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, or `xsdAndRdfDataTypes` variables.
 * Ensure any modified variable retains its original datatype (boolean, string, list).
 
@@ -143,6 +144,9 @@ To adjust configuration settings, edit the `config-parameters.xsl` file.
 # Incorrect (datatype mismatch)
 <xsl:variable name="defaultNamespaceInterpretation" select="'new-value'"/>
 ```
+
+For more details about available variables and how they work, please visit
+the link:configuration-file.adoc[configuration parameters page]
 
 == Namespaces Configuration
 
