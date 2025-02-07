@@ -147,7 +147,7 @@ To adjust configuration settings, edit the `config-parameters.xsl` file.
 ```
 
 For more details about available variables and how they work, please visit
-the link:user-guide/configuration-file.adoc[configuration parameters page]
+the xref:user-guide/configuration-file.adoc[configuration parameters page]
 
 === Namespaces Configuration
 
