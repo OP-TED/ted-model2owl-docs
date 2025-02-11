@@ -160,11 +160,9 @@ even if they would sometimes be classified as reused.
 | `generateReusedConceptsOWLrestrictions` | Boolean | Enables or disables the inclusion of reused concepts in OWL restrictions. | `true`
 | `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. | `true`
 |===
-=== Tags, comments and status filtering parameters
+=== Status filtering parameters
 
-This section defines parameters that control **tag handling, comment generation, and status-based filtering** in Model2OWL.
-These settings determine how **comments are included, which tags should be excluded, and how the status of UML elements
-affects their inclusion in the generated artefacts**.
+This section defines parameters that control ** status-based filtering** in model2owl.
 
 Status filtering is a **flexible mechanism** that allows users to specify which UML elements should be **included or excluded**
 based on predefined status values. Since model2owl does not assume logical correctness of the statuses assigned to UML elements,
@@ -250,7 +248,7 @@ missing an explicit status can be processed consistently.
 - **The `statusProperty` tells model2owl which property is used in UML tags to express the status
 of an element.** Model2owl interprets these tags to determine element status.
 
-==== **Comments generation**
+=== **Comments generation**
 
 This section defines parameters that control **how comments are handled** in the generated
 artefacts. Comments can be included to **provide additional explanations, annotations, or
@@ -262,7 +260,7 @@ editorial notes** within OWL or SHACL outputs.
 | `commentProperty` | String | Specifies the property used for comments in the output. | `skos:editorialNote`
 |===
 
-==== **Excluded tags**
+=== **Tags**
 This section defines parameters that control which **tags should be excluded** from the
 generated artefacts.
 
