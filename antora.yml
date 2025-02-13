@@ -2,5 +2,8 @@ name: M2O
 title: model2owl Documentation
 start_page: ROOT:index.adoc
 version: '2.3.0'
+asciidoc:
+  attributes:
+    page-toclevels: 5@
 nav:
   - modules/ROOT/nav.adoc
