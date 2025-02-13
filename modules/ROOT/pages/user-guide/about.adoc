@@ -5,8 +5,8 @@ various semantic artefacts, including OWL ontologies and SHACL shapes. Model2owl
 process by automating the conversion of a UML (v2.5) model from its XMI (v2.5.1) serialisation into formal,
 standards-compliant RDF-based representations.
 
-For an overview of **model2owl**, including its purpose and capabilities, please visit the main documentation page:
-link:../index.adoc[model2owl Documentation].
+For an overview of **model2owl**, including its purpose and capabilities, please visit the
+link:../index.html[main documentation page].
 
 == What’s Inside?
 

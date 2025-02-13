@@ -73,7 +73,7 @@ allowed characters for normalised strings, default delimiter in URIs, etc.
 === Stereotypes parameters
 This section defines the valid stereotypes that can be applied to different UML elements, such as attributes, objects,
 generalisations, associations, dependencies, and classes. For more details about stereotypes, please refer to
-link:../uml/conv-general.adoc#sec:stereotypes-tags[UML Modelling Conventions – Stereotypes and Tags].
+link:../uml/conv-general.html#sec:stereotypes-tags[UML Modelling Conventions – Stereotypes and Tags].
 
 
 Certain stereotypes, like "Abstract", classify a class as abstract, while others, such as "Disjoint" and "Equivalent",
@@ -121,7 +121,7 @@ Due to the diversity of controlled vocabularies (CVs) that a project may use, it
 over the type of SHACL shapes generated for each CV. This information will be stored within the
 UML model itself by using a tag with a key defined in the configuration (cvConstraintLevelProperty).
 
-There are two possible link:../uml/conv-enumerations.adoc#rule:enumeration-constraint-level[constraint levels] that determine the type of SHACL shape generated:
+There are two possible link:../uml/conv-enumerations.html#rule:enumeration-constraint-level[constraint levels] that determine the type of SHACL shape generated:
 
    * permissive – Generates a permissive SHACL shape for the related UML enumeration.
    * restrictive – Generates a restrictive SHACL shape for the related UML enumeration.
@@ -280,7 +280,7 @@ editorial notes** within OWL or SHACL outputs.
 
 Model2owl uses tags found in the UML model in two distinct ways:
 
-   * To generate corresponding RDF statements that express metadata about concepts, following the link:../transformation/transf-rules4.adoc#rule:element-tag-core[transformation rules for tags].
+   * To generate corresponding RDF statements that express metadata about concepts, following the link:../transformation/transf-rules4.html#rule:element-tag-core[transformation rules for tags].
    * To control the generation process at the UML element level by using specific tags that describe an element's status or constraint level (control tags).
 
 Control tags influence the generation process by altering how elements are transformed into semantic artefacts.
