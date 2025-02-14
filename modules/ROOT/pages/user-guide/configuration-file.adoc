@@ -98,6 +98,8 @@ ontology.
 | `abstractClassesStereotypes` | List | Defines which stereotypes classify a class as abstract. | `('Abstract', 'abstract class', 'abstract')`
 
 |===
+
+[[controlled-vocabulary-parameters]]
 === Controlled vocabulary parameters
 
 This section defines settings for handling controlled vocabularies in model2owl. These parameters determine whether
@@ -234,7 +236,7 @@ missing an explicit status can be processed consistently.
 | `:term2`   | `approved`
 | `:term3`   | `implemented`
 | `:term4`   | _not set_
-| `:term5`   | `proposed`
+| `:term5`   | `aproved`
 |===
 
 **Model2owl configuration**
@@ -253,7 +255,7 @@ missing an explicit status can be processed consistently.
 | `:term2`   | `Excluded`
 | `:term3`   | `Included`
 | `:term4`   | `Included as it defaults to implemented`
-| `:term5`   | `Excluded`
+| `:term5`   | `Error (The value contains a typo and it is not a valid status)`
 |===
 
 ==== **Key Takeaways**
