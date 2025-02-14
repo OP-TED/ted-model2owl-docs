@@ -1,0 +1,23 @@
+= Introduction
+
+This user guide provides detailed documentation on **model2owl**, a toolset for transforming UML models into
+various semantic artefacts, including OWL ontologies and SHACL shapes. Model2owl simplifies the transformation
+process by automating the conversion of a UML (v2.5) model from its XMI (v2.5.1) serialisation into formal,
+standards-compliant RDF-based representations.
+
+For an overview of **model2owl**, including its purpose and capabilities, please visit the
+link:../index.html[main documentation page].
+
+== What’s Inside?
+
+This guide covers the following key topics:
+
+- **How to use model2owl:** Step-by-step instructions for using the tool, including installation, configuration, and running transformations.
+- **Configuration parameters:** Explanation of the configuration options available, including how to customise the transformation process to meet specific requirements.
+
+== Intended Audience
+
+This user guide is intended for:
+
+- **Ontology Engineers** and **Semantic Modellers** who want to transform UML models into OWL ontologies and SHACL shapes.
+- **Developers** working with the eProcurement Ontology or similar projects requiring semantic artefacts.

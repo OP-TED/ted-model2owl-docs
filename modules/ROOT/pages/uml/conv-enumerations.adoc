@@ -60,6 +60,6 @@ Every UML Enumeration element have to specify the constraint level as a tag, usi
 
 image::conv-enum-constr-level.png["constraint level set for an enum"]
 
-Details on how to configure model2owl can be found in the User Guide section.
+Details on how to configure model2owl can be found in the link:../user-guide/configuration-file.html#controlled-vocabulary-parameters[User Guide section].
 
 A tag with the specified key is not materialized in model2owl artefacts. It is used only to control what SHACL shapes should be generated.
