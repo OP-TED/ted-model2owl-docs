@@ -594,7 +594,8 @@ image::f14.png[14]
 
 [#rule:generalisation-property-core,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Property generalisation -- in core ontology layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify sub-property axiom for the generalisation between UML association/dependency connectors.
+Specify a sub-property axiom representing the generalisation between named roles of UML associations. Properties on the subject and object positions correspond to the association roles belonging to the same side of the association ends. 
+Such a sub-property axiom is specified for the target side of association ends (for unidirectional associations) or for both source and target sides of the association ends (for bidirectional associations).
 ====
 
 [cols="a,a", options="noheader"]
