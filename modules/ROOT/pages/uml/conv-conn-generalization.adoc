@@ -105,3 +105,74 @@ Equivalent classes can be represented by using stereotypes on the uml:Generaliza
 *Description:*
 
 In case two classes are equivalent, then the latexmath:[$<<equivalent>>$] or latexmath:[$<<complete>>$] stereotype should be used as a marker.
+
+
+[[rule:generalization-btw-connectors-and-allowed-targets]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Connector generalization and allowed targets for involved connector ends
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:generalization-btw-connectors-and-allowed-targets
+
+|*Statement:*
+ Ends of the same side (either source or target) of two connectors connected with a generalization relation 
+can be attached to the same class or two different ones connected with a generalization relation.
+|===
+
+*Description:*
+For a pair of connectors with a generalization relation linking them, each of the sides of their ends can be attached to the following:
+
+* same class or
+* two classes connected with a generalization relation
+
+
+[[rule:generalization-btw-connectors-and-class-generalization-for-distinct-connector-targets]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Connector generalization and required class generalization for involved distinct connector targets 
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:generalization-btw-connectors-and-class-generalization-for-distinct-connector-targets
+
+|*Statement:*
+uml:Class elements linked to the same side ends of two connectors having generalization relation between them must also be connected with a generalization connector.
+|===
+
+*Description:*
+
+In case the ends of the same side (either source or target) of two connectors connected with a generalization relation refer to two different classes (see rule [xref:rule:generalization-btw-connectors-and-allowed-targets[rule:generalization-btw-connectors-and-allowed-targets]]), these classes must be also linked with a generalization relation. 
+
+[[rule:generalization-connectors-direction-and-roles]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Connector generalization and direction and roles of related connectors
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:generalization-connectors-direction-and-roles
+
+|*Statement:*
+The connectors linked by the generalization connector must have the same direction and roles defined
+|===
+
+*Description:*
+Unidirectional connectors linked with a generalization connector must have the same direction. In addition, role names have to be provided for the proper ends. The second requirement applies also to bidirectional connectors.
+
+
+[[rule:direction-of-generalization-btw-connectors-and-classes-match]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Direction of connector generalization and linked classes generalization relations is the same. 
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:direction-of-generalization-btw-connectors-and-classes-match
+
+|*Statement:*
+Direction of a generalization relation between connectors follows the direction of generalization relation between the relevant classes (if the latter one exists).
+|===
+
+*Description:*
+
+In case the ends (either source or target) of two connectors are associated with different classes (see rules [xref:rule:generalization-btw-connectors-and-allowed-targets[rule:generalization-btw-connectors-and-allowed-targets]], [xref:rule:generalization-btw-connectors-and-class-generalization-for-distinct-connector-targets[rule:generalization-btw-connectors-and-class-generalization-for-distinct-connector-targets]]), the directions of the connector generalization and class generalization relations must match. 
+
+This applies to target connector ends (for unidirectional connectors) or to the both sides of connector ends (for bidirectional connectors).
