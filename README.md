@@ -1,4 +1,4 @@
-# ted-model2owl-docs
+# Model2Owl Documentation
 This repository contains the model2owl documentation previously found under the associated code repository.
 
 This repository is used for authoring the documentation on the model2owl tools and processes.
