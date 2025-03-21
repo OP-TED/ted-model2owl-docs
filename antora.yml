@@ -1,6 +1,6 @@
 name: M2O
-title: model2owl Documentation
+title: Model2Owl Documentation
 start_page: ROOT:index.adoc
-version: '2.3.0'
+version: '3.0.0'
 nav:
   - modules/ROOT/nav.adoc

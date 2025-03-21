@@ -324,12 +324,87 @@ In addition to these SEMIC recommendation for providing good definitions, we als
 
 *See also:* SEMIC Style Guide Rule [https://semiceu.github.io/style-guide/1.0.0/gc-general-conventions.html#sec:gc-r5[GC-R5]], which provides more recommendations to be followed here.
 
+
+[[rule:comments-gen]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Comments
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:comments-gen
+
+|*Statement:*
+Generation of annotation axioms for comments is configurable.
+|===
+
+*Description:*
+By default, we recommend a use of the SKOS lexicalization (`skos:editorialNote`) for representing comments in the core ontology layer.
+However, a different property can be used for that purpose. For example `rdfs:comment` to apply RDFS lexicalization instead of SKOS lexicalization.
+
+The property used in an RDF statement to describe a comment can be configured by `commentProperty` configuration property. In addition, generation of RDF statements for comments can be disabled by using `commmentsGeneration` configuration parameter (enabled by default). 
+Specification of these configuration parameters can be found in the User guide.
+//TODO provide reference once the mentioned page is created
+
+[[rule:comments-uml-elems]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* UML types supported by comment generation
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:comments-uml-elems
+
+|*Statement:*
+UML comment can be defined for all UML elements except for UML attribute and generalization.
+|===
+
+*Description:*
+The following UML types are supported:
+
+* elements: class, enumeration, datatype
+* connectors: association, dependency
+
+Comments in the form of floating notes attached to attributes unsupported as they are neither practical nor readable. Tags can be used instead to store notes for attributes. 
+
+Generalization is not supported due to a technical limitation. There is no subject to associate a comment with when constructing an RDF statement.
+
 [[sec:controlled-lists]]
 === Controlled lists
 
-The controlled list is a carefully selected list of words and phrases and is often employed in the modelling practices. The controlled list has a name, and a set of terms. For example, the list of grammatical genders can be named "Gender" and comprise the terms "masculine", "feminine", "neuter" and "utrum".
+The controlled list (also referred to as a controlled vocabulary) is a carefully selected list of words and phrases and is often employed in the modelling practices. The controlled list has a name, and a set of terms. For example, the list of grammatical genders can be named "Gender" and comprise the terms "masculine", "feminine", "neuter" and "utrum".
 
 As a rule of thumb, but not always, the relationship between the controlled list as a whole and its comprising elements can be informally conceptualised as a class-instance, class-subclass, set-item, or part-whole.
+
+
+[[rule:incorporation-of-controlled-list]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Incorporation of controlled lists
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:incorporation-of-controlled-list
+|*Statement:*
+
+Controlled list should be defined externally and referenced in the UML conceptual model
+|===
+
+*Description:*
+
+There are two possible use cases for incorporating a controlled list in the conceptual model:
+
+1. referencing case: An externally defined controlled list is referenced in the model by its URI.
+2. defining case: A controlled list is defined within the model together with its items.
+
+The use cases are properly represented in the UML conceptual model by using an UML Enumeration element as described in xref:../transformation/transf-rules3.adoc#sec:enumeration[enumerations]. 
+
+*Referencing case*
+
+Controlled lists play an essential role in establishing interoperability standards. Management and publication of controlled lists should happen as a separate process, and are not addressed here. Such controlled lists are developed, published and maintained independently following their own lifecycle, so that they can be reused in other models.
+References to controlled lists shall be done via uml:Enumeration elements without defined items.
+
+*Defining case*
+
+The expectation is that the designed controlled lists are published in accordance with best practices and represented with the SKOS model using persistent identifiers. In such an approach, a controlled list is expressed as a `skos:ConceptScheme` and the specific values as `skos:Concept`(s). 
+In that setup, a UML Enumeration element contains one or more enumeration items. 
 
 [[rule:gen-controlled-list]]
 |===
@@ -346,10 +421,7 @@ shall be represented as uml:Enumeration element.
 |===
 
 *Description:*
-
-Controlled lists play an essential role in establishing interoperability standards. Management and publication of controlled lists should happen as a separate process, and are not addressed here. References to controlled lists shall be done via uml:Enumeration elements.
-
-The expectation is that the controlled lists are published in accordance with best practices and represented with the SKOS model using persistent identifiers. In such an approach, the controlled list is expressed as a `skos:ConceptScheme` and the specific values as `skos:Concept`(s). Also, such controlled lists are often developed, published and maintained independently following their own lifecycle, so that they can be reused in other models.
+When a modelled property is foreseen to have a discrete set of values, the range of this property should be described using a reference to appropriate code list defining these values.
 
 Two use-cases can be identified in practice: (a) when the code list is known and is explicitly referred to as the range of a property, and (b) when a property is modelled but no code list reference is provided as its range.
 
@@ -500,23 +572,142 @@ The use of stereotypes is not recommended. There should be only a small set of s
 
 *See also:* SEMIC Style Guide Rule [https://semiceu.github.io/style-guide/1.0.0/gc-conceptual-model-conventions.html#sec:cmc-r17[CMC-R17]]
 
+
+[[rule:tags-use-cases]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Use of tags
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:tags-use-cases
+
+|*Statement:*
+UML tags is used to either provide additional description of the element or control generation of the element RDF representation.
+|===
+
+*Description:*
+UML tags can be specified for UML elements and connectors. Tags can be used to:
+
+1. Control what and how is generated in RDF artefacts in the context of the associated UML element.
+2. Provide additional information about the associated UML element (primary use case).
+
+There are two groups of tags addressing the above use cases, respectively:
+
+1. control tags: use predefined, reserved keys
+2. descriptive tags: any tag that does not use a reserved key
+
+
+[[rule:descriptive-tags]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Descriptive tags
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:descriptive-tags
+
+|*Statement:*
+Descriptive tags are used to provide additional information of the element.
+|===
+
+*Description:*
+Descriptive tag should provide additional information to an element (classes, enumerations, datatypes, connectors, attributes, connector roles). In particular, tags could be used to assign metadata to an element.
+
+*Note:* Tags should not be used as the sole (or primary) source of concept identifier generation, i.e. every UML element that has tags attached, should, in the first place, have a proper name provided, according to the conventions in the [xref:sec:names[]] section.
+
+
+[[rule:control-tags]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* Control tags
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:control-tags
+
+|*Statement:*
+Control tags are used to configure artefact generation process in the context of the UML elements they describe.
+|===
+
+*Description:*
+A control tag uses a special, predefined key that is interpreted by the tool and used to configure whether and how the related UML element is generated in artefact(s). Such a tag relates to a known feature served by the tool and its use needs to conform to the feature specification. In particular, a tag value is constrained and needs to be a one that is understandable by the tool.
+
+An index of control tags and related features can be found in the User guide.
+//TODO provide reference once the mentioned page is created
+
+Due to the nature of the control tag, it is not materialized (unless a specific feature specification states otherwise).
+
+[[rule:tags-uml-elems]]
+|===
+|{set:cellbgcolor: #a8c6f7}
+ *Title:* UML types supported by tag value generation
+
+|{set:cellbgcolor: #f5f8fc}
+*Identifier:* rule:tags-uml-elems
+
+|*Statement:*
+UML tag can be defined for all UML elements except for UML generalization.
+|===
+
+*Description:*
+The following UML types are supported:
+
+* elements: class, enumeration, datatype
+* attributes
+* connectors: association, dependency
+
+The <<fig:element-tag>>, <<fig:attribute-tag>> and <<fig:dependency-tag>> demonstrate tags set for example UML elements from each of the above groups.
+
+.Example depicting a tag for UML class
+[#fig:element-tag]
+image::class-tag.png[element-tag]
+
+.Example depicting a tag for UML attribute
+[#fig:attribute-tag]
+image::attribute-tag.png[attribute-tag]
+
+.Example depicting a tag for UML dependency connector
+[#fig:dependency-tag]
+image::dependency-tag.png[dependency-tag]
+
+Although technically possible, the convention for UML association connector is to set tags for association roles (either source or target) rather than the association itself, as presented in <<fig:association-role-tag>>. 
+
+.Example depicting a tag for UML association connector
+[#fig:association-role-tag]
+image::association-role-tag.png[association-role-tag]
+
+UML generalization is not supported due to a technical limitation. There is no subject to associate a tag value with when constructing an RDF statement.
+
 [[rule:gen-tags]]
 |===
 |{set:cellbgcolor: #a8c6f7}
- *Title:* Tags
+ *Title:* Tags format
 
 |{set:cellbgcolor: #f5f8fc}
 *Identifier:* rule:gen-tags
 
 |*Statement:*
-UML tags shall be used to provide additional descriptions of the element in a consistent and structure manner.
+UML tags shall be used in a consistent and structured manner.
 |===
 
 *Description:*
 
 When providing additional information to an element (classes, enumerations, datatypes, connectors, attributes, connector roles) through a tag ensure that:
 
-* The tag name should be provided and should be either a short URI or short URI with a language tag (e.g. @en).
-* There should be a value associated to each tag that appears on an element.
+* The tag name is provided and is based on a compact URI representing a property of choice
+* There is a value associated to each tag that appears on an element
 
-*Note:* Tags should not be used as the sole (or primary) source of concept identifier generation, i.e. every UML element that has tags attached, should, in the first place, have a proper name provided, according to the conventions in the [xref:sec:names[]] section.
+By default, a tag value is treated as a plain text literal.
+However, there are three kinds of supported suffixes (additional segments at the end of a key) that changnes the way the value is interpreted:
+
+* `@LANG` language suffix: informs that the value is a language-tagged string. _LANG_ is a placeholder for a language code compliant with ISO 639 format
+* `^^DATATYPE` datatype suffix: informs that the value is a typed literal. _DATATYPE_ is a placeholder for a datatype compact URI; XSD types should be used whenever possible
+* `<>` URI suffix: informs that the value is a URI
+
+Examples of valid tags (`key: value`):
+
+* `skos:prefLabel`: `Value without a language tag`
+* `skos:prefLabel@en`: `The value of the label`
+* `dct:issued^^xsd:date`: `1990-08-27`
+* `owl:sameAs<>`: `http://some.url.com`
+
+*Note:*
+The suffixes are inspired by Turtle syntax used to represent the corresponding information. The decision to append the suffixes to a key rather than a value was made for practical reasons.

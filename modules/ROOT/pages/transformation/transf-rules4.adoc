@@ -186,8 +186,8 @@ image::f19.png[19]
 
 As UML Comments add no semantics, they are not used in any method of semantic validation. In OWL the AnnotationAssertion axiom [xref:references.adoc#ref:owl2[owl2]] does not add any semantics either, and it only improves readability.
 
-By default, we recommend the use of the SKOS lexicalization (`skos:editorialNote`) in the core ontology layer. In the future this could be controlled by a flag in the configuration of the transformation tool. With such a flag one could enable RDFS lexicalization (`rdfs:comment`) instead of, or in addition to, the SKOS lexicalization.
-
+**Note**:
+In practice, comments on UML attributes and generalizations are unsupported, as explained in the xref:../uml/conv-general.adoc#rule:comments-uml-elems[rule:comments-uml-elems] UML convention.
 
 [#rule:element-external-comment-core,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D.1}. Comment -- in core ontology layer',reftext='{example-caption} {rule-cnt}']
 ====
@@ -270,7 +270,9 @@ shape:ClassName-PropertyName
 
 === Tags
 
-Any UML element can have additional information provided by means of tags, represented by UML Tag elements. Such tags should be transformed into annotation on the RDF resource representing the UML element (e.g. Class, Attribute, Connector). The language tags that are provided on the tag, can be used to generate multilingual ontologies/specifications. For example, the highlighted elements in <<fig:transf-tag-marked>> would be transformed in the following Turtle statement `epo:Procedure skos:definition "this is the definition in French"@fr .`
+Any UML element can have additional information provided by means of tags, represented by UML Tag elements. Tags serve two purposes (as described in xref:../uml/conv-general.adoc#rule:tags-use-cases[rule:tags-use-cases]): to either provide additional description of an element or control the transformation process. Every _descriptive_ tag should be transformed into annotation on the RDF resource representing the UML element (e.g. Class, Attribute, Connector). 
+
+For example, the language tags that are provided on the tag, can be used to generate multilingual ontologies/specifications. The elements highlighted in <<fig:transf-tag-marked>> below would be transformed in the following Turtle statement `epo:Procedure skos:definition "this is the definition in French"@fr .`
 
 .Example depicting the specification of UML tags
 [#fig:transf-tag-marked]
@@ -281,25 +283,78 @@ The generation of annotations from tags could be controlled by a flag in the con
 
 [#rule:element-tag-core,source,XML,caption='',title='{example-caption} {counter:rule-cnt:D.1}. Tag -- in core ontology layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify an annotation axiom on the OWL entity for each UML Tag associated to a UML element. If a tag has an associated language tag, it should be attached to the value.
+Specify an annotation axiom on the OWL entity for a UML Tag associated to a UML element. Apply this transformation rule only for descriptive tags (as defined in as defined in xref:../uml/conv-general.adoc#rule:descriptive-tags[rule:descriptive-tags]). Detect the kind of tag by analyzing its key, and generate the proper RDF representation of the tag value as specified in xref:../uml/conv-general.adoc#rule:gen-tags[rule:gen-tags].
 ====
+
+The below snippets present generated RDF statements for the four supported forms of tags and their values: a plain literal, a literal with a language tag, a typed value and an URI. The snippets use suitable examples to demonstrate the idea.
+
+The `tagProperty` indicates a part of a tag name with a compact URI (for example `skos:related` for a tag with the `skos:related<>` key).
 
 [cols="a,a", options="noheader"]
 |===
 |
-.Tags in Turtle syntax
+.Tag for a plain literal in RDF/XML syntax
 [source,Turtle]
 ----
 :ClassName
-  tagName "tag value"@langTag ;
-.
+  tagName "tag value" .
 ----
 |
-.Tags in RDF/XML syntax
+.Tag for a plain literal in RDF/XML syntax
 [source,XML]
 ----
-<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
-    <tagName xml:lang="langTag">tag value</tagName>
+<rdf:Description rdf:about = 
+"http://base.onto.uri/ClassName">
+    <tagName>tag value</tagName>
+</rdf:Description>
+----
+|
+.Tag for a literal with a language tag in RDF/XML syntax
+[source,Turtle]
+----
+:ClassName
+  tagProperty "tag value"@langTag .
+----
+|
+.Tag for a literal with a language tag in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = 
+"http://base.onto.uri/ClassName">
+    <tagProperty xml:lang = "langTag" >tag value</tagProperty>
+</rdf:Description>
+----
+|
+.Tag for a typed value in RDF/XML syntax
+[source,Turtle]
+----
+:ClassName
+  tagProperty "false"^^xsd:boolean .
+----
+|
+.Tag for a typed value in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = 
+"http://base.onto.uri/ClassName">
+  <tagProperty rdf:datatype = "http://www.w3.org/2001/XMLSchema#boolean" >false</tagProperty>
+</rdf:Description>
+----
+|
+.Tag for a URI value in RDF/XML syntax
+[source,Turtle]
+----
+:ClassName
+  tagProperty <https://www.example.org> .
+----
+|
+.Tag for a URI value in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about =
+"http://base.onto.uri/ClassName">
+  <tagProperty rdf:resource = 
+  "https://www.example.org"/>
 </rdf:Description>
 ----
 |===

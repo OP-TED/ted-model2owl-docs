@@ -1,0 +1,358 @@
+= Configuration Parameters
+
+== Overview
+
+The configuration parameters in model2owl define various aspects of how the transformation processes work.
+These parameters control namespace handling, ontology URIs, stereotype validations, reused concepts generation control,
+tags/comments generation, controlled vocabulary generation and constraints, metadata generation, status filtering.
+
+Understanding these parameters allows users to fine-tune the output of the transformation, ensuring it aligns
+with their requirements. Parameters are primarily stored in `config-parameters.xsl` and linked XML files such as
+`namespaces.xml`, `umlToXsdDataTypes.xml`, and `xsdAndRdfDataTypes.xml`.
+
+The configuration file used in model2owl is not an ordinary XML file. It is an **XSLT-based configuration**,
+meaning that specific syntax and structure must be followed for it to work correctly.
+Parameters are defined as XSLT variables (`<xsl:variable>`), and their values directly affect the transformation
+process.
+
+**Important:**
+
+* When modifying this file, ensure that the link:https://www.w3.org/TR/xslt-30/#variables-and-parameters[XSLT specification] is strictly followed. Improper syntax or unsupported XSLT elements can cause errors during the transformation process.
+
+* It is highly recommended to review the existing configuration examples first and understand that each parameter has a specific data type that must be respected.
+
+* Do not delete variables, as they are essential to the transformation process. Removing them will result in errors.
+
+== List of Configuration Parameters
+
+
+
+=== Core parameter mappings
+These parameters ensure that the system retrieves and applies predefined namespace prefixes, UML-to-XSD datatype mappings,
+and XSD-to-RDF datatype definitions from their respective configuration files.
+
+They act as references to external XML documents that are part of the configuration, storing them in variables for use
+within the transformation process. This approach enhances modularity, allowing datatype mappings and namespace definitions
+to be updated independently without modifying the core configuration.
+
+**Note:**
+
+It is not recommended to modify these parameters unless absolutely necessary. Changing them may break the link between
+the main configuration file (config-parameters.xsl) and the supporting configuration files
+(namespaces.xml, umlToXsdDataTypes.xml, xsdAndRdfDataTypes.xml).
+This could result in errors or inconsistent behaviour during the transformation process.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `namespacePrefixes` | XML Document | Defines the prefixes and base URIs for namespaces. | (`namespaces.xml`)
+| `umlDataTypesMapping` | XML Document | Maps UML atomic types to XSD datatypes. | (`umlToXsdDataTypes.xml`)
+| `xsdAndRdfDataTypes` | XML Document | Defines XSD datatypes that conform to OWL2. | (`xsdAndRdfDataTypes.xml`)
+|===
+
+=== General parameters
+This section defines general configuration settings that control how model2owl processes data.
+These parameters specify namespace handling, base URIs, object property types, type of attributes that take values from a controlled list,
+allowed characters for normalised strings, default delimiter in URIs, etc.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `defaultNamespaceInterpretation` | Boolean | If `true`, local segments without a prefix will be transformed into `:localSegment`. | `true`
+| `base-ontology-uri` | String | The base URI for the ontology. |`http://data...eu/a4g/ontology`
+| `base-shape-uri` | String | The base URI for SHACL shapes. | `http://data...eu/a4g/data-shape`
+| `base-restriction-uri` | String | The base URI for OWL restrictions. | `http://data...eu/a4g/ontology`
+| `defaultDelimiter` | String | The default delimiter to use when a namespace lacks one. | `#`
+| `acceptableTypesForObjectProperties` | List | Defines types that can produce object properties. | `('epo:Identifier', 'rdfs:Literal')`
+| `controlledListType` | String | The type of attributes that take values from a controlled list. | `epo:Code`
+| `allowedStrings` | String (Regex) | Defines allowed characters for normalised strings. | `^[\w\d-_:]+$`
+| `supportedUmlVersions` | List | Lists the UML versions supported by model2owl. | `('http://www.omg.../UML/20131001', 'https://www.omg.../UML/20131001', 'http://www.omg.../UML/20161101', 'https://www.omg.../UML/20161101')`
+|===
+
+
+=== Stereotypes parameters
+This section defines the valid stereotypes that can be applied to different UML elements, such as attributes, objects,
+generalisations, associations, dependencies, and classes. For more details about stereotypes, please refer to
+link:../uml/conv-general.html#sec:stereotypes-tags[UML Modelling Conventions – Stereotypes and Tags].
+
+
+Certain stereotypes, like "Abstract", classify a class as abstract, while others, such as "Disjoint" and "Equivalent",
+define relationships between generalisations. These settings ensure correct interpretation of UML models during
+transformation.
+
+**Note:**
+Changing these parameters may affect how UML models are processed and how elements are classified in the generated
+ontology.
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `stereotypeValidOnAttributes` | List | Defines acceptable stereotypes on attributes. | `()`
+| `stereotypeValidOnObjects` | List | Defines acceptable stereotypes on objects. | `()`
+| `stereotypeValidOnGeneralisations` | List | Defines valid stereotypes for generalisations. | `('Disjoint', 'Equivalent', 'Complete')`
+| `stereotypeValidOnAssociations` | List | Defines valid stereotypes for associations. | `()`
+| `stereotypeValidOnDependencies` | List | Defines valid stereotypes for dependencies. | `('Disjoint', 'disjoint', 'join')`
+| `stereotypeValidOnClasses` | List | Defines valid stereotypes for classes. | `('Abstract')`
+| `stereotypeValidOnDatatypes` | List | Defines valid stereotypes for data types. | `()`
+| `stereotypeValidOnEnumerations` | List | Defines valid stereotypes for enumerations. | `()`
+| `stereotypeValidOnPackages` | List | Defines valid stereotypes for packages. | `()`
+| `abstractClassesStereotypes` | List | Defines which stereotypes classify a class as abstract. | `('Abstract', 'abstract class', 'abstract')`
+
+|===
+
+[[controlled-vocabulary-parameters]]
+=== Controlled vocabulary parameters
+
+This section defines settings for handling controlled vocabularies in model2owl. These parameters determine whether
+enumeration items are converted into SKOS concepts and whether entire enumerations are structured as SKOS concept schemes.
+
+Additionally, constraint levels can be applied to UML enumeration objects to specify how SHACL shapes should be generated
+for controlled vocabularies. This allows for fine-grained control over validation and enforcement in different vocabularies.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `enableGenerationOfSkosConcept` | Boolean | Enables or disables the transformation of enumeration items into SKOS concepts. | `false`
+| `enableGenerationOfConceptSchemes` | Boolean | Enables or disables the transformation of enumerations into SKOS schemes. | `false`
+| `cvConstraintLevelProperty` | String | Property used for constraint levels in controlled vocabularies (compact URI). | `epo:constraintLevel`
+|===
+
+
+==== CV Constraint Level
+
+Due to the diversity of controlled vocabularies (CVs) that a project may use, it is necessary to have precise control
+over the type of SHACL shapes generated for each CV. This information will be stored within the
+UML model itself by using a tag with a key defined in the configuration (cvConstraintLevelProperty).
+
+There are two possible link:../uml/conv-enumerations.html#rule:enumeration-constraint-level[constraint levels] that determine the type of SHACL shape generated:
+
+   * permissive – Generates a permissive SHACL shape for the related UML enumeration.
+   * restrictive – Generates a restrictive SHACL shape for the related UML enumeration.
+
+**Note:**
+
+A tag with a key specified in **`cvConstraintLevelProperty`** is **not included** in model2owl artefacts;
+it is used solely to determine the type of SHACL shapes to be generated.
+
+If a controlled vocabulary does **not** have a constraint level defined in the model,
+it will **default to a permissive** SHACL shape.
+
+
+
+
+
+=== Reused concepts parameters
+This section defines parameters that control the **generation of reused concepts** in different
+artefacts. Reused concepts are elements considered **external** but included in certain
+outputs to maintain consistency across the ontology.
+
+To provide **granular control**, individual configuration variables allow users to specify
+whether reused concepts should be **included or excluded** for each type of artefact:
+
+- **SHACL artefacts**
+- **OWL Core ontology**
+- **OWL Restrictions**
+- **Glossary**
+
+Additionally, a dedicated prefix list ensures that **certain concepts are always treated as
+internal**, preventing them from being excluded even if they would otherwise be classified as
+"reused."
+
+With these parameters (`generateReusedConceptsSHACL`, `generateReusedConceptsOWLcore`, `generateReusedConceptsOWLrestrictions`,
+`generateReusedConceptsGlossary`), **users have full control** over which artefacts generate reused concepts.
+
+Each of these variables acts as a **toggle** for its respective artefact type:
+
+- **`true`** → The artefact will include reused concepts.
+- **`false`** → The artefact will exclude reused concepts.
+
+The **`includedPrefixesList`** parameter ensures that certain prefixes (e.g., `epo`, `epo-not`, `epo-ord`)
+are always treated as **internal**. This means that **concepts with these prefixes will always be included**,
+even if they would sometimes be classified as reused.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `includedPrefixesList` | List | Defines prefixes for concepts that should be included in generated artefacts. | `('epo', 'epo-not', 'epo-ord', 'epo-cat', 'epo-con', 'epo-ful')`
+| `generateReusedConceptsSHACL` | Boolean | Enables or disables the inclusion of reused concepts in SHACL artefacts. | `true`
+| `generateReusedConceptsOWLcore` | Boolean | Enables or disables the inclusion of reused concepts in OWL core artefacts. | `true`
+| `generateReusedConceptsOWLrestrictions` | Boolean | Enables or disables the inclusion of reused concepts in OWL restrictions. | `true`
+| `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. | `true`
+|===
+=== Status filtering parameters
+
+This section defines parameters that control ** status-based filtering** in model2owl.
+
+Status filtering is a **flexible mechanism** that allows users to specify which UML elements should be **included or excluded**
+based on predefined status values. Since model2owl does not assume logical correctness of the statuses assigned to UML elements,
+it is the **modeller’s responsibility** to ensure that statuses are set correctly to maintain a consistent RDF representation.
+
+==== **Status Filtering**
+
+Status filtering in model2owl is fully configurable, allowing users to define **custom status
+values** for UML elements. model2owl does not impose fixed status values; instead, users must
+establish a list of valid statuses for their specific project.
+
+==== **Status Filtering Guidelines**
+The modeller must ensure that statuses are applied correctly to maintain consistency.
+The following cases require special attention:
+
+- **Classes linked by a connector** → If one or both classes are filtered out, the connector
+should also be filtered out.
+- **Classes with attributes** → If a class is filtered out, all its attributes should also be
+filtered out.
+- **Class inheritance** → If a superclass is filtered out, all its subclasses and related UML
+elements should also be filtered out.
+
+**Filtering out** means that a UML element is assigned a status that prevents it from being
+included in the generated artefacts.
+
+==== **Defining Statuses in UML Models**
+
+Statuses should be assigned to UML elements using **UML tags (tagged values)**. A **compact URI**
+representing the status property should be chosen and applied as a tag to elements where status-based
+filtering is needed.
+
+Additionally, elements **without a status tag** will be assigned a **default status** defined
+in the configuration (`unspecifiedStatusInterpretation`). This ensures that even elements
+missing an explicit status can be processed consistently.
+
+===== **Model2owl status configuration parameters**
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `statusProperty` | String | Defines the property used to indicate an element's status. | `epo:status`
+| `validStatusesList` | List | Defines the list of valid statuses for elements. | `('proposed', 'approved', 'implemented')`
+| `excludedElementStatusesList` | List | Defines statuses that should be excluded from the output. | `('proposed', 'approved')`
+| `unspecifiedStatusInterpretation` | String | Defines the default status for elements without an explicitly set status. | `implemented`
+|===
+
+==== **Example: Status Filtering in Action**
+
+[options="header"]
+|===
+| UML Element | `epo:status` Tag
+| `:term1`   | `proposed`
+| `:term2`   | `approved`
+| `:term3`   | `implemented`
+| `:term4`   | _not set_
+| `:term5`   | `aproved`
+|===
+
+**Model2owl configuration**
+```xml
+<xsl:variable name="statusProperty" select="'epo:status'"/>
+<xsl:variable name="validStatusesList" select="('proposed', 'approved', 'implemented')"/>
+<xsl:variable name="excludedElementStatusesList" select="('proposed', 'approved')"/>
+<xsl:variable name="unspecifiedStatusInterpretation" select="'implemented'"/>
+```
+
+**Outcome: Included and Excluded Terms**
+[options="header"]
+|===
+| UML Element | Included in Generated Artefacts?
+| `:term1`   | `Excluded`
+| `:term2`   | `Excluded`
+| `:term3`   | `Included`
+| `:term4`   | `Included as it defaults to implemented`
+| `:term5`   | `Error (The value contains a typo and it is not a valid status)`
+|===
+
+==== **Key Takeaways**
+
+- Elements with a status in `excludedElementStatusesList` are not generated.
+- Elements without a status use the default value set in `unspecifiedStatusInterpretation`.
+- If a status value is not listed in `validStatusesList`, an error is triggered.
+- **The `statusProperty` tells model2owl which property is used in UML tags to express the status
+of an element.** Model2owl interprets these tags to determine element status.
+
+=== **Comments generation**
+
+This section defines parameters that control **how comments are handled** in the generated
+artefacts. Comments can be included to **provide additional explanations, annotations, or
+editorial notes** within OWL or SHACL outputs.
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `commentsGeneration` | Boolean | Enables or disables the generation of comments in the output. | `true`
+| `commentProperty` | String | Specifies the property used for comments in the output. | `skos:editorialNote`
+|===
+
+=== **Tags**
+
+Model2owl uses tags found in the UML model in two distinct ways:
+
+   * To generate corresponding RDF statements that express metadata about concepts, following the link:../transformation/transf-rules4.html#rule:element-tag-core[transformation rules for tags].
+   * To control the generation process at the UML element level by using specific tags that describe an element's status or constraint level (control tags).
+
+Control tags influence the generation process by altering how elements are transformed into semantic artefacts.
+These tags modify or control specific behaviours during the transformation process, such as filtering elements
+based on their status or applying constraints.
+
+Model2owl relies on certain tags to define properties such as:
+
+   * Status of elements (statusProperty)
+   * Constraint level of controlled vocabularies (cvConstraintLevelProperty)
+
+Since these tags are only required internally for processing and filtering, they are not included in the generated OWL and SHACL artefacts.
+
+The **`excludedTagNamesList`** variable ensures that these tags are **filtered out**, preventing them from appearing in the output while still allowing them to control how elements are processed.
+
+**Note:**
+
+This exclusion only affects the **representation** of the tags in the final artefacts—**it does not impact their functionality** in filtering or validation.
+
+
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `excludedTagNamesList` | List | Defines tag names that should be excluded from the output. | `($statusProperty, $cvConstraintLevelProperty)`
+|===
+
+=== Convention report parameters
+This section defines parameters used in the **generation of the convention report**. The convention report provides a
+structured evaluation of the UML model, ensuring it adheres to predefined rules and best practices. These parameters
+allow users to **customise report metadata**, such as the copyright statement, author details, and the UML model name
+included in the report.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `conventionReportCopyrightText` | String | Defines the copyright text for the convention report. | `Publications Office of the European Union, 2023`
+| `conventionReportAuthor` | String | Defines the author of the convention report. | `Publications Office of the European Union`
+| `conventionReportAuthorLocation` | String | Defines the location of the report's author. | `Luxembourg`
+| `conventionReportAuthorWebsite` | String | Defines the website of the report's author. | `https://op.europa.eu`
+| `conventionReportUMLModelName` | String | Defines the name of the UML model in the report. | `eProcurement`
+|===
+
+=== Metadata parameters
+
+This section defines metadata parameters used in the generation of **OWL Core, OWL Restrictions, and SHACL Shapes** artefacts.
+Metadata plays a crucial role in **identifying, describing, and managing ontology components**,
+ensuring that each generated artefact contains the necessary information.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `moduleReference` | String | Defines the module reference identifier. | `core`
+| `ontologyTitleCore` | String | Defines the title for the OWL Core ontology. (dct:title) | `ePO Core core`
+| `ontologyTitleRestrictions` | String | Defines the title for the OWL Restrictions ontology. (dct:title)| `ePO Core restrictions`
+| `ontologyTitleShapes` | String | Defines the title for the SHACL Shapes ontology. (dct:title)  | `ePO Core shapes`
+| `ontologyDescriptionCore` | String | Provides a detailed description of the eProcurement Ontology Core. (dct:description)| _Some text_
+| `ontologyDescriptionRestrictions` | String | Provides a detailed description of the eProcurement Ontology Restrictions. (dct:description) | _Some text_
+| `ontologyDescriptionShapes` | String | Provides a detailed description of the eProcurement Ontology Shapes. (dct:description) | _Some text_
+| `ontologyLabelCore` | String | Defines the label for the OWL Core ontology. (rdfs:label)| _Some text_
+| `ontologyLabelRestrictions` | String | Defines the label for the OWL Restrictions ontology. (rdfs:label)| _Some text_
+| `ontologyLabelShapes` | String | Defines the label for the SHACL Shapes ontology. (rdfs:label)| _Some text_
+| `issuedDate` | Date | Defines the ontology's issuance date. (dct:issued)| _Automatically set to current date_
+| `createdDate` | Date | Defines the ontology's creation date. (dct:created)| _Automatically set to current date_
+| `ontologyStatus` | String | Defines the status of the ontology. (bibo:status)| `Semantic Specification Release`
+| `versionInfo` | String | Defines the ontology version. (owl:versionInfo)| `3.1.0`
+| `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `3.0.1`
+| `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
+| `preferredNamespacePrefix` | String | Defines the preferred namespace prefix. (vann:preferredNamespacePrefix) | `epo`
+| `licenseLiteral` | String | Defines the licensing terms for the ontology. (dct:license)| `Creative Commons Attribution 4.0 International (CC BY 4.0)`
+| `publisher` | String | Defines the publisher's URI. (dct:publisher)| `http://publications...authority/corporate-body/PUBL`
+|===
+
