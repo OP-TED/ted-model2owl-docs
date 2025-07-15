@@ -524,18 +524,21 @@ The UML to OWL mapping supports qualified cardinality restrictions (owl:*qualifi
 
 [#rule:attribute-rc-multiplicity,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Attribute multiplicity -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
-For each attribute multiplicity of the form ( min .. max ), where min and max are different than ``*'' (any), specify a subclass axiom where the OWL class, corresponding to the UML Class, specialises an anonymous restriction of properties formulated according to the following cases:
+For each attribute/relation multiplicity of the form ( min .. max ), where min and max are different than ``*'' (any), specify a subclass axiom where the OWL class, corresponding to the UML Class, specialises an anonymous restriction of properties formulated according to the following cases:
 
 
 . exact cardinality, e.g. [2..2]
-. minimum cardinality only, e.g. [1..*]
+. minimum cardinality only, e.g. [2..*]
 . maximum cardinality only, e.g. [*..2]
-. maximum and maximum cardinality , e.g. [1..2]
+. maximum and maximum cardinality, e.g. [1..2]
+. at least one occurence: [1..*]
 
 The restriction describes a constraint that is formulated with respect to the range type of the defined OWL property, that is one of the following:
 
 . class
 . datatype
+
+For the special case of multiplicity [1..*], specify the existential constraint using the owl:someValuesFrom property instead of a cardinality constraint with owl:minQualifiedCardinality.
 ====
 
 [cols="a,a", options="noheader"]
@@ -549,7 +552,7 @@ The restriction describes a constraint that is formulated with respect to the ra
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :property1 ;
     owl:onDataRange xsd:string ;
-    owl:qualifiedCardinality "2"^^xsd:integer;
+    owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
@@ -562,7 +565,7 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/property1"/>
             <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-            <owl:qualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >2</owl:qualifiedCardinality>
+            <owl:qualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:qualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
@@ -576,7 +579,7 @@ The restriction describes a constraint that is formulated with respect to the ra
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :property5 ;
     owl:onClass :Prop5Class ;
-    owl:qualifiedCardinality "2"^^xsd:integer;
+    owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
@@ -589,7 +592,7 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/property5"/>
             <owl:onClass rdf:resource = "http://base.onto.uri/Prop5Class"/>
-            <owl:qualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >2</owl:qualifiedCardinality>
+            <owl:qualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:qualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
@@ -603,7 +606,7 @@ The restriction describes a constraint that is formulated with respect to the ra
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :property2 ;
     owl:onDataRange xsd:string ;
-    owl:minQualifiedCardinality "1"^^xsd:integer;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
@@ -616,7 +619,7 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/property2"/>
             <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-            <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >1</owl:minQualifiedCardinality>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >1</owl:minQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
@@ -630,7 +633,7 @@ The restriction describes a constraint that is formulated with respect to the ra
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :property6 ;
     owl:onClass :Prop6Class ;
-    owl:minQualifiedCardinality "1"^^xsd:integer;
+    owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
@@ -643,7 +646,7 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/property6"/>
             <owl:onClass rdf:resource = "http://base.onto.uri/Prop6Class"/>
-            <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >1</owl:minQualifiedCardinality>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:minQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
@@ -657,7 +660,7 @@ The restriction describes a constraint that is formulated with respect to the ra
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :property3 ;
     owl:onDataRange xsd:string ;
-    owl:maxQualifiedCardinality "2"^^xsd:integer;
+    owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
@@ -670,7 +673,7 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/property3"/>
             <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-            <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >2</owl:maxQualifiedCardinality>
+            <owl:maxQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:maxQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
@@ -684,7 +687,7 @@ The restriction describes a constraint that is formulated with respect to the ra
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :property7 ;
     owl:onClass :Prop7Class ;
-    owl:maxQualifiedCardinality "2"^^xsd:integer;
+    owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
@@ -697,7 +700,7 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/property7"/>
             <owl:onClass rdf:resource = "http://base.onto.uri/Prop7Class"/>
-            <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >2</owl:maxQualifiedCardinality>
+            <owl:maxQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:maxQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
@@ -712,11 +715,11 @@ The restriction describes a constraint that is formulated with respect to the ra
     rdf:type owl:Class ;
     owl:intersectionOf (
       [ a owl:Restriction ;
-        owl:minQualifiedCardinality "1"^^xsd:integer;
+        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
         owl:onDataRange xsd:string ;
         owl:onProperty :property4; ]
       [ a owl:Restriction ;
-        owl:maxQualifiedCardinality "2"^^xsd:integer;
+        owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
         owl:onDataRange xsd:string ;
         owl:onProperty :property4; ]
       ) ;
@@ -734,13 +737,13 @@ The restriction describes a constraint that is formulated with respect to the ra
         <owl:Restriction>
           <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
           <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-          <owl:minQualifiedCardinality rdf:datatype="...#integer"
+          <owl:minQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
           >1</owl:minQualifiedCardinality>
         </owl:Restriction>
         <owl:Restriction>
           <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
           <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-          <owl:maxQualifiedCardinality rdf:datatype="...#integer"
+          <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
           >2</owl:maxQualifiedCardinality>
         </owl:Restriction>
       </owl:intersectionOf>
@@ -748,9 +751,15 @@ The restriction describes a constraint that is formulated with respect to the ra
   </rdfs:subClassOf>
 </rdf:Description>
 ----
+|===
 
+
+The owl:someValuesFrom is used instead of owl:minQualifiedCardinality with a value of 1 because, while they are conceptually equivalent, they are treated differently in Description Logics. In particular, owl:minQualifiedCardinality can only be applied to simple object properties, whereas owl:someValuesFrom can also be used with non-simple ones, offering greater flexibility and avoiding certain reasoning limitations.
+
+[cols="a,a", options="noheader"]
+|===
 |
-.Min and max cardinality constraints for object property in Turtle syntax
+.Existential and max cardinality constraints for object property in Turtle syntax
 [source,Turtle]
 ----
 :ClassName
@@ -758,11 +767,10 @@ The restriction describes a constraint that is formulated with respect to the ra
     rdf:type owl:Class ;
     owl:intersectionOf (
       [ a owl:Restriction ;
-        owl:minQualifiedCardinality "1"^^xsd:integer;
-        owl:onClass :Prop8Class ;
+        owl:someValuesFrom :Prop8Class ;
         owl:onProperty :property8; ]
       [ a owl:Restriction ;
-        owl:maxQualifiedCardinality "2"^^xsd:integer;
+        owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
         owl:onClass :Prop8Class ;
         owl:onProperty :property8; ]
       ) ;
@@ -770,7 +778,7 @@ The restriction describes a constraint that is formulated with respect to the ra
 .
 ----
 |
-.Min and max cardinality constraints for object property in RDF/XML syntax
+.Existential and max cardinality constraints for object property in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
@@ -779,14 +787,12 @@ The restriction describes a constraint that is formulated with respect to the ra
       <owl:intersectionOf rdf:parseType="Collection">
         <owl:Restriction>
           <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
-          <owl:onClass rdf:resource = "http://base.onto.uri/Prop8Class"/>
-          <owl:minQualifiedCardinality rdf:datatype="...#integer"
-          >1</owl:minQualifiedCardinality>
+          <owl:someValuesFrom rdf:resource = "http://base.onto.uri/Prop8Class"/>
         </owl:Restriction>
         <owl:Restriction>
           <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
           <owl:onClass rdf:resource = "http://base.onto.uri/Prop8Class"/>
-          <owl:maxQualifiedCardinality rdf:datatype="...#integer"
+          <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
           >2</owl:maxQualifiedCardinality>
         </owl:Restriction>
       </owl:intersectionOf>
