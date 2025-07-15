@@ -294,7 +294,7 @@ For the association/dependency target multiplicity, where min and max are differ
   rdfs:subClassOf [ a owl:Restriction ;
     owl:onProperty :relationName ;
     owl:onClass skos:Concept ;
-    owl:minQualifiedCardinality "1"^^xsd:integer;
+    owl:minQualifiedCardinality "2"^^xsd:nonNegativeinteger;
   ] ;
 .
 ----
@@ -307,7 +307,7 @@ For the association/dependency target multiplicity, where min and max are differ
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/relationName"/>
             <owl:onClass rdf:resource = "http://www.../skos/core#Concept"/>
-            <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org...#integer" >1</owl:minQualifiedCardinality>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeinteger" >2</owl:minQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
