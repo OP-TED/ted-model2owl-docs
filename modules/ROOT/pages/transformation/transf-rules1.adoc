@@ -711,19 +711,14 @@ For the special case of multiplicity [1..*], specify the existential constraint 
 [source,Turtle]
 ----
 :ClassName
-  rdfs:subClassOf [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-      [ a owl:Restriction ;
-        owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
-        owl:onDataRange xsd:string ;
-        owl:onProperty :property4; ]
-      [ a owl:Restriction ;
-        owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
-        owl:onDataRange xsd:string ;
-        owl:onProperty :property4; ]
-      ) ;
-    ] ;
+  rdfs:subClassOf [ a owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+      owl:onDataRange xsd:string ;
+      owl:onProperty :property4; ]
+    [ a owl:Restriction ;
+      owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+      owl:onDataRange xsd:string ;
+      owl:onProperty :property4; ]
 .
 ----
 |
@@ -732,22 +727,20 @@ For the special case of multiplicity [1..*], specify the existential constraint 
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
   <rdfs:subClassOf>
-    <owl:Class>
-      <owl:intersectionOf rdf:parseType="Collection">
-        <owl:Restriction>
-          <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
-          <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-          <owl:minQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
-          >1</owl:minQualifiedCardinality>
-        </owl:Restriction>
-        <owl:Restriction>
-          <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
-          <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
-          <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
-          >2</owl:maxQualifiedCardinality>
-        </owl:Restriction>
-      </owl:intersectionOf>
-    </owl:Class>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
+      <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+      <owl:minQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
+      >1</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
+      <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+      <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
+      >2</owl:maxQualifiedCardinality>
+    </owl:Restriction>
   </rdfs:subClassOf>
 </rdf:Description>
 ----
@@ -762,19 +755,14 @@ The owl:someValuesFrom is used instead of owl:minQualifiedCardinality with a val
 .Existential and max cardinality constraints for object property in Turtle syntax
 [source,Turtle]
 ----
-:ClassName
-  rdfs:subClassOf [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-      [ a owl:Restriction ;
-        owl:someValuesFrom :Prop8Class ;
-        owl:onProperty :property8; ]
-      [ a owl:Restriction ;
-        owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
-        owl:onClass :Prop8Class ;
-        owl:onProperty :property8; ]
-      ) ;
-    ] ;
+:ClassName rdfs:subClassOf 
+    [ a owl:Restriction ;
+      owl:someValuesFrom :Prop8Class ;
+      owl:onProperty :property8; ],
+    [ a owl:Restriction ;
+      owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+      owl:onClass :Prop8Class ;
+      owl:onProperty :property8; ]
 .
 ----
 |
@@ -783,20 +771,18 @@ The owl:someValuesFrom is used instead of owl:minQualifiedCardinality with a val
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
   <rdfs:subClassOf>
-    <owl:Class>
-      <owl:intersectionOf rdf:parseType="Collection">
-        <owl:Restriction>
-          <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
-          <owl:someValuesFrom rdf:resource = "http://base.onto.uri/Prop8Class"/>
-        </owl:Restriction>
-        <owl:Restriction>
-          <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
-          <owl:onClass rdf:resource = "http://base.onto.uri/Prop8Class"/>
-          <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
-          >2</owl:maxQualifiedCardinality>
-        </owl:Restriction>
-      </owl:intersectionOf>
-    </owl:Class>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
+      <owl:someValuesFrom rdf:resource = "http://base.onto.uri/Prop8Class"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
+      <owl:onClass rdf:resource = "http://base.onto.uri/Prop8Class"/>
+      <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
+      >2</owl:maxQualifiedCardinality>
+    </owl:Restriction>
   </rdfs:subClassOf>
 </rdf:Description>
 ----
