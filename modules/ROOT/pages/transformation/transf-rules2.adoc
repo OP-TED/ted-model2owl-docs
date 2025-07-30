@@ -5,25 +5,25 @@ In this section are specified transformation rules for UML association, generali
 
 [[tab:connectors-overview]]
 .Transformation rules overview for UML connectors
-[cols="<,<,<,<",options="header",]
+[cols="<,<,<,<,<",options="header",]
 |===
-|UML element |Rules in core ontology layer |Rules in data shape layer |Rules in reasoning layer
-|Association |<<rule:association-uni-core>> |<<rule:association-uni-ds>> |
-|Association domain | | |<<rule:association-uni-domain-rc>>
-|Association range | |<<rule:association-uni-range-ds>> |<<rule:association-uni-range-rc>>
-|Association multiplicity | |<<rule:association-uni-multiplicity-ds>> |<<rule:association-uni-multiplicity-rc>>, <<rule:association-uni-multiplicity-one-rc>>
-|Association asymmetry | |<<rule:association-uni-asymetry-ds>> |<<rule:association-uni-asymetry-rc>>
-|Association inverse | | |<<rule:association-bi-inverse-rc>>
-|Dependency |<<rule:association-uni-core>> |<<rule:association-uni-ds>> |
-|Dependency domain | | |<<rule:association-uni-domain-rc>>
-|Dependency range | |<<rule:dependency-uni-range-ds>> |<<rule:dependency-uni-range-rc>>
-|Dependency multiplicity | |<<rule:association-uni-multiplicity-ds>> |<<rule:association-uni-multiplicity-rc>>, <<rule:association-uni-multiplicity-one-rc>>
-|Class generalisation |<<rule:generalisation-class-core>> | |
-|Property generalisation |<<rule:generalisation-property-core>> | |
-|Class equivalence | | |<<rule:equivalent-classes-rc>>
-|Property equivalence | | |<<rule:equivalent-properties-rc>>
-|Disjoint classes | | |<<rule:disjoint-classes-rc>>
-|Realisation |<<rule:realisation-class-core>> | |
+|UML element |Rules in core ontology layer |Rules in data shape layer |Rules in reasoning layer | Rules in JSON-LD context layer
+|Association |<<rule:association-uni-core>> |<<rule:association-uni-ds>> | | <<rule:assoc-dep-ldcontext>>
+|Association domain | | |<<rule:association-uni-domain-rc>> |
+|Association range | |<<rule:association-uni-range-ds>> |<<rule:association-uni-range-rc>> | <<rule:assoc-dep-range-ldcontext>>
+|Association multiplicity | |<<rule:association-uni-multiplicity-ds>> |<<rule:association-uni-multiplicity-rc>>, <<rule:association-uni-multiplicity-one-rc>> | <<rule:assoc-dep-container-ldcontext>>
+|Association asymmetry | |<<rule:association-uni-asymetry-ds>> |<<rule:association-uni-asymetry-rc>> |
+|Association inverse | | |<<rule:association-bi-inverse-rc>> |
+|Dependency |<<rule:association-uni-core>> |<<rule:association-uni-ds>> | | <<rule:assoc-dep-ldcontext>>
+|Dependency domain | | |<<rule:association-uni-domain-rc>> |
+|Dependency range | |<<rule:dependency-uni-range-ds>> |<<rule:dependency-uni-range-rc>> | <<rule:assoc-dep-range-ldcontext>>
+|Dependency multiplicity | |<<rule:association-uni-multiplicity-ds>> |<<rule:association-uni-multiplicity-rc>>, <<rule:association-uni-multiplicity-one-rc>> | <<rule:assoc-dep-container-ldcontext>>
+|Class generalisation |<<rule:generalisation-class-core>> | | |
+|Property generalisation |<<rule:generalisation-property-core>> | | |
+|Class equivalence | | |<<rule:equivalent-classes-rc>> |
+|Property equivalence | | |<<rule:equivalent-properties-rc>> |
+|Disjoint classes | | |<<rule:disjoint-classes-rc>> |
+|Realisation |<<rule:realisation-class-core>> | | |
 |===
 
 [[sec:association-uni]]
@@ -104,6 +104,27 @@ shape:ClassName-relationName a sh:PropertyShape ;
 ----
 |===
 
+
+[#rule:assoc-dep-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Association & dependency -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
+====
+For each UML association/dependency, specify an object property by creating a property URI mapping with an absolute URI of a target end in a node object. Set the term definition as a top-level entry of the context object. For bidirectional connectors, additionally specify an extended term definition for the source end.
+====
+
+
+[cols="a", options="noheader"]
+|===
+|
+.Association/dependency term mapping in JSON-LD syntax
+[source,JSON]
+----
+"ClassName.relatesTo": {
+ "@id":"http://base.onto.uri/relatesTo"
+}
+"ClassName.dependencyName": {
+ "@id":"http://base.onto.uri/dependencyName"
+}
+----
+|===
 
 === Association source
 
@@ -250,6 +271,28 @@ shape:ClassName-relationName
 ----
 |===
 
+
+[#rule:assoc-dep-range-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Association & dependency range -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
+====
+For each UML association/dependency, specify the object property range by creating a type coercion entry in a node object. Set the fixed `@id` keyword as a value to indicate that that the value of the term should be interpreted as an URI. Set the term definition as a top-level entry of the context object. For bidirectional connectors, additionally specify the object property range for the source end.
+====
+
+[cols="a", options="noheader"]
+|===
+|
+.Type coercion for association & dependency in JSON-LD syntax
+[source,JSON]
+----
+"ClassName.relatesTo": {
+  "@type": "@id"
+}
+"ClassName.dependencyName": {
+  "@type": "@id"
+}
+----
+|===
+
+
 === Association multiplicity
 
 
@@ -337,6 +380,29 @@ shape:ClassName-relationName
 </rdf:Description>
 ----
 |===
+
+
+[#rule:assoc-dep-container-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Association & dependency container -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
+====
+Specify a default container type for each UML association/dependency that can accept more than a one value, setting the fixed `@set` keyword as a value for the `@container` key.
+Set the container type entry for an association/dependency target end, inside a term definition created as a top-level entry of the context object. For bidirectional connectors, additionally specify the container type for the source end.
+====
+
+[cols="a", options="noheader"]
+|===
+|
+.Association & dependency container definition in JSON-LD syntax
+[source,JSON]
+----
+"ClassName.relatesTo": {
+ "@container": "@set"
+}
+"ClassName.dependencyName": {
+ "@container": "@set"
+}
+----
+|===
+
 
 [[sec:association-self]]
 === Recursive association
