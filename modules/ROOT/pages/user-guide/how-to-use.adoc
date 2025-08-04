@@ -235,7 +235,7 @@ model2owl.
 
 4. `make generate-jsonld-context` – Generates JSON-LD context for JSON-LD applications.
    * Generated File:
-     **`<input-file>_context.jsonld`** – Signatures of ontology terms usable in a JSON-LD data file.
+     **`<input-file>_context.jsonld`** – Signatures of ontology terms usable in a JSON-LD data file. The file consists of a JSON object with a single top-level entry having the `@context` key and an object with link:https://www.w3.org/TR/json-ld/#dfn-term-definition[term definitions] as its value.
 
 5. `make generate-glossary` – Generates an HTML glossary of terms extracted from the UML model.
    * Generated File:
