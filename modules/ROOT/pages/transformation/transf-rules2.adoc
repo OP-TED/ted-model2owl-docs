@@ -253,40 +253,68 @@ shape:ClassName-relationName
 === Association multiplicity
 
 
-[#rule:association-uni-multiplicity-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Association multiplicity -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
+[#rule:association-uni-multiplicity-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Association & dependency multiplicity -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
-For the association/dependency target multiplicity, where min and max are different than ``*'' (any) and multiplicity is not [1..1], specify a subclass axiom where the source class specialises an anonymous restriction of properties formulated according to cases provided by xref:transformation/transf-rules1.adoc#rule:attribute-rc-multiplicity[rule:attribute-rc-multiplicity].
+For the association/dependency target multiplicity, where min and max are different than ``*'' (any) and multiplicity is not [1..1], specify a subclass axiom where the source class specialises an anonymous restriction of properties formulated according to cases provided by xref:transformation/transf-rules1.adoc#rule:attribute-rc-multiplicity[rule:attribute-rc-multiplicity]. For dependency relations, the property range is always defined as skos:Concept.
 ====
 
 [cols="a,a", options="noheader"]
 |===
 |
-.Min cardinality restriction in Turtle syntax
+.Min cardinality restriction for association in Turtle syntax
 [source,Turtle]
 ----
 :ClassName
   rdfs:subClassOf [ a owl:Restriction ;
-    owl:minCardinality "1"^^xsd:integer;
     owl:onProperty :relationName ;
+    owl:onClass :AnotherClass ;
+    owl:minQualifiedCardinality "2"^^xsd:nonNegativeinteger;
   ] ;
 .
 ----
 |
-.Min cardinality restriction in RDF/XML syntax
+.Min cardinality restriction for association in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
     <rdfs:subClassOf>
         <owl:Restriction>
             <owl:onProperty rdf:resource = "http://base.onto.uri/relationName"/>
-            <owl:minCardinality rdf:datatype="http://www.w3.org...#integer" >1</owl:cardinality>
+            <owl:onClass rdf:resource = "http://base.onto.uri/AnotherClass"/>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeinteger" >2</owl:minQualifiedCardinality>
+        </owl:Restriction>
+    </rdfs:subClassOf>
+</rdf:Description>
+----
+|
+.Min cardinality restriction for dependency in Turtle syntax
+[source,Turtle]
+----
+:ClassName
+  rdfs:subClassOf [ a owl:Restriction ;
+    owl:onProperty :relationName ;
+    owl:onClass skos:Concept ;
+    owl:minQualifiedCardinality "2"^^xsd:nonNegativeinteger;
+  ] ;
+.
+----
+|
+.Min cardinality restriction for dependency in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
+    <rdfs:subClassOf>
+        <owl:Restriction>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/relationName"/>
+            <owl:onClass rdf:resource = "http://www.../skos/core#Concept"/>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeinteger" >2</owl:minQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
 ----
 |===
 
-[#rule:association-uni-multiplicity-one-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Association multiplicity "one" -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
+[#rule:association-uni-multiplicity-one-rc,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Association & dependency multiplicity "one" -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
 If the association/dependency multiplicity is exactly one, i.e. [1..1], specify a functional property axiom like in xref:transformation/transf-rules1.adoc#rule:attribute-rc-multiplicity-one[rule:attribute-rc-multiplicity-one].
 ====
@@ -309,7 +337,7 @@ If the association/dependency multiplicity is exactly one, i.e. [1..1], specify 
 ----
 |===
 
-[#rule:association-uni-multiplicity-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Association multiplicity -- in data shape layer',reftext='{example-caption} {rule-cnt}']
+[#rule:association-uni-multiplicity-ds,source,XML,caption='',title='{example-caption} {counter:rule-cnt:2.1}. Association & dependency multiplicity -- in data shape layer',reftext='{example-caption} {rule-cnt}']
 ====
 Within the SHACL PropertyShape corresponding to an association/dependency relation linked to a given source UML Class, specify property constraints indicating minimum and maximum cardinality, according to cases provided by xref:transformation/transf-rules1.adoc#rule:attribute-ds-multiplicity[rule:attribute-ds-multiplicity].
 ====
