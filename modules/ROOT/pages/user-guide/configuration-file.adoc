@@ -266,6 +266,14 @@ missing an explicit status can be processed consistently.
 - **The `statusProperty` tells model2owl which property is used in UML tags to express the status
 of an element.** Model2owl interprets these tags to determine element status.
 
+=== **Annotating SHACL shapes with ontology URI**
+Each instance of `sh:NodeShape` and `sh:PropertyShape` is annotated with the URI
+of the ontology in which it is defined. This typically refers to the ontology
+contained within the same SHACL shapes artefact. The `rdfs:isDefinedBy` property
+is used to identify the source ontology of each shape. It can be disabled by
+setting the `annotateShaclConceptsWithOntology` configuration parameter to
+`false()`.
+
 === **Comments generation**
 
 This section defines parameters that control **how comments are handled** in the generated
