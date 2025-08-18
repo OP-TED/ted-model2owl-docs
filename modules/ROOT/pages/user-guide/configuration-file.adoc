@@ -63,6 +63,7 @@ allowed characters for normalised strings, default delimiter in URIs, etc.
 | `base-shape-uri` | String | The base URI for SHACL shapes. | `http://data...eu/a4g/data-shape`
 | `base-restriction-uri` | String | The base URI for OWL restrictions. | `http://data...eu/a4g/ontology`
 | `defaultDelimiter` | String | The default delimiter to use when a namespace lacks one. | `#`
+| `nodeShapeURIsuffix` | String | A suffix for URIs of sh:NodeShape instances in the SHACL artefact. | `'Shape'`
 | `acceptableTypesForObjectProperties` | List | Defines types that can produce object properties. | `('epo:Identifier', 'rdfs:Literal')`
 | `controlledListType` | String | The type of attributes that take values from a controlled list. | `epo:Code`
 | `allowedStrings` | String (Regex) | Defines allowed characters for normalised strings. | `^[\w\d-_:]+$`
