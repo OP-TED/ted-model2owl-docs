@@ -25,4 +25,5 @@
 * xref:user-guide/about.adoc[User guide]
 ** xref:user-guide/how-to-use.adoc[How to use]
 ** xref:user-guide/configuration-file.adoc[Configuration parameters]
+** xref:user-guide/respec-documentation.adoc[ReSpec documentation]
 * xref:references.adoc[References]
