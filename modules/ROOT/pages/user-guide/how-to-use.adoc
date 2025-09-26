@@ -58,16 +58,22 @@ These commands execute transformations and generate outputs:
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
 
 * `owl-restrictions` – Generates a heavyweight ontology with additional axioms for reasoning.
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
 
 * `shacl` – Generates SHACL data shapes suitable for validation.
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
 
 * `generate-html-docs-from-rdf` – Generates HTML documentation using Widoco from an RDF file.
   ** **Parameters:**
@@ -119,10 +125,11 @@ source model2owl-venv/bin/activate
 
 == Configuration
 
-The model2owl configuration consists of four files, which should be placed in a single folder:
+The model2owl configuration consists of five files, which should be placed in a single folder:
 
 * `config-parameters.xsl` – Defines main configuration variables.
 * `namespaces.xml` – Lists namespaces used in the UML model.
+* `imports.xml` – Contains URIs of ontologies to be imported.
 * `umlToXsdDataTypes.xml` – Maps UML data types to XSD.
 * `xsdAndRdfDataTypes.xml` – Defines data types used.
 
@@ -135,7 +142,7 @@ It allows the tool to reference and apply the configuration stored at a specifie
 By modifying this file, users can switch between different configuration sets.
 
 Example:
-```
+```xml
 # Update the path in config-proxy.xsl:
 <xsl:import href="my-pc/user/my-config-folder/config-parameters.xsl"/>
 ```
@@ -163,42 +170,77 @@ the link:configuration-file.html[configuration parameters page]
 
 === Namespaces Configuration
 
-== Namespaces Configuration
+To add namespaces, edit `namespaces.xml`. The purpose of the file is to store definitions of namespaces, including their prefixes and URIs.
 
-To add namespaces, edit `namespaces.xml`. There are two key tasks you can perform:
+Add a prefix and its corresponding URI in the `namespaces.xml` file in the following way:
 
-* **Defining a Namespace Prefix and URI**
-
-Add a prefix and its corresponding URI in the `namespaces.xml` file:
-
-```
+```xml
 <prefix name="foaf" value="http://xmlns.com/foaf/0.1/"/>
 ```
 
-* **Including an import statement in the output**
+=== Imported ontologies configuration
+URIs of ontologies to be declared for import within generated ontologies (for
+core, restrictions or SHACL shapes artefacts) can be specified in the
+`imports.xml` file. The file includes sections for shared URIs, which apply to all
+artefact types, as well as sections for specific artefact types.
+URIs specified in the `imports.xml` file will be included in the generated
+artefacts as import statements using the `owl:imports` property.
 
-For a namespace to appear as an import statement in the final output, add the
-importURI attribute:
+.Example of imported ontologies configuration:
+```xml
+<imports xmlns="http://publications.europa.eu/ns/">
+    <!-- affects all three artefacts -->
+    <all>
+        <import uri="http://purl.org/dc/terms/"/>
+    </all>
+    <!-- affects SHACL artefact -->
+    <shacl>
+        <import uri="http://data.europa.eu/a4g/data-shape#awa-shape"/>
+    </shacl>
+</imports>
 ```
-<prefix name="dct" value="http://purl.org/dc/terms/" importURI="http://purl.org/dc/terms/"/>
+The exemplary configuration will cause *all RDF output files* to include the
+following import statement for the declared ontology:
+```xml
+<!-- in core.rdf, the resource <http://example.com/core> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://example.com/core">
+    <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+</rdf:Description>
+
+<!-- in core_restrictions.rdf, the resource <http://example.com/core-restriction> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://example.com/core-restriction">
+    <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+</rdf:Description>
+
+<!-- in core_shapes.rdf, the resource <http://example.com/core-shape> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://example.com/core-shape">
+    <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+</rdf:Description>
+```
+In addition, the below statement will be present *only in the SHACL artefact*:
+```xml
+<!-- in core_shapes.rdf, the resource <http://example.com/core-shape> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://data.europa.eu/a4g/ontology#core-restriction">
+    <owl:imports rdf:resource="http://data.europa.eu/a4g/data-shape#awa-shape"/>
+</rdf:Description>
 ```
 
-This will result in the following OWL import statement in the output:
-```
-<owl:imports rdf:resource="http://purl.org/dc/terms/"/>
-```
+To add additional URIs, simply include more `<import uri="..."/>` elements
+within the appropriate section of the `imports.xml` file (either all, or the one
+corresponding to the artefact of interest, e.g., `shacl`).
+
 === XSD and RDF Data Types
 
 To define datatypes used in the UML model, edit xsdAndRdfDataTypes.xml:
 
-```
+```xml
 <datatype namespace="xsd" qname="xsd:date"/>
 ```
 
 === UML to XSD Mappings
 
 If the UML model uses custom datatypes, map them in umlToXsdDataTypes.xml:
-```
+```xml
 <mapping>
     <from qname="epo:Date"/>
     <to qname="xsd:date"/>
