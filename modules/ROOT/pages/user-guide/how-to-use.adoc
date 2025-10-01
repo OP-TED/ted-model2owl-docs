@@ -84,7 +84,7 @@ These commands execute transformations and generate outputs:
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
 
 [[sec:generate-respec-cmd]]
-* `generate-respec` – Creates a ReSpec HTML documentation package for an ontology using Jinja2 with templates based on XMI file, ReSpec JSON file and static assets. This command does not generate other RDF artefacts, so they need to be generated separately and provided as input to this command.
+* `generate-respec` – Creates an HTML documentation package for an ontology using Jinja2 and ReSpec. The command expects the input model, metadata and a set of assets to be provided. The generated package is ready to be hosted on a web server. This command does not generate other RDF artefacts, so they need to be generated separately and provided as input to this command.
   ** **Parameters:**
     - `RESPEC_OUTPUT_DIR` – Output directory for the documentation package.
     - `RESPEC_DATA_JSON_PATH` – (Optional) Path to the ReSpec data JSON file. If not provided, the file will be generated automatically.
@@ -97,6 +97,14 @@ These commands execute transformations and generate outputs:
     - `OWL_RESTR_FILE_PATH` – Path to the generated OWL restrictions file.
     - `SHACL_SHAPES_FILE_PATH` – Path to the generated SHACL shapes file.
     - `JSONLD_CONTEXT_FILE_PATH` – Path to the generated JSON-LD context file.
+
+* `respec-json` – An auxiliary command that generates the ReSpec data JSON file from the input XMI file. The command is used by the `generate-respec` command.
+  ** **Parameters:**
+    - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
+    - `RESPEC_JSON_INDENTATION` – (Optional) Number of spaces for indentation in the generated JSON file. Default is 2.
 
 * `merge-xmi` – Merges XMI files from a specified folder.
   ** **Parameters:**
@@ -143,13 +151,14 @@ source model2owl-venv/bin/activate
 
 == Configuration
 
-The model2owl configuration consists of five files, which should be placed in a single folder:
+The model2owl configuration consists of six files, which should be placed in a single folder:
 
 * `config-parameters.xsl` – Defines main configuration variables.
 * `namespaces.xml` – Lists namespaces used in the UML model.
 * `imports.xml` – Contains URIs of ontologies to be imported.
 * `umlToXsdDataTypes.xml` – Maps UML data types to XSD.
 * `xsdAndRdfDataTypes.xml` – Defines data types used.
+* `metadata.json` – Contains metadata describing the processed model, which is used to generate RDF and ReSpec artefacts.
 
 To set up, copy the default configuration files from the `ePO-default-config` folder to your new configuration folder.
 
@@ -171,7 +180,7 @@ To adjust configuration settings, edit the `config-parameters.xsl` file.
 
 **Important notes:**
 
-* Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, or `xsdAndRdfDataTypes` variables.
+* Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, `xsdAndRdfDataTypes`, or `metadataJson` variables.
 * Ensure any modified variable retains its original datatype (boolean, string, list).
 
 .Example of correct and incorrect datatype modification:
@@ -265,6 +274,8 @@ If the UML model uses custom datatypes, map them in umlToXsdDataTypes.xml:
 </mapping>
 ```
 
+=== Metadata JSON
+All predefined properties should be updated in the `metadata.json` file by the editor as described in xref:sec:metadata-parameters[Metadata parameters]. The editor can also add custom properties to be used in the generated ReSpec documentation as described in xref:sec:respec-custom-metadata[Custom metadata] section.
 
 == Running Transformations
 

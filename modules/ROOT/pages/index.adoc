@@ -20,6 +20,8 @@ The following capabilities are implemented:
 * UML -> OWL 2 (heavyweight ontology with additional axioms suitable for reasoning purposes)
 * UML -> SHACL (data shapes suitable for representing an application profile)
 * UML -> SVRL (Compliance report in SVRL format)
+* UML -> ReSpec documentation (comprehensive documentation of the ontology project)
+
 
 This documentation is evolving and aims at covering the following aspects related to use of these tools:
 
