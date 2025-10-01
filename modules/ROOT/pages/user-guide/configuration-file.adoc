@@ -348,7 +348,7 @@ ensuring that each generated artefact contains the necessary information. The de
 [options="header"]
 |===
 | Parameter Name | Data Type | Description | Default Value
-| `changelogUrl` | String | URL to the changelog or release notes of the project | `https://github.com/OP-TED/ePO/releases`
+| `changelogUrl` | String | URL to the changelog or release notes of the project | `https://github.com/.../org/repo/releases`
 | `contributors` | List[Object] | List of individuals contributing to the project | See description of the object properties below
 | `contributors.affiliation` | Object | Organisation or entity with which the contributor is associated | See description of the object properties below
 | `contributors.affiliation.name` | Object | Name of the organisation | `ACME`
@@ -367,7 +367,7 @@ ensuring that each generated artefact contains the necessary information. The de
 | `createdDate` | Date | Defines the ontology's creation date. (dct:created)| _Automatically set to current date_
 | `documentConfig` | Object | Configuration parameters for document generation or presentation | See description of the object properties below
 | `documentConfig.editorDocumentRoot` | String | Root path (URL) for the document used for referencing accompanying assets | `.`
-| `feedbackUrl` | String | URL of the location where one can provide feedback about the specification | `https://github.com/organization/repo/issues`
+| `feedbackUrl` | String | URL of the location where one can provide feedback about the specification | `https://github.com/.../org/repo/issues`
 | `github` | String | A GitHub repository identifier of the project consisting of the owner and repository name | `organization/repo`
 | `incompatibleWith` | String | Version of the ontology that is not compatible with the current version | `2.1.0`
 | `issuedDate` | Date | Defines the ontology's issuance date. (dct:issued)| _Automatically set to current date_
@@ -377,9 +377,9 @@ ensuring that each generated artefact contains the necessary information. The de
 | `localBiblio.ENTRY.title` | String | Title of the reference | `Permanent Identifiers for the Web`
 | `moduleReference` | String | Defines the module reference identifier. | `core`
 | `navigation` | Object | Links for navigating between versions of the vocabulary | See description of the object properties below
-| `navigation.next` | String | URL to the next version. Applicable only if a newer version of the documentation exists | `https://example.com/releases/6.0.0`
-| `navigation.prev` | String | URL to the previous version | `https://example.com/releases/4.2.0`
-| `navigation.self` | String | URL to the current version | `https://example.com/releases/5.0.0`
+| `navigation.next` | String | URL to the next version. Applicable only if a newer version of the documentation exists | `https://example.com/.../releases/6.0.0`
+| `navigation.prev` | String | URL to the previous version | `https://example.com/.../releases/4.2.0`
+| `navigation.self` | String | URL to the current version | `https://example.com/.../releases/5.0.0`
 | `openGithubIssue` | Object | Configuration for displaying a GitHub issue creation option | See description of the object properties below
 | `openGithubIssue.buttonLabel` | String | Tooltip text shown when hovering over the feedback button | `Report an issue or share feedback`
 | `openGithubIssue.columnLabel` | String | Label used for a feedback column | `Feedback`
@@ -394,12 +394,12 @@ ensuring that each generated artefact contains the necessary information. The de
 | `ontologyTitleShapes` | String | Defines the title for the SHACL Shapes ontology. (dct:title)  | `ePO Core shapes`
 | `owners` | List[Object] | List of owners of the project | See description of the object properties below
 | `owners.name` | String | Owner name | `Tom Smith`
-| `owners.website` | String | Owner website (optional) | `https://www.tomsmith.com`
+| `owners.website` | String | Owner website (optional) | `https://www.ex.com`
 | `preferredNamespacePrefix` | String | Defines the preferred namespace prefix. (vann:preferredNamespacePrefix) | `epo`
 | `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
 | `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `4.2.0`
 | `publisher` | String | Defines the publisher's URI. (dct:publisher)| `http://publications...authority/corporate-body/PUBL`
-| `seeAlsoResources` | Array[String] | List of URLs providing additional resources or references related to the ontology | `['https://example1.com', 'https://example2.com']`
+| `seeAlsoResources` | Array[String] | List of URLs providing additional resources or references related to the ontology | `['https://ex1.com', 'https://ex2.com']`
 | `status` | String | Defines the status of the ontology. (bibo:status)| `Draft`
 | `title` | String | A human-readable title to be used in the ReSpec document | `My ontology`
 | `versionInfo` | String | Defines the ontology version. (owl:versionInfo)| `5.0.0`
