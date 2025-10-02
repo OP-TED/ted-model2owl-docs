@@ -90,13 +90,9 @@ These commands execute transformations and generate outputs:
     - `RESPEC_DATA_JSON_PATH` – (Optional) Path to the ReSpec data JSON file. If not provided, the file will be generated automatically.
     - `RESPEC_METADATA_JSON_PATH` – Path to the metadata JSON file.
     - `RESPEC_INPUT_ASSETS_DIR` – Directory containing static assets (examples, images, etc.).
-    - `XMI_INPUT_FILE_PATH` – Path to the UML XMI model file.
+    - `XMI_INPUT_FILE_PATH` – (Optional) Path to the UML XMI model file needed for generating the ReSpec data JSON file (if not given).
+    - `OUTPUT_FOLDER_PATH` – (Optional) Directory where a ReSpec data JSON file should be stored (if not given).
     - `MODEL_EAP_FILE_PATH` – Path to the UML EAP model file.
-    - `OUTPUT_FOLDER_PATH` – Directory containing generated model2owl artefacts.
-    - `OWL_CORE_FILE_PATH` – Path to the generated OWL core file.
-    - `OWL_RESTR_FILE_PATH` – Path to the generated OWL restrictions file.
-    - `SHACL_SHAPES_FILE_PATH` – Path to the generated SHACL shapes file.
-    - `JSONLD_CONTEXT_FILE_PATH` – Path to the generated JSON-LD context file.
 
 * `respec-json` – An auxiliary command that generates the ReSpec data JSON file from the input XMI file. The command is used by the `generate-respec` command.
   ** **Parameters:**

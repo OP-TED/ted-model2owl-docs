@@ -398,6 +398,9 @@ ensuring that each generated artefact contains the necessary information. The de
 | `preferredNamespacePrefix` | String | Defines the preferred namespace prefix. (vann:preferredNamespacePrefix) | `epo`
 | `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
 | `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `4.2.0`
+| `projectLocalResources` | List[Object] | Resource files that will be displayed in the `Project resources` section of the ReSpec documentation (see link:./respec-documentation.html#sec:documentation-page-structure[ReSpec documentation page structure]) | See description of the object properties below
+| `projectLocalResources.name` | List[Object] | A name of of the resource  | `SHACL shapes file`
+| `projectLocalResources.path` | List[Object] | A path to a resource in the filesystem, relative to the processed module directory. | `rel/path/to/file`
 | `publisher` | String | Defines the publisher's URI. (dct:publisher)| `http://publications...authority/corporate-body/PUBL`
 | `seeAlsoResources` | Array[String] | List of URLs providing additional resources or references related to the ontology | `['https://ex1.com', 'https://ex2.com']`
 | `status` | String | Defines the status of the ontology. (bibo:status)| `Draft`

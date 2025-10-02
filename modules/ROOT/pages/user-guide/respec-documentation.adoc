@@ -5,17 +5,17 @@ ReSpec is a tool used to write technical specifications in a simple and structur
 
 == Usage
 
-This section provides a step-by-step guide on how to generate ReSpec documentation using model2owl. The process is the same but can differ in details depending on whether model2owl is used locally or in an automated workflow (see xref:how-to-use.adoc[]).
+This section provides a step-by-step guide on how to generate ReSpec documentation using model2owl. The process is the same but can differ in details depending on whether model2owl is used locally or in an automated workflow (see link:how-to-use.adoc[How to use] page).
 
 === Prepare an input UML model in XMI format
-Export the UML model from your modelling tool in XMI format. Make sure that the XMI file conforms to the UML standard supported by model2owl (see xref:about.adoc#sec:introduction[Introduction]). The file will be used as input for the model2owl transformation process.
+Export the UML model from your modelling tool in XMI format. Make sure that the XMI file conforms to the UML standard supported by model2owl (see link:about.adoc#sec:introduction[Introduction]). The file will be used as input for the model2owl transformation process.
 The source project with the UML model can be added to an asset folder for inclusion in the ReSpec documentation (see <<sec:input-assets, Input assets>>).
 
 === Generate model2owl artefacts
 _This step is optional and can be skipped if the editor prefers documentation without references to model2owl artefacts. See <<sec:model2owl-artefacts, model2owl artefacts>> for more details on the artefacts._
 
 If provided, the ReSpec documentation can include references to the model2owl artefacts generated from the input UML model (see <<sec:model2owl-artefacts, model2owl artefacts>>).
-These files need to be generated prior to generating the ReSpec documentation. See xref:how-to-use.adoc#sec:functional-commands[Functional Commands] for instructions on how to generate these artefacts using model2owl. The artefacts are not essential for generating the documentation; therefore, the generation process can be executed without them. In such cases, the documentation will not include references to these files.
+These files need to be generated prior to generating the ReSpec documentation. See link:how-to-use.adoc#sec:functional-commands[Functional Commands] for instructions on how to generate these artefacts using model2owl. The artefacts are not essential for generating the documentation; therefore, the generation process can be executed without them. In such cases, the documentation will not include references to these files.
 
 === Prepare input assets
 _This step is optional and can be skipped if the editor prefers documentation without static assets. See <<sec:supplementary-assets, Supplementary assets>> for more details on input assets._
@@ -32,7 +32,7 @@ _This step is optional. If the default templates provided by model2owl are suffi
 Model2owl provides a default Jinja2 template called the base template for ReSpec documentation generation. The base template is designed to allow fine-grained customization. This is done through a child template called the main template, which inherits from the base template. Model2owl comes with the base template and a slim main template. The main template can be further extended or modified through optional partial templates. See <<sec:template-management, Template management>> for more details on template management and customization.
 
 === Run the generation process
-If using model2owl locally, run the `generate-respec` command with appropriate parameters (see xref:how-to-use.adoc#sec:generate-respec-cmd[the command]).
+If using model2owl locally, run the `generate-respec` command with appropriate parameters (see link:how-to-use.adoc#sec:generate-respec-cmd[the command]).
 
 If using model2owl in an automated workflow (a project repository based on model2owl-boilerplate), the generation process is triggered automatically when a change in the repository is detected. The workflow executes the model2owl command, using configuration and data files present in the repository.
 
@@ -97,9 +97,10 @@ The following structure for the ReSpec assets folder is used by default:
 ** `examples`: contains code examples
 ** `img`: contains images
 ** `shacl`: contains SHACL shapes for validation purposes
+** `sds`: any additional files related to the model (Semantic Data Specifications)
 ** `js`: contains JS scripts
 
-The assets are copied to output ReSpec package (see <<sec:package-managenent, Package management>>) and referenced in the HTML ReSpec document.
+The assets are copied to output ReSpec package (see <<sec:package-management, Package management>>) and referenced in the HTML ReSpec document.
 
 [[sec:model2owl-artefacts]]
 === Model2owl artefacts
@@ -214,12 +215,12 @@ The variables below reflect the structure of a ReSpec package and are used in th
 
 [[sec:respec-metadata]]
 == ReSpec metadata
-ReSpec generation feature uses metadata properties defined in the metadata JSON file. The xref:sec:metadata-parameters[Metadata parameters] table lists standard metadata properties that are used during generation of model2owl artefacts, including the ReSpec documentation. A subset of the properties is used in the ReSpec base template. All the properties defined in the metadata file are available for use in child templates.
+ReSpec generation feature uses metadata properties defined in the metadata JSON file. The link:configuration-file.html#sec:metadata-parameters[Metadata parameters] table lists standard metadata properties that are used during generation of model2owl artefacts, including the ReSpec documentation. A subset of the properties is used in the ReSpec base template. All the properties defined in the metadata file are available for use in child templates.
 
 
 [[sec:respec-standard-metadata]]
 === Standard metadata
-Standard metadata properties are defined in the xref:sec:metadata-parameters[Metadata parameters] table. Most of these properties are used in the ReSpec base template. The properties are defined in the top-level `metadata` JSON object. The properties are directly accessible in Jinja2 templates using the `metadata` variable, e.g., `{{ metadata.title }}`.
+Standard metadata properties are defined in the link:configuration-file.html#sec:metadata-parameters[Metadata parameters] table. Most of these properties are used in the ReSpec base template. The properties are defined in the top-level `metadata` JSON object. The properties are directly accessible in Jinja2 templates using the `metadata` variable, e.g., `{{ metadata.title }}`.
 
 
 [[sec:respec-custom-metadata]]
