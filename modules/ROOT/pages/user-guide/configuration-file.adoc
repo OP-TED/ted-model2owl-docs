@@ -23,6 +23,9 @@ process.
 
 * Do not delete variables, as they are essential to the transformation process. Removing them will result in errors.
 
+
+Another type of configuration file is the metadata file, which defines metadata properties used in generating various model2owl artefacts. While it does not control the generation process, it provides important supplementary information that describes the generated data. The metadata file is a JSON file named `metadata.json` and belongs to the set of configuration files.
+
 == List of Configuration Parameters
 
 
@@ -48,6 +51,7 @@ This could result in errors or inconsistent behaviour during the transformation 
 | `namespacePrefixes` | XML Document | Defines the prefixes and base URIs for namespaces. | (`namespaces.xml`)
 | `umlDataTypesMapping` | XML Document | Maps UML atomic types to XSD datatypes. | (`umlToXsdDataTypes.xml`)
 | `xsdAndRdfDataTypes` | XML Document | Defines XSD datatypes that conform to OWL2. | (`xsdAndRdfDataTypes.xml`)
+| `metadataJson` | JSON Document | Defines model metadata. | (`metadata.json`)
 |===
 
 === General parameters
@@ -335,33 +339,72 @@ included in the report.
 | `conventionReportUMLModelName` | String | Defines the name of the UML model in the report. | `eProcurement`
 |===
 
+[[sec:metadata-parameters]]
 === Metadata parameters
 
-This section defines metadata parameters used in the generation of **OWL Core, OWL Restrictions, and SHACL Shapes** artefacts.
-Metadata plays a crucial role in **identifying, describing, and managing ontology components**,
-ensuring that each generated artefact contains the necessary information.
+This section defines metadata parameters used in the generation of **OWL Core, OWL Restrictions, SHACL Shapes, convention report, and ReSpec documentation** artefacts. Metadata plays a crucial role in **identifying, describing, and managing ontology components**,
+ensuring that each generated artefact contains the necessary information. The described metadata properties should be defined in the **metadata.json JSON file** that belongs to the set of configuration files. An exemplary metadata JSON file is included in the model2owl repository and can be accessed link:https://github.com/OP-TED/model2owl/blob/develop/test/ePO-default-config/metadata.json[here].
 
 [options="header"]
 |===
 | Parameter Name | Data Type | Description | Default Value
+| `changelogUrl` | String | URL to the changelog or release notes of the project | `https://github.com/.../org/repo/releases`
+| `contributors` | List[Object] | List of individuals contributing to the project | See description of the object properties below
+| `contributors.affiliation` | Object | Organisation or entity with which the contributor is associated | See description of the object properties below
+| `contributors.affiliation.name` | Object | Name of the organisation | `ACME`
+| `contributors.affiliation.website` | Object | Website of the organisation | `https://www.acme.com`
+| `contributors.email` | String | Contributor email | `tom.smith@acme.com`
+| `contributors.first_name` | String | Contributor first name | `Tom`
+| `contributors.last_name` | String | Contributor last name | `Smith`
+| `contributors.name` | String | Affiliation name | `ACME`
+| `contributors.role` | String | Role of the contributor in the project; `E` for editors or `A` for authors  | `E`
+| `contributors.website` | String | Affiliation website | `https://www.acme.com`
+| `conventionReportAuthor` | String | Name of the organization or individual responsible for the convention report | `Publications Office of the European Union`
+| `conventionReportAuthorLocation` | String | Geographical location of the authoring organization | `Luxembourg`
+| `conventionReportAuthorWebsite` | String | Website URL of the authoring organization | `https://op.europa.eu`
+| `conventionReportCopyrightText` | String | Copyright statement displayed in the convention report | `Publications Office of the European Union, 2023`
+| `conventionReportUMLModelName` | String | Name of the UML model described in the convention report | `eProcurement`
+| `createdDate` | Date | Defines the ontology's creation date. (dct:created)| _Automatically set to current date_
+| `documentConfig` | Object | Configuration parameters for document generation or presentation | See description of the object properties below
+| `documentConfig.editorDocumentRoot` | String | Root path (URL) for the document used for referencing accompanying assets | `.`
+| `feedbackUrl` | String | URL of the location where one can provide feedback about the specification | `https://github.com/.../org/repo/issues`
+| `github` | String | A GitHub repository identifier of the project consisting of the owner and repository name | `organization/repo`
+| `incompatibleWith` | String | Version of the ontology that is not compatible with the current version | `2.1.0`
+| `issuedDate` | Date | Defines the ontology's issuance date. (dct:issued)| _Automatically set to current date_
+| `localBiblio` | Object | Local bibliography references used in the documentation. See link:https://github.com/speced/respec/wiki/localBiblio[ReSpec documentation for localBiblio] for more information about the format | Each object key represents a unique reference ID and the value is another object with the properties described below
+| `localBiblio.ENTRY.href` | String | URL of the reference | `https://w3id.org/`
+| `localBiblio.ENTRY.publisher` | String | Title of the reference | `W3C Permanent Identifier Community Group`
+| `localBiblio.ENTRY.title` | String | Title of the reference | `Permanent Identifiers for the Web`
 | `moduleReference` | String | Defines the module reference identifier. | `core`
-| `ontologyTitleCore` | String | Defines the title for the OWL Core ontology. (dct:title) | `ePO Core core`
-| `ontologyTitleRestrictions` | String | Defines the title for the OWL Restrictions ontology. (dct:title)| `ePO Core restrictions`
-| `ontologyTitleShapes` | String | Defines the title for the SHACL Shapes ontology. (dct:title)  | `ePO Core shapes`
+| `navigation` | Object | Links for navigating between versions of the vocabulary | See description of the object properties below
+| `navigation.next` | String | URL to the next version. Applicable only if a newer version of the documentation exists | `https://example.com/.../releases/6.0.0`
+| `navigation.prev` | String | URL to the previous version | `https://example.com/.../releases/4.2.0`
+| `navigation.self` | String | URL to the current version | `https://example.com/.../releases/5.0.0`
+| `openGithubIssue` | Object | Configuration for displaying a GitHub issue creation option | See description of the object properties below
+| `openGithubIssue.buttonLabel` | String | Tooltip text shown when hovering over the feedback button | `Report an issue or share feedback`
+| `openGithubIssue.columnLabel` | String | Label used for a feedback column | `Feedback`
 | `ontologyDescriptionCore` | String | Provides a detailed description of the eProcurement Ontology Core. (dct:description)| _Some text_
 | `ontologyDescriptionRestrictions` | String | Provides a detailed description of the eProcurement Ontology Restrictions. (dct:description) | _Some text_
 | `ontologyDescriptionShapes` | String | Provides a detailed description of the eProcurement Ontology Shapes. (dct:description) | _Some text_
 | `ontologyLabelCore` | String | Defines the label for the OWL Core ontology. (rdfs:label)| _Some text_
 | `ontologyLabelRestrictions` | String | Defines the label for the OWL Restrictions ontology. (rdfs:label)| _Some text_
 | `ontologyLabelShapes` | String | Defines the label for the SHACL Shapes ontology. (rdfs:label)| _Some text_
-| `issuedDate` | Date | Defines the ontology's issuance date. (dct:issued)| _Automatically set to current date_
-| `createdDate` | Date | Defines the ontology's creation date. (dct:created)| _Automatically set to current date_
-| `ontologyStatus` | String | Defines the status of the ontology. (bibo:status)| `Semantic Specification Release`
-| `versionInfo` | String | Defines the ontology version. (owl:versionInfo)| `3.1.0`
-| `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `3.0.1`
-| `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
+| `ontologyTitleCore` | String | Defines the title for the OWL Core ontology. (dct:title) | `ePO Core core`
+| `ontologyTitleRestrictions` | String | Defines the title for the OWL Restrictions ontology. (dct:title)| `ePO Core restrictions`
+| `ontologyTitleShapes` | String | Defines the title for the SHACL Shapes ontology. (dct:title)  | `ePO Core shapes`
+| `owners` | List[Object] | List of owners of the project | See description of the object properties below
+| `owners.name` | String | Owner name | `Tom Smith`
+| `owners.website` | String | Owner website (optional) | `https://www.ex.com`
 | `preferredNamespacePrefix` | String | Defines the preferred namespace prefix. (vann:preferredNamespacePrefix) | `epo`
-| `licenseLiteral` | String | Defines the licensing terms for the ontology. (dct:license)| `Creative Commons Attribution 4.0 International (CC BY 4.0)`
+| `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
+| `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `4.2.0`
+| `projectLocalResources` | List[Object] | Resource files that will be displayed in the `Project resources` section of the ReSpec documentation (see link:./respec-documentation.html#sec:documentation-page-structure[ReSpec documentation page structure]) | See description of the object properties below
+| `projectLocalResources.name` | List[Object] | A name of of the resource  | `SHACL shapes file`
+| `projectLocalResources.path` | List[Object] | A path to a resource in the filesystem, relative to the processed module directory. | `rel/path/to/file`
 | `publisher` | String | Defines the publisher's URI. (dct:publisher)| `http://publications...authority/corporate-body/PUBL`
+| `seeAlsoResources` | Array[String] | List of URLs providing additional resources or references related to the ontology | `['https://ex1.com', 'https://ex2.com']`
+| `status` | String | Defines the status of the ontology. (bibo:status)| `Draft`
+| `title` | String | A human-readable title to be used in the ReSpec document | `My ontology`
+| `versionInfo` | String | Defines the ontology version. (owl:versionInfo)| `5.0.0`
 |===
 
