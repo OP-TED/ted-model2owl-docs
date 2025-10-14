@@ -19,6 +19,7 @@ The following capabilities are implemented:
 * UML -> OWL 2 (lightweight ontology suitable as a core vocabulary)
 * UML -> OWL 2 (heavyweight ontology with additional axioms suitable for reasoning purposes)
 * UML -> SHACL (data shapes suitable for representing an application profile)
+* UML -> JSON-LD context (an accompanying context file for the ontology, suitable for use in JSON-LD applications)
 * UML -> SVRL (Compliance report in SVRL format)
 * UML -> ReSpec documentation (comprehensive documentation of the ontology project)
 

@@ -162,7 +162,7 @@ Additionally, a dedicated prefix list ensures that **certain concepts are always
 internal**, preventing them from being excluded even if they would otherwise be classified as
 "reused."
 
-With these parameters (`generateReusedConceptsSHACL`, `generateReusedConceptsOWLcore`, `generateReusedConceptsOWLrestrictions`,
+With these parameters (`generateReusedConceptsSHACL`, `generateReusedConceptsOWLcore`, `generateReusedConceptsOWLrestrictions`, `generateReusedConceptsJSONLDcontext`,
 `generateReusedConceptsGlossary`), **users have full control** over which artefacts generate reused concepts.
 
 Each of these variables acts as a **toggle** for its respective artefact type:
@@ -181,6 +181,7 @@ even if they would sometimes be classified as reused.
 | `generateReusedConceptsSHACL` | Boolean | Enables or disables the inclusion of reused concepts in SHACL artefacts. | `true`
 | `generateReusedConceptsOWLcore` | Boolean | Enables or disables the inclusion of reused concepts in OWL core artefacts. | `true`
 | `generateReusedConceptsOWLrestrictions` | Boolean | Enables or disables the inclusion of reused concepts in OWL restrictions. | `true`
+| `generateReusedConceptsJSONLDcontext` | Boolean | Enables or disables the inclusion of reused concepts in JSON-LD context. | `true`
 | `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. | `true`
 |===
 === Status filtering parameters

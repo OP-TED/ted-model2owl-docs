@@ -78,6 +78,12 @@ These commands execute transformations and generate outputs:
     - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
     - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
 
+* `generate-jsonld-context` – Generates JSON-LD context file for the ontology data.
+  ** **Parameters:**
+    - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `JSONLD_CONTEXT_INDENTATION` – Indentation for the JSON-LD context file (defaults to 2 spaces).
+
 * `generate-html-docs-from-rdf` – Generates HTML documentation using Widoco from an RDF file.
   ** **Parameters:**
     - `WIDOCO_RDF_INPUT_FILE_PATH` – Path to the RDF file.
@@ -294,15 +300,19 @@ model2owl.
    * Generated File:
      **`<input-file>_shapes.rdf`** – SHACL shapes in RDF format.
 
-4. `make generate-glossary` – Generates an HTML glossary of terms extracted from the UML model.
+4. `make generate-jsonld-context` – Generates JSON-LD context for JSON-LD applications.
+   * Generated File:
+     **`<input-file>_context.jsonld`** – Signatures of ontology terms usable in a JSON-LD data file. The file consists of a JSON object with a single top-level entry having the `@context` key and an object with link:https://www.w3.org/TR/json-ld/#dfn-term-definition[term definitions] as its value.
+
+5. `make generate-glossary` – Generates an HTML glossary of terms extracted from the UML model.
    * Generated File:
      **`<input-file>_glossary.html`** – Glossary in HTML format.
 
-5. `make generate-convention-report` – Generates a compliance report from the UML model in HTML format, validating it against the conventions.
+6. `make generate-convention-report` – Generates a compliance report from the UML model in HTML format, validating it against the conventions.
    * Generated File:
      **`<input-file>_convention_report.html`** – HTML compliance report.
 
-6. `make generate-convention-SVRL-report` – Generates a compliance report in SVRL format.
+7. `make generate-convention-SVRL-report` – Generates a compliance report in SVRL format.
    * Generated File:
      **`<input-file>_convention_svrl_report.xml`** – SVRL compliance report.
 
