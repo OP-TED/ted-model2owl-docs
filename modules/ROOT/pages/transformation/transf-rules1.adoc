@@ -113,7 +113,7 @@ Specify a term for each UML class by assigning an absolute URI of the class to t
 The term mapping key contains the relevant class name. It does not contain a namespace prefix even if one is defined in the model. Namespace prefixes are not used as all classes defined in the model are presumed to be internal, that is belonging to the generated ontology.
 
 [NOTE]
-If the class has attributes or related association or dependency connectors, all their term definitions are set within the single inner context object (see  link:transf-rules1.html:rule:assoc-dep-ldcontext[attribute], link:transf-rules1.html:rule:assoc-dep-type-ldcontext[attribute range], link:transf-rules1.html:rule:assoc-dep-container-ldcontext[attribute multiplicity], link:transf-rules2.html:rule:assoc-dep-ldcontext[association/dependency], link:transf-rules2.html:rule:assoc-dep-type-ldcontext[association/dependency range], link:transf-rules2.html:rule:assoc-dep-container-ldcontext[association/dependency multiplicity]). 
+If the class has attributes or related association or dependency connectors, all their term definitions are set within the single inner context object (see  link:transf-rules1.html#rule:assoc-dep-ldcontext[attribute], link:transf-rules1.html#rule:assoc-dep-type-ldcontext[attribute range], link:transf-rules1.html#rule:assoc-dep-container-ldcontext[attribute multiplicity], link:transf-rules2.html#rule:assoc-dep-ldcontext[association/dependency], link:transf-rules2.html#rule:assoc-dep-type-ldcontext[association/dependency range], link:transf-rules2.html#rule:assoc-dep-container-ldcontext[association/dependency multiplicity]). 
 
 [cols="a", options="noheader"]
 |===
