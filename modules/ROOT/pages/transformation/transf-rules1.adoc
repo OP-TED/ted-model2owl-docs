@@ -589,141 +589,280 @@ For each UML class attribute, specify its range by creating a type coercion entr
 [[sec:attribute-multiplicity]]
 === Attribute multiplicity
 
-In [xref:references.adoc#ref:uml2.5[uml2.5]], multiplicity bounds of multiplicity element are specified in the form of `[<lower-bound> .. <upper-bound>]`. The lower-bound, also referred here as minimum cardinality or `min` is of a non-negative Integer type and the upper-bound, also referred here as maximum cardinality or `max`, is of an UnlimitedNatural type (see Section xref:transformation/transf-rules3.adoc#sec:primitive-type[Primitive datatype]). The strictly compliant specification of UML in version 2.5 defines only a single value range for MultiplicityElement. not limit oneself to a single interval. Therefore, the below UML to OWL mapping covers a wider case – a possibility of specifying more value ranges for a multiplicity element. Nevertheless, if the reader would like to strictly follow the current UML specification, the particular single lower..upper bound interval is therein also comprised.
+In [xref:references.adoc#ref:uml2.5[uml2.5]], multiplicity bounds of multiplicity element are specified in the form of `[<lower-bound> .. <upper-bound>]`. The lower-bound, also referred here as minimum cardinality or `min` is of a non-negative Integer type and the upper-bound, also referred here as maximum cardinality or `max`, is of an UnlimitedNatural type (see Section xref:transformation/transf-rules3.adoc#sec:primitive-type[Primitive datatype]). The strictly compliant specification of UML in version 2.5 defines only a single value range for MultiplicityElement. However, in practice, there might be a need to specify more than a single interval. Therefore, the below UML to OWL mapping covers a wider case – a possibility of specifying more value ranges for a multiplicity element. Nevertheless, if the reader would like to strictly follow the current UML specification, the particular single lower..upper bound interval is therein also comprised.
+
+.Visual representation of class attributes with multiplicity in UML
+[#fig:attribute-multiplicity-visual-uml]
+image::f9-1.png[9-1]
+.Visual representation of OWL class specialising an anonymous restriction of properties
+[#fig:attribute-multiplicity-visual-owl]
+image::f9-2.png[9-2]
 
 
-.Visual representation of class attributes with multiplicity in UML (on the left) and OWL class specialising an anonymous restriction of properties (on the right)
-[#fig:attribute-multiplicity-visual]
-image::f9.png[9]
-
-
-It should be noted that upper-bound of UML MultiplicityElement can be specified as unlimited: ``*''. In OWL, cardinality expressions serve to restrict the number of individuals that are connected by an object property expression to a given number of instances of a specified class expression [xref:references.adoc#ref:owl2[owl2]]. Therefore, UML unlimited upper-bound does not add any information to OWL ontology, hence it is not transformed.
+It should be noted that upper-bound of UML MultiplicityElement can be specified as unlimited: ``*''. In OWL, cardinality expressions serve to restrict the number of individuals that are connected by a property expression to a given number of instances of a specified type [xref:references.adoc#ref:owl2[owl2]]. Therefore, UML unlimited upper-bound does not add any information to OWL ontology, hence it is not transformed.
+The UML to OWL mapping supports qualified cardinality restrictions (owl:*qualifiedCardinality), which impose constraints on a specific type associated with a property. Both object properties and datatype properties are supported.
 
 [#rule:attribute-rc-multiplicity,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Attribute multiplicity -- in reasoning layer',reftext='{example-caption} {rule-cnt}']
 ====
-For each attribute multiplicity of the form ( min .. max ), where min and max are different than ``*'' (any), specify a subclass axiom where the OWL class, corresponding to the UML Class, specialises an anonymous restriction of properties formulated according to the following cases.
+For each attribute/relation multiplicity of the form ( min .. max ), where min and max are different than ``*'' (any), specify a subclass axiom where the OWL class, corresponding to the UML Class, specialises an anonymous restriction of properties formulated according to the following cases:
+
 
 . exact cardinality, e.g. [2..2]
-. minimum cardinality only, e.g. [1..*]
+. minimum cardinality only, e.g. [2..*]
 . maximum cardinality only, e.g. [*..2]
-. maximum and maximum cardinality , e.g. [1..2]
+. maximum and maximum cardinality, e.g. [1..2]
+. at least one occurence: [1..*]
+
+The restriction describes a constraint that is formulated with respect to the range type of the defined OWL property, that is one of the following:
+
+. class
+. datatype
+
+For the special case of multiplicity [1..*], specify the existential constraint using the owl:someValuesFrom property instead of a cardinality constraint with owl:minQualifiedCardinality.
 ====
 
 [cols="a,a", options="noheader"]
 |===
+
 |
-.Exact cardinality constraint in Turtle syntax
+.Exact cardinality constraint for datatype property in Turtle syntax
 [source,Turtle]
 ----
 :ClassName
   rdfs:subClassOf [ a owl:Restriction ;
-    owl:cardinality "2"^^xsd:integer;
-    owl:onProperty :attribute1 ;
+    owl:onProperty :property1 ;
+    owl:onDataRange xsd:string ;
+    owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
 |
-.Exact cardinality constraint in RDF/XML syntax
+.Exact cardinality constraint for datatype property in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
     <rdfs:subClassOf>
         <owl:Restriction>
-            <owl:onProperty rdf:resource = "http://base.onto.uri/attribute1"/>
-            <owl:cardinality rdf:datatype="http://www.w3.org...#integer" >2</owl:cardinality>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/property1"/>
+            <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+            <owl:qualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:qualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
 ----
 
 |
-.Min cardinality constraint in Turtle syntax
+.Exact cardinality constraint for object property in Turtle syntax
 [source,Turtle]
 ----
 :ClassName
   rdfs:subClassOf [ a owl:Restriction ;
-    owl:minCardinality "1"^^xsd:integer;
-    owl:onProperty :attribute2 ;
+    owl:onProperty :property5 ;
+    owl:onClass :Prop5Class ;
+    owl:qualifiedCardinality "2"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
 |
-.Min cardinality constraint in RDF/XML syntax
+.Exact cardinality constraint for object property in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
     <rdfs:subClassOf>
         <owl:Restriction>
-            <owl:onProperty rdf:resource = "http://base.onto.uri/attribute2"/>
-            <owl:minCardinality rdf:datatype="http://www.w3.org...#integer" >1</owl:cardinality>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/property5"/>
+            <owl:onClass rdf:resource = "http://base.onto.uri/Prop5Class"/>
+            <owl:qualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:qualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
 ----
 
 |
-.Max cardinality constraint in Turtle syntax
+.Min cardinality constraint for datatype property in Turtle syntax
 [source,Turtle]
 ----
 :ClassName
   rdfs:subClassOf [ a owl:Restriction ;
-    owl:maxCardinality "2"^^xsd:integer;
-    owl:onProperty :attribute3 ;
+    owl:onProperty :property2 ;
+    owl:onDataRange xsd:string ;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
   ] ;
 .
 ----
 |
-.Max cardinality constraint in RDF/XML syntax
+.Min cardinality constraint for datatype property in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
     <rdfs:subClassOf>
         <owl:Restriction>
-            <owl:onProperty rdf:resource = "http://base.onto.uri/attribute3"/>
-            <owl:maxCardinality rdf:datatype="http://www.w3.org...#integer" >2</owl:cardinality>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/property2"/>
+            <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >1</owl:minQualifiedCardinality>
         </owl:Restriction>
     </rdfs:subClassOf>
 </rdf:Description>
 ----
 
 |
-.Min and max cardinality constraint in Turtle syntax
+.Min cardinality constraint for object property in Turtle syntax
 [source,Turtle]
 ----
 :ClassName
-  rdfs:subClassOf [
-    rdf:type owl:Class ;
-    owl:intersectionOf (
-      [ a owl:Restriction ;
-        owl:minCardinality "1"^^xsd:integer;
-        owl:onProperty :attribute4; ]
-      [ a owl:Restriction ;
-        owl:maxCardinality "2"^^xsd:integer;
-        owl:onProperty :attribute4; ]
-      ) ;
-    ] ;
+  rdfs:subClassOf [ a owl:Restriction ;
+    owl:onProperty :property6 ;
+    owl:onClass :Prop6Class ;
+    owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+  ] ;
 .
 ----
 |
-.Min and max cardinality constraint in RDF/XML syntax
+.Min cardinality constraint for object property in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
+    <rdfs:subClassOf>
+        <owl:Restriction>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/property6"/>
+            <owl:onClass rdf:resource = "http://base.onto.uri/Prop6Class"/>
+            <owl:minQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:minQualifiedCardinality>
+        </owl:Restriction>
+    </rdfs:subClassOf>
+</rdf:Description>
+----
+
+|
+.Max cardinality constraint for datatype property in Turtle syntax
+[source,Turtle]
+----
+:ClassName
+  rdfs:subClassOf [ a owl:Restriction ;
+    owl:onProperty :property3 ;
+    owl:onDataRange xsd:string ;
+    owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+  ] ;
+.
+----
+|
+.Max cardinality constraint for datatype property in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
+    <rdfs:subClassOf>
+        <owl:Restriction>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/property3"/>
+            <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+            <owl:maxQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:maxQualifiedCardinality>
+        </owl:Restriction>
+    </rdfs:subClassOf>
+</rdf:Description>
+----
+
+|
+.Max cardinality constraint for object property in Turtle syntax
+[source,Turtle]
+----
+:ClassName
+  rdfs:subClassOf [ a owl:Restriction ;
+    owl:onProperty :property7 ;
+    owl:onClass :Prop7Class ;
+    owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+  ] ;
+.
+----
+|
+.Max cardinality constraint for object property in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
+    <rdfs:subClassOf>
+        <owl:Restriction>
+            <owl:onProperty rdf:resource = "http://base.onto.uri/property7"/>
+            <owl:onClass rdf:resource = "http://base.onto.uri/Prop7Class"/>
+            <owl:maxQualifiedCardinality rdf:datatype="http://...#nonNegativeInteger" >2</owl:maxQualifiedCardinality>
+        </owl:Restriction>
+    </rdfs:subClassOf>
+</rdf:Description>
+----
+
+|
+.Min and max cardinality constraints for datatype property in Turtle syntax
+[source,Turtle]
+----
+:ClassName
+  rdfs:subClassOf [ a owl:Restriction ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger;
+      owl:onDataRange xsd:string ;
+      owl:onProperty :property4; ]
+    [ a owl:Restriction ;
+      owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+      owl:onDataRange xsd:string ;
+      owl:onProperty :property4; ]
+.
+----
+|
+.Min and max cardinality constraints for datatype property in RDF/XML syntax
 [source,XML]
 ----
 <rdf:Description rdf:about = "http://base.onto.uri/ClassName">
   <rdfs:subClassOf>
-    <owl:Class>
-      <owl:intersectionOf rdf:parseType="Collection">
-        <owl:Restriction>
-          <owl:onProperty rdf:resource = "http://base.onto.uri/attribute4"/>
-          <owl:minCardinality rdf:datatype="...#integer"
-          >1</owl:minCardinality>
-        </owl:Restriction>
-        <owl:Restriction>
-          <owl:onProperty rdf:resource = "http://base.onto.uri/attribute4"/>
-          <owl:maxCardinality rdf:datatype="...#integer"
-          >2</owl:maxCardinality>
-        </owl:Restriction>
-      </owl:intersectionOf>
-    </owl:Class>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
+      <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+      <owl:minQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
+      >1</owl:minQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property4"/>
+      <owl:onDataRange rdf:resource = "http://www.w3.org...#string"/>
+      <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
+      >2</owl:maxQualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</rdf:Description>
+----
+|===
+
+
+The owl:someValuesFrom is used instead of owl:minQualifiedCardinality with a value of 1 because, while they are conceptually equivalent, they are treated differently in Description Logics. In particular, owl:minQualifiedCardinality can only be applied to simple object properties, whereas owl:someValuesFrom can also be used with non-simple ones, offering greater flexibility and avoiding certain reasoning limitations.
+
+[cols="a,a", options="noheader"]
+|===
+|
+.Existential and max cardinality constraints for object property in Turtle syntax
+[source,Turtle]
+----
+:ClassName rdfs:subClassOf 
+    [ a owl:Restriction ;
+      owl:someValuesFrom :Prop8Class ;
+      owl:onProperty :property8; ],
+    [ a owl:Restriction ;
+      owl:maxQualifiedCardinality "2"^^xsd:nonNegativeInteger;
+      owl:onClass :Prop8Class ;
+      owl:onProperty :property8; ]
+.
+----
+|
+.Existential and max cardinality constraints for object property in RDF/XML syntax
+[source,XML]
+----
+<rdf:Description rdf:about = "http://base.onto.uri/ClassName">
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
+      <owl:someValuesFrom rdf:resource = "http://base.onto.uri/Prop8Class"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource = "http://base.onto.uri/property8"/>
+      <owl:onClass rdf:resource = "http://base.onto.uri/Prop8Class"/>
+      <owl:maxQualifiedCardinality rdf:datatype="...#nonNegativeInteger"
+      >2</owl:maxQualifiedCardinality>
+    </owl:Restriction>
   </rdfs:subClassOf>
 </rdf:Description>
 ----
