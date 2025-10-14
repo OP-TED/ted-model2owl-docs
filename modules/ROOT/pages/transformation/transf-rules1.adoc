@@ -106,19 +106,34 @@ shape:ClassName a sh:NodeShape ;
 
 [#rule:class-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Class -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify a term for each UML class by assigning an absolute URI of the class to the class name. Create the term mapping as a top-level entry of the context object.
+Specify a term for each UML class by assigning an absolute URI of the class to the class name. Define a simple term definition or, an expanded term definition if the class includes properties. Create the term mapping as a top-level entry of the context object.
 ====
 
 [NOTE]
 The term mapping key contains the relevant class name. It does not contain a namespace prefix even if one is defined in the model. Namespace prefixes are not used as all classes defined in the model are presumed to be internal, that is belonging to the generated ontology.
 
+[NOTE]
+If the class has attributes or related association or dependency connectors, all their term definitions are set within the single inner context object (see  link:transf-rules1.html:rule:assoc-dep-ldcontext[attribute], link:transf-rules1.html:rule:assoc-dep-type-ldcontext[attribute range], link:transf-rules1.html:rule:assoc-dep-container-ldcontext[attribute multiplicity], link:transf-rules2.html:rule:assoc-dep-ldcontext[association/dependency], link:transf-rules2.html:rule:assoc-dep-type-ldcontext[association/dependency range], link:transf-rules2.html:rule:assoc-dep-container-ldcontext[association/dependency multiplicity]). 
+
 [cols="a", options="noheader"]
 |===
 |
-.Class term mapping in JSON-LD syntax
+.Simple class term mapping in JSON-LD syntax
 [source,JSON]
 ----
 "ClassName": "http://base.onto.uri/ClassName"
+----
+|===
+
+[cols="a", options="noheader"]
+|===
+|
+.Expanded class term mapping in JSON-LD syntax
+[source,JSON]
+----
+"ClassName": {
+  "@id": "http://base.onto.uri/ClassName"
+}
 ----
 |===
 
@@ -393,7 +408,7 @@ shape:ClassName-attributeName a sh:PropertyShape ;
 
 [#rule:attribute-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Attribute -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-For each UML class attribute, specify a datatype property by creating a property URI mapping with an absolute attribute URI in a node object. Set the term definition as a top-level entry of the context object.
+For each UML class attribute, specify a datatype property by creating a property URI mapping with an absolute attribute URI in a node object. Set the term definition as a top-level entry inside the class’s inner context object.
 ====
 
 [NOTE]
@@ -405,8 +420,12 @@ The term definition key contains the attribute and the relevant class names. It 
 .Class attribute term mapping in JSON-LD syntax
 [source,JSON]
 ----
-"ClassName.attribute1": {
-  "@id":"http://base.onto.uri/attribute1"
+"ClassName": {
+  "@context": {
+    "attribute1": {
+      "@id": "http://base.onto.uri/attribute1"
+    }
+  }
 }
 ----
 |===
@@ -547,7 +566,7 @@ shape:ClassName-attribute2
 
 [#rule:attribute-type-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Class attribute type -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-For each UML class attribute, specify its range by creating a type coercion entry with an absolute URI of the attribute datatype in a node object. Set the term definition as a top-level entry of the context object.
+For each UML class attribute, specify its range by creating a type coercion entry with an absolute URI of the attribute datatype in a node object. Set the term definition as a top-level entry inside the class’s inner context object.
 ====
 
 [cols="a", options="noheader"]
@@ -556,8 +575,12 @@ For each UML class attribute, specify its range by creating a type coercion entr
 .Class attribute type definition in JSON-LD syntax
 [source,JSON]
 ----
-"ClassName.attribute1": {
-  "@type":"http://www.w3.org/2001/XMLSchema#string"
+"ClassName": {
+  "@context": {
+    "attribute1": {
+      "@type": "http://www.w3.org/2001/XMLSchema#string"
+    }
+  }
 }
 ----
 |===
@@ -840,7 +863,7 @@ shape:ClassName-attribute4
 
 [#rule:attribute-container-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Class attribute container -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify a default container type for a class attribute that can accept more than a one value by setting the fixed `@set` keyword as a value for the `@container` key. Set the container type entry inside a term definition created as a top-level entry of the context object.
+Specify a default container type for a class attribute that can accept more than a one value by setting the fixed `@set` keyword as a value for the `@container` key. Set the container type entry inside a term definition created as a top-level entry inside the class’s inner context object.
 ====
 
 [cols="a", options="noheader"]
@@ -849,17 +872,21 @@ Specify a default container type for a class attribute that can accept more than
 .Attribute container definition in JSON-LD syntax
 [source,JSON]
 ----
-"ClassName.attribute1": {
- "@container": "@set"
-}
-"ClassName.attribute2": {
- "@container": "@set"
-}
-"ClassName.attribute3": {
- "@container": "@set"
-}
-"ClassName.attribute4": {
- "@container": "@set"
+"ClassName": {
+  "@context": {
+    "attribute1": {
+      "@container": "@set"
+    },
+    "attribute2": {
+      "@container": "@set"
+    },
+    "attribute3": {
+      "@container": "@set"
+    },
+    "attribute4": {
+      "@container": "@set"
+    }
+  }
 }
 ----
 |===

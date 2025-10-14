@@ -107,7 +107,7 @@ shape:ClassName-relationName a sh:PropertyShape ;
 
 [#rule:assoc-dep-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Association & dependency -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-For each UML association/dependency, specify an object property by creating a property URI mapping with an absolute URI of a target end in a node object. Set the term definition as a top-level entry of the context object. For bidirectional connectors, additionally specify an extended term definition for the source end.
+For each UML association/dependency, specify an object property by creating a property URI mapping with an absolute URI of a target end in a node object. Set the term definition as a top-level entry inside the class’s inner context object. For bidirectional connectors, additionally specify an extended term definition for the source end.
 ====
 
 
@@ -117,11 +117,15 @@ For each UML association/dependency, specify an object property by creating a pr
 .Association/dependency term mapping in JSON-LD syntax
 [source,JSON]
 ----
-"ClassName.relatesTo": {
- "@id":"http://base.onto.uri/relatesTo"
-}
-"ClassName.dependencyName": {
- "@id":"http://base.onto.uri/dependencyName"
+"ClassName": {
+ "@context": {
+    "relatesTo": {
+      "@id":"http://base.onto.uri/relatesTo"
+    },
+    "dependencyName": {
+      "@id":"http://base.onto.uri/dependencyName"
+    }
+  }
 }
 ----
 |===
@@ -274,7 +278,7 @@ shape:ClassName-relationName
 
 [#rule:assoc-dep-range-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Association & dependency range -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-For each UML association/dependency, specify the object property range by creating a type coercion entry in a node object. Set the fixed `@id` keyword as a value to indicate that that the value of the term should be interpreted as an URI. Set the term definition as a top-level entry of the context object. For bidirectional connectors, additionally specify the object property range for the source end.
+For each UML association/dependency, specify the object property range by creating a type coercion entry in a node object. Set the fixed `@id` keyword as a value to indicate that that the value of the term should be interpreted as an URI. Set the term definition as a top-level entry inside the class’s inner context object. For bidirectional connectors, additionally specify the object property range for the source end.
 ====
 
 [cols="a", options="noheader"]
@@ -283,11 +287,15 @@ For each UML association/dependency, specify the object property range by creati
 .Type coercion for association & dependency in JSON-LD syntax
 [source,JSON]
 ----
-"ClassName.relatesTo": {
-  "@type": "@id"
-}
-"ClassName.dependencyName": {
-  "@type": "@id"
+"ClassName": {
+ "@context": {
+    "relatesTo": {
+      "@type":"@id"
+    },
+    "dependencyName": {
+      "@type":"@id"
+    }
+  }
 }
 ----
 |===
@@ -384,8 +392,8 @@ shape:ClassName-relationName
 
 [#rule:assoc-dep-container-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Association & dependency container -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
 ====
-Specify a default container type for each UML association/dependency that can accept more than a one value, setting the fixed `@set` keyword as a value for the `@container` key.
-Set the container type entry for an association/dependency target end, inside a term definition created as a top-level entry of the context object. For bidirectional connectors, additionally specify the container type for the source end.
+Specify a default container type for each UML association/dependency that can accept more than a one value by setting the fixed `@set` keyword as a value for the `@container` key.
+Set the container type entry for an association/dependency target end, inside a term definition created as a top-level entry inside the class’s inner context object. For bidirectional connectors, additionally specify the container type for the source end.
 ====
 
 [cols="a", options="noheader"]
@@ -394,11 +402,15 @@ Set the container type entry for an association/dependency target end, inside a 
 .Association & dependency container definition in JSON-LD syntax
 [source,JSON]
 ----
-"ClassName.relatesTo": {
- "@container": "@set"
-}
-"ClassName.dependencyName": {
- "@container": "@set"
+"ClassName": {
+  "@context": {
+    "relatesTo": {
+      "@container": "@set"
+    },
+    "dependencyName": {
+      "@container": "@set"
+    }
+  }
 }
 ----
 |===
