@@ -243,8 +243,6 @@ Learn more about the format link:https://github.com/speced/respec/wiki/otherLink
 Model2owl generates a self-contained folder with the documentation called a _ReSpec package_.
 ReSpec documentation consists of the HTML document itself, which is the core component, and a set of static assets (OWL, SHACL, XMI, and EAP distribution files, code snippets, images, etc.). Together, these form a ReSpec package. The assets are either embedded in the generated HTML page or distributed alongside it and referenced in the HTML document using ReSpec utilities.
 
-Model2owl-boilerplate repository provides a straightforward method for publishing documentation. However, it is not intended to be a comprehensive solution. The responsibility for publishing the documentation in the desired manner ultimately lies with the editor.
-
 [[sec:respec-package-structure]]
 === ReSpec package structure
 
@@ -265,6 +263,10 @@ The following list presents the structure for the ReSpec package:
 ** `shacl`: contains SHACL shapes for validation purposes
 ** `examples`: contains code examples
 
+== Model2owl-boilerplate repository and GitHub automation
+Model2owl-boilerplate serves as a blueprint for a project repository that can be cloned and used to set up a new project. The repository contains example project data and is preconfigured with a GitHub Actions workflow that automates the generation of ReSpec documentation. The workflow supports a multi-module structure and generates the ReSpec package for every input model module. The generated documentation includes a ReSpec website for each module, along with a landing page linking to all module websites.
 
-=== Storage and execution
-When executed in an automated workflow, the package is saved in a `respec` subfolder of a module folder. Any change to the project repository files triggers regeneration of the documentation and commits a new revision to that branch. Each revision will include a reference to the source revision that triggered the documentation rebuild. The project repository can then be configured to publish the ReSpec documentation from that branch using the GitHub Pages feature. The GitHub Pages in model2owl-boilerplate are configured for demonstration purposes. The setup supports multi-module organization and generates the ReSpec package for every input model module.
+When executed in an automated workflow, data stored in a `respec-resources` input folder is processed and the ReSpec package is saved in a `respec` subfolder of a module folder. Any modification in the project repository triggers the documentation to be regenerated and commits a new revision to the same branch. Each revision will include a reference to the source revision that triggered the documentation rebuild. The project repository can then be configured to publish the ReSpec documentation from that branch using the GitHub Pages feature. Details on how to set up the repository and configure the workflow for ReSpec generation can be found link:https://github.com/OP-TED/model2owl-boilerplate/blob/develop/README.md[here].
+
+Model2owl-boilerplate provides a straightforward way to publish documentation. The GitHub Pages setup in model2owl-boilerplate is for demonstration purposes only. The editor is ultimately responsible for publishing the documentation in the intended way.
+

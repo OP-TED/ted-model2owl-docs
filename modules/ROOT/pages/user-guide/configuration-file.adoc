@@ -324,20 +324,19 @@ This exclusion only affects the **representation** of the tags in the final arte
 | `excludedTagNamesList` | List | Defines tag names that should be excluded from the output. | `($statusProperty, $cvConstraintLevelProperty)`
 |===
 
-=== Convention report parameters
-This section defines parameters used in the **generation of the convention report**. The convention report provides a
-structured evaluation of the UML model, ensuring it adheres to predefined rules and best practices. These parameters
-allow users to **customise report metadata**, such as the copyright statement, author details, and the UML model name
-included in the report.
+=== ReSpec documentation parameters
+This section defines parameters used in the **generation of the ReSpec documentation**. The ReSpec documentation provides a comprehensive description of the generated model. These parameters
+allow users to **control and customize which information is displayed and how it is presented in the document**, such as usage and reuse notes, property status, and more. The parameters described here can be set in the config-parameters.xsl file. The <<sec:metadata-parameters,Metadata parameters>> section provides a description of metadata properties configured in the _metadata JSON file_ that are also applicable to the ReSpec documentation.
 
 [options="header"]
 |===
 | Parameter Name | Data Type | Description | Default Value
-| `conventionReportCopyrightText` | String | Defines the copyright text for the convention report. | `Publications Office of the European Union, 2023`
-| `conventionReportAuthor` | String | Defines the author of the convention report. | `Publications Office of the European Union`
-| `conventionReportAuthorLocation` | String | Defines the location of the report's author. | `Luxembourg`
-| `conventionReportAuthorWebsite` | String | Defines the website of the report's author. | `https://op.europa.eu`
-| `conventionReportUMLModelName` | String | Defines the name of the UML model in the report. | `eProcurement`
+| `classReferenceRespecLabel` | String | Defines the label used in ReSpec documentation to describe values of `referenceTagName` for classes. Applies only if the `showReferencesInRespec` is enabled. | `Reference`
+| `customTermLabelTagName` | String | Defines the tag name used as a custom label for terms in the ReSpec documentation. | `skos:prefLabel`
+| `propertyReferenceRespecLabel` | String | Defines the label used in ReSpec documentation to describe values of `referenceTagName` for properties. Applies only if the `showReferencesInRespec` is enabled.  | `Reuse`
+| `referenceTagName` | String | Defines the tag name used to provide reference links or reuse information for a class or property. Applies only if the `showReferencesInRespec` is enabled. | `dct:references`
+| `showReferencesInRespec` | Boolean | Controls whether reference or reuse information is displayed in ReSpec documentation for classes and properties. | `true`
+| `usageNoteTagName` | String | Defines the tag name used to describe a usage note of a class or property. | `skos:note`
 |===
 
 [[sec:metadata-parameters]]
