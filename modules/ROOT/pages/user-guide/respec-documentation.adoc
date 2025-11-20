@@ -53,7 +53,7 @@ The documentation page is built using ReSpec, which facilitates the creation of 
 
 There are several standard sections that are present in the documentation by default (these can be overwritten in child templates):
 
-* Metadata: Displays document metadata such as contributors, issued date, links to sources and related resources, and custom metadata properties.
+* Metadata: Displays document metadata such as contributors, links to sources and related resources, and custom metadata properties.
 * Abstract: Provides a concise summary of the vocabulary and its purpose.
 * Introduction: Explains the motivation, intended audience, and scope of the vocabulary.
 * Status: Indicates the current status of the specification, publication date, and approval information.
