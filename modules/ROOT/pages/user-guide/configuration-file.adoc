@@ -72,6 +72,7 @@ allowed characters for normalised strings, default delimiter in URIs, etc.
 | `controlledListType` | String | The type of attributes that take values from a controlled list. | `epo:Code`
 | `allowedStrings` | String (Regex) | Defines allowed characters for normalised strings. | `^[\w\d-_:]+$`
 | `supportedUmlVersions` | List | Lists the UML versions supported by model2owl. | `('http://www.omg.../UML/20131001', 'https://www.omg.../UML/20131001', 'http://www.omg.../UML/20161101', 'https://www.omg.../UML/20161101')`
+| `issuedDate` | Date | Defines the ontology's issuance date. It is used for the `dct:issued` property in RDF artefacts and in the header of the ReSpec documentation. | _Automatically set to the current date_
 |===
 
 
@@ -370,7 +371,6 @@ ensuring that each generated artefact contains the necessary information. The de
 | `feedbackUrl` | String | URL of the location where one can provide feedback about the specification | `https://github.com/.../org/repo/issues`
 | `github` | String | A GitHub repository identifier of the project consisting of the owner and repository name | `organization/repo`
 | `incompatibleWith` | String | Version of the ontology that is not compatible with the current version | `2.1.0`
-| `issuedDate` | Date | Defines the ontology's issuance date. It is used for the `dct:issued` property in RDF artefacts and in the header of the ReSpec documentation. | _Automatically set to the current date_
 | `localBiblio` | Object | Local bibliography references used in the documentation. See link:https://github.com/speced/respec/wiki/localBiblio[ReSpec documentation for localBiblio] for more information about the format | Each object key represents a unique reference ID and the value is another object with the properties described below
 | `localBiblio.ENTRY.href` | String | URL of the reference | `https://w3id.org/`
 | `localBiblio.ENTRY.publisher` | String | Title of the reference | `W3C Permanent Identifier Community Group`
