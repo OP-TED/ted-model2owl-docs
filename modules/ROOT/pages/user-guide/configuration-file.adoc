@@ -183,7 +183,7 @@ even if they would sometimes be classified as reused.
 | `generateReusedConceptsOWLcore` | Boolean | Enables or disables the inclusion of reused concepts in OWL core artefacts. | `true`
 | `generateReusedConceptsOWLrestrictions` | Boolean | Enables or disables the inclusion of reused concepts in OWL restrictions. | `true`
 | `generateReusedConceptsJSONLDcontext` | Boolean | Enables or disables the inclusion of reused concepts in JSON-LD context. | `true`
-| `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. | `true`
+| `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. Applies to glossaries generated in both HTML and AsciiDoc formats. | `true`
 |===
 === Status filtering parameters
 
