@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+
+
+## [3.1.0-rc.2] - 2025-11-20
+### Changed
+- Update documentation of the `issuedDate` parameter (TEDM2O-11).
+
+
+## [3.1.0-rc.1] - 2025-10-15
 ### Added
 - New category of transformation rules for JSON-LD context generation
   (TEDM2O-7).
