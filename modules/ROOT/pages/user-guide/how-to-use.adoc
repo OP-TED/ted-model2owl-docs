@@ -35,6 +35,9 @@ The following commands are available for setting up dependencies:
 * `get-jinja` – Installs Jinja2 inside the project folder.
 * `get-jq` – Installs jq inside the project folder.
 * `install` – Executes all the above installation steps automatically.
+* `get-rdf-differ` – Installs RDF Differ in a local directory.
+* `start-rdf-differ-services` – Starts Docker-based RDF Differ and Traefik services.
+* `stop-rdf-differ-services` – Stops RDF Differ Docker and Traefik services.
 * `create-virtual-env` – Creates a Python virtual environment for the project.
 
 [[sec:functional-commands]]
@@ -108,6 +111,20 @@ These commands execute transformations and generate outputs:
     - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
     - `RESPEC_JSON_INDENTATION` – (Optional) Number of spaces for indentation in the generated JSON file. Default is 2.
 
+* `merge-owl-shacl` – Merges an OWL ontology file with a SHACL shapes file into a combined output TTL file. Useful to extend diffing coverage for with selected properties from the SHACL shapes file.
+  **Parameters:**
+    - `MERGE_ONTOLOGY_FILE` – Path to the OWL ontology file (default: `test/diffing-files/ePO_core-4.1.0.ttl`).
+    - `MERGE_SHAPES_FILE` – Path to the SHACL shapes file (default: `test/diffing-files/ePO_core_shapes-4.1.0.ttl`).
+    - `MERGE_OUTPUT_FILE` – Path to the output file (default: `${OUTPUT_FOLDER_PATH}/ePO_core_combined-1.0.ttl`).
+
+* `run-rdf-diff` – Runs the RDF diffing workflow using RDF Differ services and produces a diff report. The report type is determined by the `RDF_DIFF_TEMPLATE`.
+  **Parameters:**
+    - `RDF_DIFF_FILE1` – Path to the first RDF file (default: `test/diffing-files/ePO_core-4.1.0.ttl`).
+    - `RDF_DIFF_FILE2` – Path to the second RDF file (default: `test/diffing-files/ePO_core-4.2.0.ttl`).
+    - `RDF_DIFF_OUTDIR` – Output directory for the diff results (default: `${OUTPUT_FOLDER_PATH}`).
+    - `RDF_DIFF_AP` – Application profile used for diffing (default: `owl-core-en-only`).
+    - `RDF_DIFF_TEMPLATE` – Template format for the diff report (default: `html`).
+
 * `merge-xmi` – Merges XMI files from a specified folder.
   ** **Parameters:**
     - `FIRST_XMI_TO_BE_MERGED_FILE_PATH` – Path to the first XMI file.
@@ -161,6 +178,8 @@ The model2owl configuration consists of six files, which should be placed in a s
 * `umlToXsdDataTypes.xml` – Maps UML data types to XSD.
 * `xsdAndRdfDataTypes.xml` – Defines data types used.
 * `metadata.json` – Contains metadata describing the processed model, which is used to generate RDF and ReSpec artefacts.
+
+In addition, configuration for a workflow in model2owl-boilerplate project implementing the RDF diffing feature can be set using link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[Github Variables] as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
 
 To set up, copy the default configuration files from the `ePO-default-config` folder to your new configuration folder.
 
@@ -316,10 +335,18 @@ model2owl.
    * Generated File:
      **`<input-file>_convention_svrl_report.xml`** – SVRL compliance report.
 
-7. `make generate-respec` – Generates a ReSpec documentation package.
+8. `make generate-respec` – Generates a ReSpec documentation package.
    * Generated folder:
      **`<respec-dir>`** – A folder containing the HTML ReSpec document and all required resources (artefact files, images, examples, and other static assets). The package structure is described in <<sec:respec-package-structure, ReSpec package structure>>.
 
+9. `make merge-owl-shacl` – Merge OWL ontology and SHACL shapes files. Used as a preprocessing step before calling `run-rdf-diff`.
+   * Generated File:
+     **`<output-dir>/<file-name>.ttl`** – An RDF file combining content of provided OWL core and SHACL shapes files.
+
+10. `make run-rdf-diff` – Generates a diff report in a format specified by the user (JSON / AsciiDoc / HTML).
+   * Generated File:
+   
+     **`<output-dir>/diff.<report-extension>`** – A diff report listing changes between two versions of an RDF file. 
 **Notes**
 
 - `<input-file>` will be replaced with the name of the input XMI file (e.g., `file1.rdf` if the input is `file1.xml`).

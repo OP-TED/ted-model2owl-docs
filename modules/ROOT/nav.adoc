@@ -26,4 +26,5 @@
 ** xref:user-guide/how-to-use.adoc[How to use]
 ** xref:user-guide/configuration-file.adoc[Configuration parameters]
 ** xref:user-guide/respec-documentation.adoc[ReSpec documentation]
+** xref:user-guide/rdf-diffing.adoc[RDF diffing documentation]
 * xref:references.adoc[References]
