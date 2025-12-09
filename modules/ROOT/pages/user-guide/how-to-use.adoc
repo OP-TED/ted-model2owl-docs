@@ -45,10 +45,18 @@ The following commands are available for setting up dependencies:
 
 These commands execute transformations and generate outputs:
 
-* `generate-glossary` – Generates a glossary from the UML export (XML/XMI).
+* `generate-glossary` – Generates an HTML glossary from the UML export (XML/XMI).
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_GLOSSARY_PATH` – Path to the output folder.
+
+* `generate-asciidoc-glossary` – Generates an AsciiDoc glossary from the UML export (XML/XMI), optionally creating the model data JSON file if it is not provided.
+  ** **Parameters:**
+    - `XMI_INPUT_FILE_PATH` – Path to the UML XMI model file required for generating the ReSpec data JSON file (used only if `MODEL_DATA_JSON_PATH` is not provided).
+    - `MODEL_DATA_JSON_PATH` – (Optional) Path to the ReSpec data JSON file.  
+      If omitted, the file will be generated automatically.
+    - `OUTPUT_GLOSSARY_PATH` – Output directory for the glossary file.
+    - `OUTPUT_FOLDER_PATH` – (Optional) Directory where the generated ReSpec data JSON file should be stored (used only if `MODEL_DATA_JSON_PATH` is not provided). If not set, then the default directory is used.
 
 * `generate-convention-report` – Generates a compliance report from the UML export in HTML format.
   ** **Parameters:**
@@ -327,23 +335,27 @@ model2owl.
    * Generated File:
      **`<input-file>_glossary.html`** – Glossary in HTML format.
 
-6. `make generate-convention-report` – Generates a compliance report from the UML model in HTML format, validating it against the conventions.
+6. `make generate-asciidoc-glossary` – Generates an AsciiDoc glossary of terms extracted from the UML model.
+   * Generated File:
+     **`<input-file>_glossary.adoc`** – Glossary in AsciiDoc format.
+
+7. `make generate-convention-report` – Generates a compliance report from the UML model in HTML format, validating it against the conventions.
    * Generated File:
      **`<input-file>_convention_report.html`** – HTML compliance report.
 
-7. `make generate-convention-SVRL-report` – Generates a compliance report in SVRL format.
+8. `make generate-convention-SVRL-report` – Generates a compliance report in SVRL format.
    * Generated File:
      **`<input-file>_convention_svrl_report.xml`** – SVRL compliance report.
 
-8. `make generate-respec` – Generates a ReSpec documentation package.
+9. `make generate-respec` – Generates a ReSpec documentation package.
    * Generated folder:
      **`<respec-dir>`** – A folder containing the HTML ReSpec document and all required resources (artefact files, images, examples, and other static assets). The package structure is described in <<sec:respec-package-structure, ReSpec package structure>>.
 
-9. `make merge-owl-shacl` – Merge OWL ontology and SHACL shapes files. Used as a preprocessing step before calling `run-rdf-diff`.
+10. `make merge-owl-shacl` – Merge OWL ontology and SHACL shapes files. Used as a preprocessing step before calling `run-rdf-diff`.
    * Generated File:
      **`<output-dir>/<file-name>.ttl`** – An RDF file combining content of provided OWL core and SHACL shapes artefacts, resulting in an OWL-SHACL RDF file (embedded SHACL shapes).
 
-10. `make run-rdf-diff` – Generates a diff report in a format specified by the user (JSON / AsciiDoc / HTML).
+11. `make run-rdf-diff` – Generates a diff report in a format specified by the user (JSON / AsciiDoc / HTML).
    * Generated File:   
      **`<output-dir>/diff.<report-extension>`** – A diff report listing changes between two versions of an RDF file. 
 
