@@ -6,13 +6,13 @@ Model2owl provides functionality for generating difference reports between two
 versions of a model. It currently supports AsciiDoc format for human-readable
 reports and JSON-based outputs for machine-readable purposes. The feature is
 powered by the link:https://meaningfy-ws.github.io/rdf-differ-ws/[RDF Differ]
-tool. Reports can be generated directly within Model2owl (locally) or through
+tool. Reports can be generated directly within Model2owl (locally, offline) or through
 the automated workflow provided by the model2owl-boilerplate project (online).
 
 
 [[sec:usage]]
 == Usage
-This section provides a step-by-step guide on how to generate a diffing report
+This section provides a step-by-step guide on how to generate a diff report
 using model2owl. The process is the same but may differ in details depending on
 whether model2owl is used locally or in an automated workflow (see the
 link:how-to-use.html[How to use] page).
@@ -38,20 +38,21 @@ the predefined directory when using the model2owl-boilerplate workflow.
 [[sec:diffing-process]]
 == Diffing process
 Model2owl uses the link:https://meaningfy-ws.github.io/rdf-differ-ws/[RDF Differ]
-tool to calculate differences between two RDF graphs and to generate
+tool to calculate differences between two RDF files and to generate
 diff reports in AsciiDoc and JSON formats. It compares either two OWL core files
 or two pairs consisting of an OWL core file and a SHACL shapes file. When SHACL
-files are provided, the comparison scope additionally includes domain, range,
-and cardinality properties. The comparison scope is defined in an application
-profile suitable for comparing OWL ontologies. Model2owl integrates this tool
-via its CLI client and provides a dedicated set of commands for interacting with
-it (see the descriptions of the `run-rdf-diff` and `merge-owl-shacl` commands in
-the link:how-to-use.html#sec:functional-commands[Functional commands] section).
+files are provided, the diff report will be augmented with additional
+information about the domain, range, and cardinality. The scope of comparison is
+defined in an application profile suitable for comparing OWL ontologies.
+Model2owl integrates this tool via its CLI client and provides a dedicated set
+of commands for interacting with it (see the descriptions of the `run-rdf-diff`
+and `merge-owl-shacl` commands in the
+link:how-to-use.html#sec:functional-commands[Functional commands] section).
 Further details on how the RDF Differ tool operates can be found in the
 link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md[project documentation].
 
 
-== Diffing reports
+== Diff reports
 Model2owl produces a set of files summarising the differences between two
 versions of a model, collectively known as *diff reports*. These reports can be
 generated in three formats:
@@ -64,12 +65,6 @@ Each report’s content mirrors the types of changes detected. The fundamental
 building block of any report is a diff describing a change to a property of a
 model instance. For example, modifications to `skos:definition` values for
 resources of type `owl:ObjectProperty`.
-
-AsciiDoc and HTML outputs follow the same structure: one section summarising
-general statistics and another presenting detailed differences. A full
-explanation of the report scope, formats, and data structure is available in the
-link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md#the-diff-reports[RDF
-Differ documentation].
 
 AsciiDoc and HTML reports follow an identical structure. Each includes, among
 other sections, a general statistics section and a detailed section in which the
@@ -98,7 +93,7 @@ The configuration can be adjusted using
 link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[GitHub Variables]
 as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
 
-The workflow is triggered automatically on changes of the RDF files: OWL core or
+The workflow is triggered automatically on changes to the RDF files: OWL core or
 SHACL shapes. The files are regenerated every time the base workflow for RDF
 generation runs.
 

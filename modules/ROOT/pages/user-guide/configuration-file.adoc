@@ -425,7 +425,7 @@ The following table describes configuration parameters that can be specified for
 | `OLD_SHACL_FILE` | String | Specification of the old version; a path to a SHACL shapes file. | `implementation/ ePO_core/shacl_shapes/ePO_core_shapes.ttl`
 | `NEW_ONTOLOGY_FILE` | String | Specification of the new version; a path to an OWL core file. | `implementation/demo_ontology/ owl_ontology/demo_ontology_CM.ttl`
 | `NEW_SHACL_FILE` | String | Specification of the new version; a path to a SHACL shapes file.  | `implementation/demo_ontology/ shacl_shapes/demo_ontology_CM_shapes.ttl`
-| `RDF_DIFF_OUTDIR` | String | Output directory for generated diffing reports. | `diff-reports`
+| `RDF_DIFF_OUTDIR` | String | Output directory for generated diff reports. | `diff-reports`
 | `RDF_DIFF_AP` | String | Identifier of an application profile used. No need to change it unless following a customized diffing. | `owl-core-en-only`
 |===
 
