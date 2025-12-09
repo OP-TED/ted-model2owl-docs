@@ -1,0 +1,104 @@
+= RDF diffing documentation
+
+== Overview
+
+Model2owl provides functionality for generating difference reports between two
+versions of a model. It currently supports AsciiDoc format for human-readable
+reports and JSON-based outputs for machine-readable purposes. The feature is
+powered by the link:https://meaningfy-ws.github.io/rdf-differ-ws/[RDF Differ]
+tool. Reports can be generated directly within Model2owl (locally, offline) or through
+the automated workflow provided by the model2owl-boilerplate project (online).
+
+
+[[sec:usage]]
+== Usage
+This section provides a step-by-step guide on how to generate a diff report
+using model2owl. The process is the same but may differ in details depending on
+whether model2owl is used locally or in an automated workflow (see the
+link:how-to-use.html[How to use] page).
+
+1. prepare OWL core (and SHACL shapes) for the old version: The former version
+of the Semantic Data Specification for the processed model needs to be prepared
+(read more about the expected input in the <<sec:diffing-process,Diffing Process>>
+section).
+
+2. prepare OWL core (and SHACL shapes) for the new version: The new version of
+the Semantic Data Specification for the processed model needs to be prepared
+(read more about the expected input in the <<sec:diffing-process,Diffing Process>>
+section).
+
+3. generate diff and report(s): The user needs to decide which report(s) should
+be generated and run the generation. If using model2owl-boilerplate, the formats
+are already predefined as AsciiDoc and JSON.
+
+4. inspect the reports: Reports are available in the specified destination or in
+the predefined directory when using the model2owl-boilerplate workflow.
+
+
+[[sec:diffing-process]]
+== Diffing process
+Model2owl uses the link:https://meaningfy-ws.github.io/rdf-differ-ws/[RDF Differ]
+tool to calculate differences between two RDF files and to generate
+diff reports in AsciiDoc and JSON formats. It compares either two OWL core files
+or two pairs consisting of an OWL core file and a SHACL shapes file. When SHACL
+files are provided, the diff report will be augmented with additional
+information about the domain, range, and cardinality. The scope of comparison is
+defined in an application profile suitable for comparing OWL ontologies.
+Model2owl integrates this tool via its CLI client and provides a dedicated set
+of commands for interacting with it (see the descriptions of the `run-rdf-diff`
+and `merge-owl-shacl` commands in the
+link:how-to-use.html#sec:functional-commands[Functional commands] section).
+Further details on how the RDF Differ tool operates can be found in the
+link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md[project documentation].
+
+
+== Diff reports
+Model2owl produces a set of files summarising the differences between two
+versions of a model, collectively known as *diff reports*. These reports can be
+generated in three formats:
+
+1. AsciiDoc – suitable for integration into external documentation workflows.
+2. HTML – a standalone, human-readable format.
+3. JSON – a machine-readable format following the link:https://www.w3.org/TR/sparql11-results-json/[SPARQL 1.1 Query Results JSON Format].
+
+Each report’s content mirrors the types of changes detected. The fundamental
+building block of any report is a diff describing a change to a property of a
+model instance. For example, modifications to `skos:definition` values for
+resources of type `owl:ObjectProperty`.
+
+AsciiDoc and HTML reports follow an identical structure. Each includes, among
+other sections, a general statistics section and a detailed section in which the
+actual differences are shown together with relevant metadata.
+A full explanation of the report scope, supported output formats, and content is available in 
+link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md#the-diff-reports[the dedicated RDF Differ documentation section].
+
+
+== Automated diffing workflow in the model2owl-boilerplate repository
+
+The workflow located in the model2owl-boilerplate repository implements calculation of a difference between two RDF files (two versions of the OWL core artefact of the model, in Turtle syntax, optionally combined with SHACL shapes content) and generation of reports in AsciiDoc and JSON formats.
+
+The process followed in the workflow is similar to the one described in the
+<<sec:usage,Usage>> section, with some differences:
+
+1. The new versions of the model files need to be committed to the repository
+where the workflow is configured. It's possible to compare a file in the current
+revision with the one committed in another revision or even another repository.
+2. Results are committed to the repository (the same branch where the workflow
+was triggered), saved in `diff-report` directory.
+
+The workflow uses some default configuration for demonstration purposes.
+The configuration can be adjusted using 
+link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[GitHub Variables]
+as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
+
+The workflow is triggered automatically on changes to the RDF files: OWL core or
+SHACL shapes. The files are regenerated every time the base workflow for RDF
+generation runs.
+
+The RDF diffing workflow commits the generated files to the repository. The
+commit message includes details about the versions of the artefacts used, which
+makes it possible to determine the input files associated with a particular
+report.
+
+Further details about the workflow can be found
+link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[in the project's README].
