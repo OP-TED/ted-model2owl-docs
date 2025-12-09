@@ -112,13 +112,13 @@ These commands execute transformations and generate outputs:
     - `RESPEC_JSON_INDENTATION` – (Optional) Number of spaces for indentation in the generated JSON file. Default is 2.
 
 * `merge-owl-shacl` – Merges an OWL ontology file with a SHACL shapes file into a combined output TTL file. Useful to extend diffing coverage for with selected properties from the SHACL shapes file.
-  **Parameters:**
+  ** **Parameters:**
     - `MERGE_ONTOLOGY_FILE` – Path to the OWL ontology file (default: `test/diffing-files/ePO_core-4.1.0.ttl`).
     - `MERGE_SHAPES_FILE` – Path to the SHACL shapes file (default: `test/diffing-files/ePO_core_shapes-4.1.0.ttl`).
     - `MERGE_OUTPUT_FILE` – Path to the output file (default: `${OUTPUT_FOLDER_PATH}/ePO_core_combined-1.0.ttl`).
 
 * `run-rdf-diff` – Runs the RDF diffing workflow using RDF Differ services and produces a diff report. The report type is determined by the `RDF_DIFF_TEMPLATE`.
-  **Parameters:**
+  ** **Parameters:**
     - `RDF_DIFF_FILE1` – Path to the first RDF file (default: `test/diffing-files/ePO_core-4.1.0.ttl`).
     - `RDF_DIFF_FILE2` – Path to the second RDF file (default: `test/diffing-files/ePO_core-4.2.0.ttl`).
     - `RDF_DIFF_OUTDIR` – Output directory for the diff results (default: `${OUTPUT_FOLDER_PATH}`).
@@ -344,9 +344,9 @@ model2owl.
      **`<output-dir>/<file-name>.ttl`** – An RDF file combining content of provided OWL core and SHACL shapes files.
 
 10. `make run-rdf-diff` – Generates a diff report in a format specified by the user (JSON / AsciiDoc / HTML).
-   * Generated File:
-   
+   * Generated File:   
      **`<output-dir>/diff.<report-extension>`** – A diff report listing changes between two versions of an RDF file. 
+
 **Notes**
 
 - `<input-file>` will be replaced with the name of the input XMI file (e.g., `file1.rdf` if the input is `file1.xml`).

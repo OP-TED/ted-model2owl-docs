@@ -46,7 +46,7 @@ and cardinality properties. The comparison scope is defined in an application
 profile suitable for comparing OWL ontologies. Model2owl integrates this tool
 via its CLI client and provides a dedicated set of commands for interacting with
 it (see the descriptions of the `run-rdf-diff` and `merge-owl-shacl` commands in
-the link:sec:how-to-use.html#functional-commands[Functional commands] section).
+the link:how-to-use.html#sec:functional-commands[Functional commands] section).
 Further details on how the RDF Differ tool operates can be found in the
 link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md[project documentation].
 
