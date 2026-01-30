@@ -128,7 +128,9 @@ commits format (e.g., `chore(ci): diff 2 module(s) #143 [skip ci]`).
 
 Each run produces a summary visible in the GitHub Actions page, showing which
 modules were processed with links to the reports. Failed modules (e.g., no
-preexisting files to compare to) are marked accordingly.
+preexisting files to compare to) are noted accordingly. For more information on
+navigating workflow runs, see
+link:https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/using-the-visualization-graph[Using the visualization graph].
 
 Further details about the workflow can be found
 link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[in the project's README].
