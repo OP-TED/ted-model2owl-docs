@@ -101,12 +101,10 @@ link:https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-ru
 
 === Multiple modules processing
 
-The workflow supports processing multiple modules in a single run. Modules can be
-specified explicitly via the `modules` parameter (comma-separated list) or
-auto-detected from the repository structure. When multiple modules are specified
-or detected, the workflow processes each module in parallel, generating separate
-diff reports for each. The reports are stored in subdirectories named after the
-module (e.g., `diff-reports/epo_core/`, `diff-reports/epo_cat/`).
+The workflow can process multiple modules in a single run. They can be specified
+explicitly via the `modules` parameter as a comma-separated list, or auto-detected
+from the repository structure. Each is processed in parallel, with separate reports
+stored in dedicated subdirectories (e.g., `diff-reports/epo_core/`, `diff-reports/epo_cat/`).
 
 === Manual workflow dispatch
 
@@ -124,14 +122,13 @@ GitHub Actions UI:
 | `output_dir` | Output directory for generated diff reports. | `diff-reports` | `diff-reports/v5.1`
 |===
 
-The RDF diffing workflow commits the generated files to the repository. The
-commit message includes the number of modules processed and the workflow run
-number, following conventional commits format (e.g., `chore(ci): diff 2 module(s) #143 [skip ci]`).
+Generated files are committed to the repository. The commit message includes
+the number of modules processed and the run number, following conventional
+commits format (e.g., `chore(ci): diff 2 module(s) #143 [skip ci]`).
 
-Each workflow run generates a summary visible in the GitHub Actions run page.
-The summary shows which modules were processed, with links to the generated
-diff reports. Failed modules (e.g., no preexisting files to compare to) are
-marked accordingly.
+Each run produces a summary visible in the GitHub Actions page, showing which
+modules were processed with links to the reports. Failed modules (e.g., no
+preexisting files to compare to) are marked accordingly.
 
 Further details about the workflow can be found
 link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[in the project's README].
