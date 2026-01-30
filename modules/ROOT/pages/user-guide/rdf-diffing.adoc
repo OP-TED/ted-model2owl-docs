@@ -92,11 +92,33 @@ link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-work
 as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
 
 The workflow is called automatically by the transform workflow after generating
-new OWL/SHACL artefacts. It can also be triggered manually via workflow dispatch.
+new OWL/SHACL artefacts. It can also be triggered manually via
+link:https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow[workflow dispatch].
+
+=== Manual workflow dispatch
+
+When triggering the workflow manually, the following options are available in the
+GitHub Actions UI:
+
+[options="header"]
+|===
+| Option | Description | Default | Example
+| `modules` | Comma-separated list of module names to compare. Leave empty to process all modules. | (empty) | `epo_core,epo_cat`
+| `revision_to_compare` | Git revision (branch, tag, or commit SHA) to compare against. | `develop` | `release/5.0.0`
+| `revision_repo_url` | URL of an external public repository for the old version. Leave empty to compare within the same repository. | (empty) | `https://github.com/OP-TED/ePO`
+| `old_ontology_dir` | Root directory for old OWL/SHACL files. | `implementation` | `output/release`
+| `new_ontology_dir` | Root directory for new OWL/SHACL files. | `implementation` | `implementation`
+| `output_dir` | Output directory for generated diff reports. | `diff-reports` | `diff-reports/v5.1`
+|===
 
 The RDF diffing workflow commits the generated files to the repository. The
 commit message includes the number of modules processed and the workflow run
 number, following conventional commits format (e.g., `chore(ci): diff 2 module(s) #143 [skip ci]`).
+
+Each workflow run generates a summary visible in the GitHub Actions run page.
+The summary shows which modules were processed, with links to the generated
+diff reports. Failed modules (e.g., no preexisting files to compare to) are
+marked accordingly.
 
 Further details about the workflow can be found
 link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[in the project's README].
