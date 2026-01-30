@@ -84,21 +84,19 @@ The process followed in the workflow is similar to the one described in the
 where the workflow is configured. It's possible to compare a file in the current
 revision with the one committed in another revision or even another repository.
 2. Results are committed to the repository (the same branch where the workflow
-was triggered), saved in `diff-report` directory.
+was triggered), saved in `diff-reports` directory.
 
 The workflow uses some default configuration for demonstration purposes.
-The configuration can be adjusted using 
+The configuration can be adjusted using the `diff-config.env` file or
 link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[GitHub Variables]
 as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
 
-The workflow is triggered automatically on changes to the RDF files: OWL core or
-SHACL shapes. The files are regenerated every time the base workflow for RDF
-generation runs.
+The workflow is called automatically by the transform workflow after generating
+new OWL/SHACL artefacts. It can also be triggered manually via workflow dispatch.
 
 The RDF diffing workflow commits the generated files to the repository. The
-commit message includes details about the versions of the artefacts used, which
-makes it possible to determine the input files associated with a particular
-report.
+commit message includes the number of modules processed and the workflow run
+number, following conventional commits format (e.g., `chore(ci): diff 2 module(s) #143 [skip ci]`).
 
 Further details about the workflow can be found
 link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[in the project's README].

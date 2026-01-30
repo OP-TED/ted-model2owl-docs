@@ -413,24 +413,24 @@ ensuring that each generated artefact contains the necessary information. The de
 
 This section defines parameters that control **the automated diffing process** implemented in a Github workflow of model2owl-boilerplate project. It's relevant only for the online use of the diffing feature.
 
-The workflow compares two versions of a model (as described on the link:rdf-diffing.html[Diffing] page). 
-The following table describes configuration parameters that can be specified for the workflow as link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[Github Variables] in the link:https://github.com/OP-TED/model2owl-boilerplate/settings/variables/actions[Github project].
+The workflow compares two versions of a model (as described on the link:rdf-diffing.html[Diffing] page).
+Configuration is managed through the `diff-config.env` file in the `.github/workflows` directory.
+Values can also be set as link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[Github Variables] or passed as workflow inputs.
+Priority: workflow inputs > config file > repository variables > defaults.
 
 [options="header"]
 |===
 | Parameter Name | Data Type | Description | Default Value
-| `REVISION_TO_COMPARE_COMMIT_ID` | String | (Optional) Specification of a Git revision (branch, tag or SHA) | `release/5.0.0`
-| `REVISION_TO_COMPARE_REPO_URL` | String | (Optional) URL of an external public Git repository. | `https://github.com/OP-TED/ePO.git`
-| `OLD_ONTOLOGY_FILE` | String | Specification of the old version; a path to an OWL core file. |  `implementation/ ePO_core/owl_ontology/ePO_core.ttl`
-| `OLD_SHACL_FILE` | String | Specification of the old version; a path to a SHACL shapes file. | `implementation/ ePO_core/shacl_shapes/ePO_core_shapes.ttl`
-| `NEW_ONTOLOGY_FILE` | String | Specification of the new version; a path to an OWL core file. | `implementation/demo_ontology/ owl_ontology/demo_ontology_CM.ttl`
-| `NEW_SHACL_FILE` | String | Specification of the new version; a path to a SHACL shapes file.  | `implementation/demo_ontology/ shacl_shapes/demo_ontology_CM_shapes.ttl`
+| `REVISION_TO_COMPARE_COMMIT_ID` | String | (Optional) Git revision to compare against (branch, tag or SHA) | `develop`
+| `REVISION_TO_COMPARE_REPO_URL` | String | (Optional) URL of an external public Git repository for the old version. | (empty)
+| `OLD_ONTOLOGY_DIR` | String | Root directory for old OWL/SHACL files. | `implementation`
+| `NEW_ONTOLOGY_DIR` | String | Root directory for new OWL/SHACL files. | `implementation`
+| `MODULES` | String | Comma-separated module names to diff (empty = auto-detect). | (empty)
 | `RDF_DIFF_OUTDIR` | String | Output directory for generated diff reports. | `diff-reports`
-| `RDF_DIFF_AP` | String | Identifier of an application profile used. No need to change it unless following a customized diffing. | `owl-core-en-only`
 |===
 
-Note that the paths specified in `OLD_ONTOLOGY_FILE` and `OLD_SHACL_FILE` are resolved according to values of `REVISION_TO_COMPARE_COMMIT_ID` and `REVISION_TO_COMPARE_REPO_URL` parameters. The following cases are supported by the workflow:
+File paths are derived automatically from the module name and directory configuration (e.g., `<OLD_ONTOLOGY_DIR>/<module>/owl_ontology/<module>.ttl`). The old version is resolved based on `REVISION_TO_COMPARE_COMMIT_ID` and `REVISION_TO_COMPARE_REPO_URL`:
 
-* `REVISION_TO_COMPARE_COMMIT_ID` and `REVISION_TO_COMPARE_REPO_URL` specified: an RDF file is fetched from an external Git repository, following the specified revision and path.
-* `REVISION_TO_COMPARE_COMMIT_ID` specified: an RDF file is fetched from the same Git repository, following the specified revision and path.
-* `REVISION_TO_COMPARE_COMMIT_ID` and `REVISION_TO_COMPARE_REPO_URL` not specified: an RDF file is fetched from the same Git repository, following the specified path. The current revision (the one that the workflow runs on) is used.
+* Both specified: files are fetched from the external repository at the given revision.
+* Only revision specified: files are fetched from the same repository at the given revision.
+* Neither specified: files are fetched from the default revision (`develop`).
