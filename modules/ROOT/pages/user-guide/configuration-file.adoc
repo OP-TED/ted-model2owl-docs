@@ -411,12 +411,13 @@ ensuring that each generated artefact contains the necessary information. The de
 [[sec:rdf-diffing-configuration]]
 === **RDF diffing configuration**
 
-This section defines parameters that control **the automated diffing process** implemented in a Github workflow of model2owl-boilerplate project. It's relevant only for the online use of the diffing feature.
+This section defines parameters that control **the automated diffing process** implemented in a Github workflow of model2owl-boilerplate project. It's relevant only for the online use of the diffing feature. For details on the workflow options available for manual runs, see the link:rdf-diffing.html#_manual_workflow_dispatch[Manual workflow dispatch] section.
 
 The workflow compares two versions of a model (as described on the link:rdf-diffing.html[Diffing] page).
 Configuration is managed through the `diff-config.env` file in the `.github/workflows` directory.
 Values can also be set as link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[Github Variables] or passed as workflow inputs.
 Priority: workflow inputs > config file > repository variables > defaults.
+The table below outlines the available configuration options, which may be defined either in the configuration file or as repository variables. An equivalent set of parameters can also be provided when manually triggering a workflow, as described in the link:rdf-diffing.html#_manual_workflow_dispatch[Manual workflow dispatch] section.
 
 [options="header"]
 |===
@@ -425,7 +426,7 @@ Priority: workflow inputs > config file > repository variables > defaults.
 | `REVISION_TO_COMPARE_REPO_URL` | String | (Optional) URL of an external public Git repository for the old version. | (empty)
 | `OLD_ONTOLOGY_DIR` | String | Root directory for old OWL/SHACL files. The directory is expected to contain one or more subdirectories for ontology modules. | `implementation`
 | `NEW_ONTOLOGY_DIR` | String | Root directory for new OWL/SHACL files. The directory is expected to contain one or more subdirectories for ontology modules. | `implementation`
-| `MODULES` | String | Comma-separated module names to diff (empty = auto-detect). | (empty)
+| `MODULES` | String | Comma-separated module names to diff. If left empty, all modules discovered under NEW_ONTOLOGY_DIR will be processed. | (empty)
 | `RDF_DIFF_OUTDIR` | String | Output directory for generated diff reports. | `diff-reports`
 |===
 

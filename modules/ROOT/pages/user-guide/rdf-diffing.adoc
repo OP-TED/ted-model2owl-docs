@@ -85,6 +85,9 @@ where the workflow is configured. It's possible to compare a file in the current
 revision with the one committed in another revision or even another repository.
 2. Results are committed to the repository (the same branch where the workflow
 was triggered), saved in `diff-reports` directory.
+3. Alternatively, diff reports can be generated between the current version and
+past versions without modifying files. In this case, the diff configuration is
+specified per run via workflow dispatch.
 
 The workflow uses some default configuration for demonstration purposes.
 The configuration can be adjusted using the `diff-config.env` file or
@@ -93,13 +96,13 @@ as described in the link:configuration-file.html#sec:rdf-diffing-configuration[R
 
 The workflow is called automatically by the transform workflow after generating
 new OWL/SHACL artefacts. It can also be triggered manually via
-link:https://docs.github.com/en/actions/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow[workflow dispatch].
+link:https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow#running-a-workflow[workflow dispatch].
 
 NOTE: The workflow dispatch option is only available after the workflow file has
 been merged to the default branch of the repository (as per
 link:https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow#configuring-a-workflow-to-run-manually[GitHub Actions specifications]).
 
-=== Multiple modules processing
+=== Multiple ontology modules processing
 
 The workflow can process multiple modules in a single run. They can be specified
 explicitly via the `modules` parameter as a comma-separated list, or auto-detected
