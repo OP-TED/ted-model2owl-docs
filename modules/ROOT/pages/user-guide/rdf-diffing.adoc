@@ -75,7 +75,7 @@ link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md#the-dif
 
 == Automated diffing workflow in the model2owl-boilerplate repository
 
-The workflow located in the model2owl-boilerplate repository implements calculation of a difference between two RDF files (two versions of the OWL core artefact of the model, in Turtle syntax, optionally combined with SHACL shapes content) and generation of reports in AsciiDoc and JSON formats.
+The workflow located in the model2owl-boilerplate repository implements calculation of a difference as described in the <<sec:diffing-process,Diffing process>> section. The workflow supports processing of one or more ontology modules. 
 
 The process followed in the workflow is similar to the one described in the
 <<sec:usage,Usage>> section, with some differences:
