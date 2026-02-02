@@ -117,8 +117,8 @@ GitHub Actions UI:
 | `modules` | Comma-separated list of module names to compare. Leave empty to process all modules. | (empty) | `epo_core,epo_cat`
 | `revision_to_compare` | Git revision (branch, tag, or commit SHA) to compare against. | `develop` | `release/5.0.0`
 | `revision_repo_url` | URL of an external public repository for the old version. Leave empty to compare within the same repository. | (empty) | `https://github.com/OP-TED/ePO`
-| `old_ontology_dir` | Root directory for old OWL/SHACL files. | `implementation` | `output/release`
-| `new_ontology_dir` | Root directory for new OWL/SHACL files. | `implementation` | `implementation`
+| `old_ontology_dir` | Root directory for old OWL/SHACL files. Expected to contain subdirectories for ontology modules. | `implementation` | `output/release`
+| `new_ontology_dir` | Root directory for new OWL/SHACL files. Expected to contain subdirectories for ontology modules. | `implementation` | `implementation`
 | `output_dir` | Output directory for generated diff reports. | `diff-reports` | `diff-reports/v5.1`
 |===
 

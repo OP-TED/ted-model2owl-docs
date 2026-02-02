@@ -423,8 +423,8 @@ Priority: workflow inputs > config file > repository variables > defaults.
 | Parameter Name | Data Type | Description | Default Value
 | `REVISION_TO_COMPARE_COMMIT_ID` | String | (Optional) Git revision to compare against (branch, tag or SHA) | `develop`
 | `REVISION_TO_COMPARE_REPO_URL` | String | (Optional) URL of an external public Git repository for the old version. | (empty)
-| `OLD_ONTOLOGY_DIR` | String | Root directory for old OWL/SHACL files. | `implementation`
-| `NEW_ONTOLOGY_DIR` | String | Root directory for new OWL/SHACL files. | `implementation`
+| `OLD_ONTOLOGY_DIR` | String | Root directory for old OWL/SHACL files. The directory is expected to contain one or more subdirectories for ontology modules. | `implementation`
+| `NEW_ONTOLOGY_DIR` | String | Root directory for new OWL/SHACL files. The directory is expected to contain one or more subdirectories for ontology modules. | `implementation`
 | `MODULES` | String | Comma-separated module names to diff (empty = auto-detect). | (empty)
 | `RDF_DIFF_OUTDIR` | String | Output directory for generated diff reports. | `diff-reports`
 |===
