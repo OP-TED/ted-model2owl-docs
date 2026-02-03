@@ -188,7 +188,7 @@ The model2owl configuration consists of six files, which should be placed in a s
 * `xsdAndRdfDataTypes.xml` – Defines data types used.
 * `metadata.json` – Contains metadata describing the processed model, which is used to generate RDF and ReSpec artefacts.
 
- In addition, configuration for a workflow implementing the RDF diffing feature can be set using a dedicated `diff-config.env` file (among other options described on the link:rdf-diffing.html[RDF Diffing documentation] page).
+In addition, configuration for a workflow implementing the RDF diffing feature can be set using a dedicated `diff-config.env` file (among other options described on the link:rdf-diffing.html[RDF Diffing documentation] page).
 
 To set up, copy the default configuration files from the `ePO-default-config` folder to your new configuration folder.
 
