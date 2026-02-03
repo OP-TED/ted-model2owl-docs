@@ -9,6 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 
+## [3.2.0-rc.2] - 2026-02-03
+### Added
+Introduce a description of generating RDF diff reports for multiple modules in the user guide (TEDM2O-12).
+
+### Changed
+- Update the user guide for the RDF diffing feature (TEDM2O-12).
+- Update the configuration and usage instructions for the RDF diffing feature (TEDM2O-12).
+- Update references to the RDF Differ repository (TEDM2O-12).
+
+
 ## [3.2.0-rc.1] - 2025-12-09
 ### Added
 - Introduce RDF Diffing feature (TEDM2O-12).
