@@ -5,7 +5,7 @@
 Model2owl provides functionality for generating difference reports between two
 versions of a model. It currently supports AsciiDoc format for human-readable
 reports and JSON-based outputs for machine-readable purposes. The feature is
-powered by the link:https://meaningfy-ws.github.io/rdf-differ-ws/[RDF Differ]
+powered by the link:https://github.com/OP-TED/rdf-differ-ws[RDF Differ]
 tool. Reports can be generated directly within Model2owl (locally, offline) or through
 the automated workflow provided by the model2owl-boilerplate project (online).
 
@@ -37,7 +37,7 @@ the predefined directory when using the model2owl-boilerplate workflow.
 
 [[sec:diffing-process]]
 == Diffing process
-Model2owl uses the link:https://meaningfy-ws.github.io/rdf-differ-ws/[RDF Differ]
+Model2owl uses the link:https://github.com/OP-TED/rdf-differ-ws[RDF Differ]
 tool to calculate differences between two RDF files and to generate
 diff reports in AsciiDoc and JSON formats. It compares either two OWL core files
 or two pairs consisting of an OWL core file and a SHACL shapes file. When SHACL
@@ -49,7 +49,7 @@ of commands for interacting with it (see the descriptions of the `run-rdf-diff`
 and `merge-owl-shacl` commands in the
 link:how-to-use.html#sec:functional-commands[Functional commands] section).
 Further details on how the RDF Differ tool operates can be found in the
-link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md[project documentation].
+link:https://github.com/OP-TED/rdf-differ-ws/blob/2.1.0/README.md[project documentation].
 
 
 == Diff reports
@@ -70,7 +70,7 @@ AsciiDoc and HTML reports follow an identical structure. Each includes, among
 other sections, a general statistics section and a detailed section in which the
 actual differences are shown together with relevant metadata.
 A full explanation of the report scope, supported output formats, and content is available in 
-link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md#the-diff-reports[the dedicated RDF Differ documentation section].
+link:https://github.com/OP-TED/rdf-differ-ws/blob/2.1.0/README.md#the-diff-reports[the dedicated RDF Differ documentation section].
 
 
 == Automated diffing workflow in the model2owl-boilerplate repository
