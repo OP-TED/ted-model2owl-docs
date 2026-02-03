@@ -75,7 +75,7 @@ link:https://github.com/meaningfy-ws/rdf-differ-ws/blob/master/README.md#the-dif
 
 == Automated diffing workflow in the model2owl-boilerplate repository
 
-The workflow located in the model2owl-boilerplate repository implements calculation of a difference between two RDF files (two versions of the OWL core artefact of the model, in Turtle syntax, optionally combined with SHACL shapes content) and generation of reports in AsciiDoc and JSON formats.
+The workflow located in the model2owl-boilerplate repository implements calculation of a difference as described in the <<sec:diffing-process,Diffing process>> section. The workflow supports processing of one or more ontology modules. 
 
 The process followed in the workflow is similar to the one described in the
 <<sec:usage,Usage>> section, with some differences:
@@ -84,21 +84,56 @@ The process followed in the workflow is similar to the one described in the
 where the workflow is configured. It's possible to compare a file in the current
 revision with the one committed in another revision or even another repository.
 2. Results are committed to the repository (the same branch where the workflow
-was triggered), saved in `diff-report` directory.
+was triggered), saved in `diff-reports` directory.
+3. Alternatively, diff reports can be generated between the current version and
+past versions without modifying files. In this case, the diff configuration is
+specified per run via workflow dispatch.
 
 The workflow uses some default configuration for demonstration purposes.
-The configuration can be adjusted using 
+The configuration can be adjusted using the `diff-config.env` file or
 link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[GitHub Variables]
 as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
 
-The workflow is triggered automatically on changes to the RDF files: OWL core or
-SHACL shapes. The files are regenerated every time the base workflow for RDF
-generation runs.
+The workflow is called automatically by the transform workflow after generating
+new OWL/SHACL artefacts. It can also be triggered manually via
+link:https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow#running-a-workflow[workflow dispatch].
 
-The RDF diffing workflow commits the generated files to the repository. The
-commit message includes details about the versions of the artefacts used, which
-makes it possible to determine the input files associated with a particular
-report.
+NOTE: The workflow dispatch option is only available after the workflow file has
+been merged to the default branch of the repository (as per
+link:https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow#configuring-a-workflow-to-run-manually[GitHub Actions specifications]).
+
+=== Multiple ontology modules processing
+
+The workflow can process multiple modules in a single run. They can be specified
+explicitly via the `modules` parameter as a comma-separated list, or auto-detected
+from the repository structure. Each is processed in parallel, with separate reports
+stored in dedicated subdirectories (e.g., `diff-reports/epo_core/`, `diff-reports/epo_cat/`).
+
+=== Manual workflow dispatch
+
+When triggering the workflow manually, the following options are available in the
+GitHub Actions UI:
+
+[options="header"]
+|===
+| Option | Description | Default | Example
+| `modules` | Comma-separated list of module names to compare. Leave empty to process all modules. | (empty) | `epo_core,epo_cat`
+| `revision_to_compare` | Git revision (branch, tag, or commit SHA) to compare against. | `develop` | `release/5.0.0`
+| `revision_repo_url` | URL of an external public repository for the old version. Leave empty to compare within the same repository. | (empty) | `https://github.com/OP-TED/ePO`
+| `old_ontology_dir` | Root directory for old OWL/SHACL files. Expected to contain subdirectories for ontology modules. | `implementation` | `output/release`
+| `new_ontology_dir` | Root directory for new OWL/SHACL files. Expected to contain subdirectories for ontology modules. | `implementation` | `implementation`
+| `output_dir` | Output directory for generated diff reports. | `diff-reports` | `diff-reports/v5.1`
+|===
+
+Generated files are committed to the repository. The commit message includes
+the number of modules processed and the run number, following conventional
+commits format (e.g., `chore(ci): diff 2 module(s) #143 [skip ci]`).
+
+Each run produces a summary visible in the GitHub Actions page, showing which
+modules were processed with links to the reports. Failed modules (e.g., no
+preexisting files to compare to) are noted accordingly. For more information on
+navigating workflow runs, see
+link:https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/using-the-visualization-graph[Using the visualization graph].
 
 Further details about the workflow can be found
 link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[in the project's README].

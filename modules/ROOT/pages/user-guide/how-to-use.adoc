@@ -176,6 +176,7 @@ make create-virtual-env
 source model2owl-venv/bin/activate
 ```
 
+[[sec:configuration]]
 == Configuration
 
 The model2owl configuration consists of six files, which should be placed in a single folder:
@@ -187,7 +188,7 @@ The model2owl configuration consists of six files, which should be placed in a s
 * `xsdAndRdfDataTypes.xml` – Defines data types used.
 * `metadata.json` – Contains metadata describing the processed model, which is used to generate RDF and ReSpec artefacts.
 
-In addition, configuration for a workflow in model2owl-boilerplate project implementing the RDF diffing feature can be set using link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[Github Variables] as described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
+In addition, configuration for a workflow implementing the RDF diffing feature can be set using a dedicated `diff-config.env` file (among other options described on the link:rdf-diffing.html[RDF Diffing documentation] page).
 
 To set up, copy the default configuration files from the `ePO-default-config` folder to your new configuration folder.
 
@@ -306,6 +307,30 @@ If the UML model uses custom datatypes, map them in umlToXsdDataTypes.xml:
 === Metadata JSON
 All predefined properties should be updated in the `metadata.json` file by the editor as described in xref:sec:metadata-parameters[Metadata parameters]. The editor can also add custom properties to be used in the generated ReSpec documentation as described in xref:sec:respec-custom-metadata[Custom metadata] section.
 
+=== Diff workflow file
+The diff workflow uses a dedicated `diff-config.env` configuration file located in the workflow directory. The file follows a simple link:https://bashcommands.com/bash-env-file[bash env file syntax]. 
+
+The below is an example of such a file:
+```bash
+# Version to compare against (branch/tag/commit)
+REVISION_TO_COMPARE_COMMIT_ID=main
+
+# External repository URL (leave empty for same repo)
+REVISION_TO_COMPARE_REPO_URL=
+
+# Root directories for OWL/SHACL files
+OLD_ONTOLOGY_DIR=implementation
+NEW_ONTOLOGY_DIR=implementation
+
+# Modules to diff (comma-separated, empty = auto-detect)
+MODULES=
+
+# Output directory for diff reports
+RDF_DIFF_OUTDIR=diff-reports
+```
+
+The expected configuration properties are described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
+
 == Running Transformations
 
 
@@ -368,3 +393,14 @@ Example of transformation command:
 ```
 make owl-core XMI_INPUT_FILE_PATH=/home/mypc/work/model2owl/file1.xml OUTPUT_FOLDER_PATH=./my-folder
 ```
+
+== Using model2owl online
+Model2owl-boilerplate (and its forked versions) can be used to run model2owl in an automated
+workflow hosted on GitHub Actions. The project repository provides a ready-to-use setup for
+executing model2owl transformations and generating artefacts based on a UML model stored
+in the same repository. The transformation can be configured in the same way as the local setup by modifying model2owl configuration files. Additionally, the diff workflow can be configured through a dedicated config file (among other options described on the link:rdf-diffing.html[RDF Diffing documentation] page). Both the model2owl configuration files and the diff workflow config file are described in the <<sec:configuration,Configuration>> section.
+Both the transformation and diffing workflows support processing multiple ontology modules in a single run. In order to process one or more modules, the user needs to provide dedicated directories for each module containing the UML model and configuration files.
+
+The workflows expect a specific structure and naming conventions for the input files and directories that are realized in the model2owl-boilerplate repository and need to be followed in other repositories based on it. The conventions are described in the link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md#usage[Usage] section.
+
+More details about using model2owl-boilerplate can be found in link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[the repository's README file].
