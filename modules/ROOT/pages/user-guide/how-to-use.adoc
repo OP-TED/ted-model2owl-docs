@@ -32,17 +32,31 @@ The following commands are available for setting up dependencies:
 * `get-saxon` – Installs Saxon inside the project folder.
 * `get-rdflib` – Installs the RDFLib library.
 * `get-widoco` – Installs Widoco inside the project folder.
+* `get-jinja` – Installs Jinja2 inside the project folder.
+* `get-jq` – Installs jq inside the project folder.
 * `install` – Executes all the above installation steps automatically.
+* `get-rdf-differ` – Installs RDF Differ in a local directory.
+* `start-rdf-differ-services` – Starts Docker-based RDF Differ and Traefik services.
+* `stop-rdf-differ-services` – Stops RDF Differ Docker and Traefik services.
 * `create-virtual-env` – Creates a Python virtual environment for the project.
 
+[[sec:functional-commands]]
 === Functional Commands
 
 These commands execute transformations and generate outputs:
 
-* `generate-glossary` – Generates a glossary from the UML export (XML/XMI).
+* `generate-glossary` – Generates an HTML glossary from the UML export (XML/XMI).
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_GLOSSARY_PATH` – Path to the output folder.
+
+* `generate-asciidoc-glossary` – Generates an AsciiDoc glossary from the UML export (XML/XMI), optionally creating the model data JSON file if it is not provided.
+  ** **Parameters:**
+    - `XMI_INPUT_FILE_PATH` – Path to the UML XMI model file required for generating the ReSpec data JSON file (used only if `MODEL_DATA_JSON_PATH` is not provided).
+    - `MODEL_DATA_JSON_PATH` – (Optional) Path to the ReSpec data JSON file.  
+      If omitted, the file will be generated automatically.
+    - `OUTPUT_GLOSSARY_PATH` – Output directory for the glossary file.
+    - `OUTPUT_FOLDER_PATH` – (Optional) Directory where the generated ReSpec data JSON file should be stored (used only if `MODEL_DATA_JSON_PATH` is not provided). If not set, then the default directory is used.
 
 * `generate-convention-report` – Generates a compliance report from the UML export in HTML format.
   ** **Parameters:**
@@ -58,21 +72,66 @@ These commands execute transformations and generate outputs:
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
 
 * `owl-restrictions` – Generates a heavyweight ontology with additional axioms for reasoning.
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
 
 * `shacl` – Generates SHACL data shapes suitable for validation.
   ** **Parameters:**
     - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
+
+* `generate-jsonld-context` – Generates JSON-LD context file for the ontology data.
+  ** **Parameters:**
+    - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `JSONLD_CONTEXT_INDENTATION` – Indentation for the JSON-LD context file (defaults to 2 spaces).
 
 * `generate-html-docs-from-rdf` – Generates HTML documentation using Widoco from an RDF file.
   ** **Parameters:**
     - `WIDOCO_RDF_INPUT_FILE_PATH` – Path to the RDF file.
     - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+
+[[sec:generate-respec-cmd]]
+* `generate-respec` – Creates an HTML documentation package for an ontology using Jinja2 and ReSpec. The command expects the input model, metadata and a set of assets to be provided. The generated package is ready to be hosted on a web server. This command does not generate other RDF artefacts, so they need to be generated separately and provided as input to this command.
+  ** **Parameters:**
+    - `RESPEC_OUTPUT_DIR` – Output directory for the documentation package.
+    - `RESPEC_DATA_JSON_PATH` – (Optional) Path to the ReSpec data JSON file. If not provided, the file will be generated automatically.
+    - `RESPEC_METADATA_JSON_PATH` – Path to the metadata JSON file.
+    - `RESPEC_INPUT_ASSETS_DIR` – Directory containing static assets (examples, images, etc.).
+    - `XMI_INPUT_FILE_PATH` – (Optional) Path to the UML XMI model file needed for generating the ReSpec data JSON file (if not given).
+    - `OUTPUT_FOLDER_PATH` – (Optional) Directory where a ReSpec data JSON file should be stored (if not given).
+    - `MODEL_EAP_FILE_PATH` – Path to the UML EAP model file.
+
+* `respec-json` – An auxiliary command that generates the ReSpec data JSON file from the input XMI file. The command is used by the `generate-respec` command.
+  ** **Parameters:**
+    - `XMI_INPUT_FILE_PATH` – Path to the XMI file.
+    - `OUTPUT_FOLDER_PATH` – Path to the output folder.
+    - `NAMESPACES_USER_XML_FILE_PATH` – Path to the *.xml file containing namespaces.
+    - `IMPORTS_XML_FILE_PATH` – Path to the *.xml file containing ontology URIs to be imported.
+    - `RESPEC_JSON_INDENTATION` – (Optional) Number of spaces for indentation in the generated JSON file. Default is 2.
+
+* `merge-owl-shacl` – Merges an OWL ontology file with a SHACL shapes file into a combined output TTL file. Useful to extend the final report with selected properties related to constraint information, which is not typically available or available only inconsistently from lightweight ontologies. At least the new version being compared must be merged, if not both.
+  ** **Parameters:**
+    - `MERGE_ONTOLOGY_FILE` – Path to the OWL ontology file (default: `test/diffing-files/ePO_core-4.1.0.ttl`).
+    - `MERGE_SHAPES_FILE` – Path to the SHACL shapes file (default: `test/diffing-files/ePO_core_shapes-4.1.0.ttl`).
+    - `MERGE_OUTPUT_FILE` – Path to the output file (default: `${OUTPUT_FOLDER_PATH}/ePO_core_combined-1.0.ttl`).
+
+* `run-rdf-diff` – Runs the RDF diffing workflow using RDF Differ services and produces a diff report. The report type is determined by the `RDF_DIFF_TEMPLATE`.
+  ** **Parameters:**
+    - `RDF_DIFF_FILE1` – Path to the first (old version) RDF file (default: `test/diffing-files/ePO_core-4.1.0.ttl`).
+    - `RDF_DIFF_FILE2` – Path to the second (new version) RDF file (default: `test/diffing-files/ePO_core-4.2.0.ttl`).
+    - `RDF_DIFF_OUTDIR` – Output directory for the diff results (default: `${OUTPUT_FOLDER_PATH}`).
+    - `RDF_DIFF_AP` – Application profile used for diffing (default: `owl-core-en-only`).
+    - `RDF_DIFF_TEMPLATE` – Template format for the diff report (default: `html`).
 
 * `merge-xmi` – Merges XMI files from a specified folder.
   ** **Parameters:**
@@ -117,14 +176,19 @@ make create-virtual-env
 source model2owl-venv/bin/activate
 ```
 
+[[sec:configuration]]
 == Configuration
 
-The model2owl configuration consists of four files, which should be placed in a single folder:
+The model2owl configuration consists of six files, which should be placed in a single folder:
 
 * `config-parameters.xsl` – Defines main configuration variables.
 * `namespaces.xml` – Lists namespaces used in the UML model.
+* `imports.xml` – Contains URIs of ontologies to be imported.
 * `umlToXsdDataTypes.xml` – Maps UML data types to XSD.
 * `xsdAndRdfDataTypes.xml` – Defines data types used.
+* `metadata.json` – Contains metadata describing the processed model, which is used to generate RDF and ReSpec artefacts.
+
+In addition, configuration for a workflow implementing the RDF diffing feature can be set using a dedicated `diff-config.env` file (among other options described on the link:rdf-diffing.html[RDF Diffing documentation] page).
 
 To set up, copy the default configuration files from the `ePO-default-config` folder to your new configuration folder.
 
@@ -135,7 +199,7 @@ It allows the tool to reference and apply the configuration stored at a specifie
 By modifying this file, users can switch between different configuration sets.
 
 Example:
-```
+```xml
 # Update the path in config-proxy.xsl:
 <xsl:import href="my-pc/user/my-config-folder/config-parameters.xsl"/>
 ```
@@ -146,7 +210,7 @@ To adjust configuration settings, edit the `config-parameters.xsl` file.
 
 **Important notes:**
 
-* Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, or `xsdAndRdfDataTypes` variables.
+* Do not modify the `namespacePrefixes`, `umlDataTypesMapping`, `xsdAndRdfDataTypes`, or `metadataJson` variables.
 * Ensure any modified variable retains its original datatype (boolean, string, list).
 
 .Example of correct and incorrect datatype modification:
@@ -163,48 +227,109 @@ the link:configuration-file.html[configuration parameters page]
 
 === Namespaces Configuration
 
-== Namespaces Configuration
+To add namespaces, edit `namespaces.xml`. The purpose of the file is to store definitions of namespaces, including their prefixes and URIs.
 
-To add namespaces, edit `namespaces.xml`. There are two key tasks you can perform:
+Add a prefix and its corresponding URI in the `namespaces.xml` file in the following way:
 
-* **Defining a Namespace Prefix and URI**
-
-Add a prefix and its corresponding URI in the `namespaces.xml` file:
-
-```
+```xml
 <prefix name="foaf" value="http://xmlns.com/foaf/0.1/"/>
 ```
 
-* **Including an import statement in the output**
+=== Imported ontologies configuration
+URIs of ontologies to be declared for import within generated ontologies (for
+core, restrictions or SHACL shapes artefacts) can be specified in the
+`imports.xml` file. The file includes sections for shared URIs, which apply to all
+artefact types, as well as sections for specific artefact types.
+URIs specified in the `imports.xml` file will be included in the generated
+artefacts as import statements using the `owl:imports` property.
 
-For a namespace to appear as an import statement in the final output, add the
-importURI attribute:
+.Example of imported ontologies configuration:
+```xml
+<imports xmlns="http://publications.europa.eu/ns/">
+    <!-- affects all three artefacts -->
+    <all>
+        <import uri="http://purl.org/dc/terms/"/>
+    </all>
+    <!-- affects SHACL artefact -->
+    <shacl>
+        <import uri="http://data.europa.eu/a4g/data-shape#awa-shape"/>
+    </shacl>
+</imports>
 ```
-<prefix name="dct" value="http://purl.org/dc/terms/" importURI="http://purl.org/dc/terms/"/>
+The exemplary configuration will cause *all RDF output files* to include the
+following import statement for the declared ontology:
+```xml
+<!-- in core.rdf, the resource <http://example.com/core> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://example.com/core">
+    <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+</rdf:Description>
+
+<!-- in core_restrictions.rdf, the resource <http://example.com/core-restriction> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://example.com/core-restriction">
+    <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+</rdf:Description>
+
+<!-- in core_shapes.rdf, the resource <http://example.com/core-shape> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://example.com/core-shape">
+    <owl:imports rdf:resource="http://purl.org/dc/terms/"/>
+</rdf:Description>
+```
+In addition, the below statement will be present *only in the SHACL artefact*:
+```xml
+<!-- in core_shapes.rdf, the resource <http://example.com/core-shape> is of type owl:Ontology -->
+<rdf:Description rdf:about="http://data.europa.eu/a4g/ontology#core-restriction">
+    <owl:imports rdf:resource="http://data.europa.eu/a4g/data-shape#awa-shape"/>
+</rdf:Description>
 ```
 
-This will result in the following OWL import statement in the output:
-```
-<owl:imports rdf:resource="http://purl.org/dc/terms/"/>
-```
+To add additional URIs, simply include more `<import uri="..."/>` elements
+within the appropriate section of the `imports.xml` file (either all, or the one
+corresponding to the artefact of interest, e.g., `shacl`).
+
 === XSD and RDF Data Types
 
 To define datatypes used in the UML model, edit xsdAndRdfDataTypes.xml:
 
-```
+```xml
 <datatype namespace="xsd" qname="xsd:date"/>
 ```
 
 === UML to XSD Mappings
 
 If the UML model uses custom datatypes, map them in umlToXsdDataTypes.xml:
-```
+```xml
 <mapping>
     <from qname="epo:Date"/>
     <to qname="xsd:date"/>
 </mapping>
 ```
 
+=== Metadata JSON
+All predefined properties should be updated in the `metadata.json` file by the editor as described in xref:sec:metadata-parameters[Metadata parameters]. The editor can also add custom properties to be used in the generated ReSpec documentation as described in xref:sec:respec-custom-metadata[Custom metadata] section.
+
+=== Diff workflow file
+The diff workflow uses a dedicated `diff-config.env` configuration file located in the workflow directory. The file follows a simple link:https://bashcommands.com/bash-env-file[bash env file syntax]. 
+
+The below is an example of such a file:
+```bash
+# Version to compare against (branch/tag/commit)
+REVISION_TO_COMPARE_COMMIT_ID=main
+
+# External repository URL (leave empty for same repo)
+REVISION_TO_COMPARE_REPO_URL=
+
+# Root directories for OWL/SHACL files
+OLD_ONTOLOGY_DIR=implementation
+NEW_ONTOLOGY_DIR=implementation
+
+# Modules to diff (comma-separated, empty = auto-detect)
+MODULES=
+
+# Output directory for diff reports
+RDF_DIFF_OUTDIR=diff-reports
+```
+
+The expected configuration properties are described in the link:configuration-file.html#sec:rdf-diffing-configuration[RDF diffing configuration] section.
 
 == Running Transformations
 
@@ -227,17 +352,37 @@ model2owl.
    * Generated File:
      **`<input-file>_shapes.rdf`** – SHACL shapes in RDF format.
 
-4. `make generate-glossary` – Generates an HTML glossary of terms extracted from the UML model.
+4. `make generate-jsonld-context` – Generates JSON-LD context for JSON-LD applications.
+   * Generated File:
+     **`<input-file>_context.jsonld`** – Signatures of ontology terms usable in a JSON-LD data file. The file consists of a JSON object with a single top-level entry having the `@context` key and an object with link:https://www.w3.org/TR/json-ld/#dfn-term-definition[term definitions] as its value.
+
+5. `make generate-glossary` – Generates an HTML glossary of terms extracted from the UML model.
    * Generated File:
      **`<input-file>_glossary.html`** – Glossary in HTML format.
 
-5. `make generate-convention-report` – Generates a compliance report from the UML model in HTML format, validating it against the conventions.
+6. `make generate-asciidoc-glossary` – Generates an AsciiDoc glossary of terms extracted from the UML model.
+   * Generated File:
+     **`<input-file>_glossary.adoc`** – Glossary in AsciiDoc format.
+
+7. `make generate-convention-report` – Generates a compliance report from the UML model in HTML format, validating it against the conventions.
    * Generated File:
      **`<input-file>_convention_report.html`** – HTML compliance report.
 
-6. `make generate-convention-SVRL-report` – Generates a compliance report in SVRL format.
+8. `make generate-convention-SVRL-report` – Generates a compliance report in SVRL format.
    * Generated File:
      **`<input-file>_convention_svrl_report.xml`** – SVRL compliance report.
+
+9. `make generate-respec` – Generates a ReSpec documentation package.
+   * Generated folder:
+     **`<respec-dir>`** – A folder containing the HTML ReSpec document and all required resources (artefact files, images, examples, and other static assets). The package structure is described in <<sec:respec-package-structure, ReSpec package structure>>.
+
+10. `make merge-owl-shacl` – Merge OWL ontology and SHACL shapes files. Used as a preprocessing step before calling `run-rdf-diff`.
+   * Generated File:
+     **`<output-dir>/<file-name>.ttl`** – An RDF file combining content of provided OWL core and SHACL shapes artefacts, resulting in an OWL-SHACL RDF file (embedded SHACL shapes).
+
+11. `make run-rdf-diff` – Generates a diff report in a format specified by the user (JSON / AsciiDoc / HTML).
+   * Generated File:   
+     **`<output-dir>/diff.<report-extension>`** – A diff report listing changes between two versions of an RDF file. 
 
 **Notes**
 
@@ -248,3 +393,14 @@ Example of transformation command:
 ```
 make owl-core XMI_INPUT_FILE_PATH=/home/mypc/work/model2owl/file1.xml OUTPUT_FOLDER_PATH=./my-folder
 ```
+
+== Using model2owl online
+Model2owl-boilerplate (and its forked versions) can be used to run model2owl in an automated
+workflow hosted on GitHub Actions. The project repository provides a ready-to-use setup for
+executing model2owl transformations and generating artefacts based on a UML model stored
+in the same repository. The transformation can be configured in the same way as the local setup by modifying model2owl configuration files. Additionally, the diff workflow can be configured through a dedicated config file (among other options described on the link:rdf-diffing.html[RDF Diffing documentation] page). Both the model2owl configuration files and the diff workflow config file are described in the <<sec:configuration,Configuration>> section.
+Both the transformation and diffing workflows support processing multiple ontology modules in a single run. In order to process one or more modules, the user needs to provide dedicated directories for each module containing the UML model and configuration files.
+
+The workflows expect a specific structure and naming conventions for the input files and directories that are realized in the model2owl-boilerplate repository and need to be followed in other repositories based on it. The conventions are described in the link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md#usage[Usage] section.
+
+More details about using model2owl-boilerplate can be found in link:https://github.com/OP-TED/model2owl-boilerplate/blob/main/README.md[the repository's README file].

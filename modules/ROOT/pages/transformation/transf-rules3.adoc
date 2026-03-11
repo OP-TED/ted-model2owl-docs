@@ -5,13 +5,13 @@ In this section are specified transformation rules for UML datatypes and enumera
 
 [[tab:datatype-overview]]
 .Overview of transformation rules for UML datatypes
-[cols="<,<,<,<",options="header",]
+[cols="<,<,<,<,<",options="header",]
 |===
-|UML element |Rules in core ontology layer |Rules in data shape layer |Rules in reasoning layer
-|Primitive datatype |<<rule:datatype-core>> | |
-|Structured datatype |<<rule:datatype-structured-core>> | |
-|Enumeration |<<rule:enumeration-core>> | |<<rule:enumeration-rc>>
-|Enumeration item |<<rule:enumeration-item-core>> | <<rule:enumeration-item-ds>> |
+|UML element |Rules in core ontology layer |Rules in data shape layer |Rules in reasoning layer | Rules in JSON-LD context layer
+|Primitive datatype |<<rule:datatype-core>> | | | <<rule:datatype-ldcontext>>
+|Structured datatype |<<rule:datatype-structured-core>> | | |
+|Enumeration |<<rule:enumeration-core>> | |<<rule:enumeration-rc>> | <<rule:enum-ldcontext>>
+|Enumeration item |<<rule:enumeration-item-core>> | <<rule:enumeration-item-ds>> | |
 |===
 
 [[sec:primitive-type]]
@@ -103,6 +103,23 @@ xsd:boolean a rdfs:Datatype .
 </rdfs:Datatype>
 ----
 |===
+
+
+[#rule:datatype-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Datatype -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
+====
+Specify a term for each UML datatype by assigning an absolute URI of the datatype to its name. Create the term mapping as a top-level entry of the context object.
+====
+
+[cols="a", options="noheader"]
+|===
+|
+.Datatype term mapping in JSON-LD syntax
+[source,JSON]
+----
+"rdf:PlainLiteral": "http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral"
+----
+|===
+
 
 === Structured datatypes
 
@@ -283,4 +300,20 @@ shape:EnumName-itemShape a sh:NodeShape ;
 </rdf:Description>
 ----
 
+|===
+
+
+[#rule:enum-ldcontext,source,XML,caption='',title='{example-caption} {counter:rule-cnt:1.1}. Enumeration -- in JSON-LD context layer',reftext='{example-caption} {rule-cnt}']
+====
+Specify a term for each UML enumeration by assigning an absolute URI of the enumeration to its name. Create the term mapping as a top-level entry of the context object.
+====
+
+[cols="a", options="noheader"]
+|===
+|
+.Enumeration term mapping in JSON-LD syntax
+[source,JSON]
+----
+"at-voc:applicability": "http://publications.europa.eu/resource/authority/applicability"
+----
 |===

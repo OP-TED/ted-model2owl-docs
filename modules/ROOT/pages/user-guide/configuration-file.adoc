@@ -23,6 +23,9 @@ process.
 
 * Do not delete variables, as they are essential to the transformation process. Removing them will result in errors.
 
+
+Another type of configuration file is the metadata file, which defines metadata properties used in generating various model2owl artefacts. While it does not control the generation process, it provides important supplementary information that describes the generated data. The metadata file is a JSON file named `metadata.json` and belongs to the set of configuration files.
+
 == List of Configuration Parameters
 
 
@@ -48,6 +51,7 @@ This could result in errors or inconsistent behaviour during the transformation 
 | `namespacePrefixes` | XML Document | Defines the prefixes and base URIs for namespaces. | (`namespaces.xml`)
 | `umlDataTypesMapping` | XML Document | Maps UML atomic types to XSD datatypes. | (`umlToXsdDataTypes.xml`)
 | `xsdAndRdfDataTypes` | XML Document | Defines XSD datatypes that conform to OWL2. | (`xsdAndRdfDataTypes.xml`)
+| `metadataJson` | JSON Document | Defines model metadata. | (`metadata.json`)
 |===
 
 === General parameters
@@ -63,10 +67,12 @@ allowed characters for normalised strings, default delimiter in URIs, etc.
 | `base-shape-uri` | String | The base URI for SHACL shapes. | `http://data...eu/a4g/data-shape`
 | `base-restriction-uri` | String | The base URI for OWL restrictions. | `http://data...eu/a4g/ontology`
 | `defaultDelimiter` | String | The default delimiter to use when a namespace lacks one. | `#`
+| `nodeShapeURIsuffix` | String | A suffix for URIs of sh:NodeShape instances in the SHACL artefact. | `'Shape'`
 | `acceptableTypesForObjectProperties` | List | Defines types that can produce object properties. | `('epo:Identifier', 'rdfs:Literal')`
 | `controlledListType` | String | The type of attributes that take values from a controlled list. | `epo:Code`
 | `allowedStrings` | String (Regex) | Defines allowed characters for normalised strings. | `^[\w\d-_:]+$`
 | `supportedUmlVersions` | List | Lists the UML versions supported by model2owl. | `('http://www.omg.../UML/20131001', 'https://www.omg.../UML/20131001', 'http://www.omg.../UML/20161101', 'https://www.omg.../UML/20161101')`
+| `issuedDate` | Date | Defines the ontology's issuance date. It is used for the `dct:issued` property in RDF artefacts and in the header of the ReSpec documentation. | _Automatically set to the current date_
 |===
 
 
@@ -157,7 +163,7 @@ Additionally, a dedicated prefix list ensures that **certain concepts are always
 internal**, preventing them from being excluded even if they would otherwise be classified as
 "reused."
 
-With these parameters (`generateReusedConceptsSHACL`, `generateReusedConceptsOWLcore`, `generateReusedConceptsOWLrestrictions`,
+With these parameters (`generateReusedConceptsSHACL`, `generateReusedConceptsOWLcore`, `generateReusedConceptsOWLrestrictions`, `generateReusedConceptsJSONLDcontext`,
 `generateReusedConceptsGlossary`), **users have full control** over which artefacts generate reused concepts.
 
 Each of these variables acts as a **toggle** for its respective artefact type:
@@ -176,7 +182,8 @@ even if they would sometimes be classified as reused.
 | `generateReusedConceptsSHACL` | Boolean | Enables or disables the inclusion of reused concepts in SHACL artefacts. | `true`
 | `generateReusedConceptsOWLcore` | Boolean | Enables or disables the inclusion of reused concepts in OWL core artefacts. | `true`
 | `generateReusedConceptsOWLrestrictions` | Boolean | Enables or disables the inclusion of reused concepts in OWL restrictions. | `true`
-| `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. | `true`
+| `generateReusedConceptsJSONLDcontext` | Boolean | Enables or disables the inclusion of reused concepts in JSON-LD context. | `true`
+| `generateReusedConceptsGlossary` | Boolean | Enables or disables the inclusion of reused concepts in the glossary. Applies to glossaries generated in both HTML and AsciiDoc formats. | `true`
 |===
 === Status filtering parameters
 
@@ -266,6 +273,14 @@ missing an explicit status can be processed consistently.
 - **The `statusProperty` tells model2owl which property is used in UML tags to express the status
 of an element.** Model2owl interprets these tags to determine element status.
 
+=== **Annotating SHACL shapes with ontology URI**
+Each instance of `sh:NodeShape` and `sh:PropertyShape` is annotated with the URI
+of the ontology in which it is defined. This typically refers to the ontology
+contained within the same SHACL shapes artefact. The `rdfs:isDefinedBy` property
+is used to identify the source ontology of each shape. It can be disabled by
+setting the `annotateShaclConceptsWithOntology` configuration parameter to
+`false()`.
+
 === **Comments generation**
 
 This section defines parameters that control **how comments are handled** in the generated
@@ -310,49 +325,113 @@ This exclusion only affects the **representation** of the tags in the final arte
 | `excludedTagNamesList` | List | Defines tag names that should be excluded from the output. | `($statusProperty, $cvConstraintLevelProperty)`
 |===
 
-=== Convention report parameters
-This section defines parameters used in the **generation of the convention report**. The convention report provides a
-structured evaluation of the UML model, ensuring it adheres to predefined rules and best practices. These parameters
-allow users to **customise report metadata**, such as the copyright statement, author details, and the UML model name
-included in the report.
+=== ReSpec documentation parameters
+This section defines parameters used in the **generation of the ReSpec documentation**. The ReSpec documentation provides a comprehensive description of the generated model. These parameters
+allow users to **control and customize which information is displayed and how it is presented in the document**, such as usage and reuse notes, property status, and more. The parameters described here can be set in the config-parameters.xsl file. The <<sec:metadata-parameters,Metadata parameters>> section provides a description of metadata properties configured in the _metadata JSON file_ that are also applicable to the ReSpec documentation.
 
 [options="header"]
 |===
 | Parameter Name | Data Type | Description | Default Value
-| `conventionReportCopyrightText` | String | Defines the copyright text for the convention report. | `Publications Office of the European Union, 2023`
-| `conventionReportAuthor` | String | Defines the author of the convention report. | `Publications Office of the European Union`
-| `conventionReportAuthorLocation` | String | Defines the location of the report's author. | `Luxembourg`
-| `conventionReportAuthorWebsite` | String | Defines the website of the report's author. | `https://op.europa.eu`
-| `conventionReportUMLModelName` | String | Defines the name of the UML model in the report. | `eProcurement`
+| `classReferenceRespecLabel` | String | Defines the label used in ReSpec documentation to describe values of `referenceTagName` for classes. Applies only if the `showReferencesInRespec` is enabled. | `Reference`
+| `customTermLabelTagName` | String | Defines the tag name used as a custom label for terms in the ReSpec documentation. | `skos:prefLabel`
+| `propertyReferenceRespecLabel` | String | Defines the label used in ReSpec documentation to describe values of `referenceTagName` for properties. Applies only if the `showReferencesInRespec` is enabled.  | `Reuse`
+| `referenceTagName` | String | Defines the tag name used to provide reference links or reuse information for a class or property. Applies only if the `showReferencesInRespec` is enabled. | `dct:references`
+| `showReferencesInRespec` | Boolean | Controls whether reference or reuse information is displayed in ReSpec documentation for classes and properties. | `true`
+| `usageNoteTagName` | String | Defines the tag name used to describe a usage note of a class or property. | `skos:note`
 |===
 
+[[sec:metadata-parameters]]
 === Metadata parameters
 
-This section defines metadata parameters used in the generation of **OWL Core, OWL Restrictions, and SHACL Shapes** artefacts.
-Metadata plays a crucial role in **identifying, describing, and managing ontology components**,
-ensuring that each generated artefact contains the necessary information.
+This section defines metadata parameters used in the generation of **OWL Core, OWL Restrictions, SHACL Shapes, convention report, and ReSpec documentation** artefacts. Metadata plays a crucial role in **identifying, describing, and managing ontology components**,
+ensuring that each generated artefact contains the necessary information. The described metadata properties should be defined in the **metadata.json JSON file** that belongs to the set of configuration files. An exemplary metadata JSON file is included in the model2owl repository and can be accessed link:https://github.com/OP-TED/model2owl/blob/develop/test/ePO-default-config/metadata.json[here].
 
 [options="header"]
 |===
 | Parameter Name | Data Type | Description | Default Value
+| `changelogUrl` | String | URL to the changelog or release notes of the project | `https://github.com/.../org/repo/releases`
+| `contributors` | List[Object] | List of individuals contributing to the project | See description of the object properties below
+| `contributors.affiliation` | Object | Organisation or entity with which the contributor is associated | See description of the object properties below
+| `contributors.affiliation.name` | Object | Name of the organisation | `ACME`
+| `contributors.affiliation.website` | Object | Website of the organisation | `https://www.acme.com`
+| `contributors.email` | String | Contributor email | `tom.smith@acme.com`
+| `contributors.first_name` | String | Contributor first name | `Tom`
+| `contributors.last_name` | String | Contributor last name | `Smith`
+| `contributors.name` | String | Affiliation name | `ACME`
+| `contributors.role` | String | Role of the contributor in the project; `E` for editors or `A` for authors  | `E`
+| `contributors.website` | String | Affiliation website | `https://www.acme.com`
+| `conventionReportAuthor` | String | Name of the organization or individual responsible for the convention report | `Publications Office of the European Union`
+| `conventionReportAuthorLocation` | String | Geographical location of the authoring organization | `Luxembourg`
+| `conventionReportAuthorWebsite` | String | Website URL of the authoring organization | `https://op.europa.eu`
+| `conventionReportCopyrightText` | String | Copyright statement displayed in the convention report | `Publications Office of the European Union, 2023`
+| `conventionReportUMLModelName` | String | Name of the UML model described in the convention report | `eProcurement`
+| `createdDate` | Date | Defines the ontology's creation date. (dct:created)| _Automatically set to current date_
+| `documentConfig` | Object | Configuration parameters for document generation or presentation | See description of the object properties below
+| `documentConfig.editorDocumentRoot` | String | Root path (URL) for the document used for referencing accompanying assets | `.`
+| `feedbackUrl` | String | URL of the location where one can provide feedback about the specification | `https://github.com/.../org/repo/issues`
+| `github` | String | A GitHub repository identifier of the project consisting of the owner and repository name | `organization/repo`
+| `incompatibleWith` | String | Version of the ontology that is not compatible with the current version | `2.1.0`
+| `localBiblio` | Object | Local bibliography references used in the documentation. See link:https://github.com/speced/respec/wiki/localBiblio[ReSpec documentation for localBiblio] for more information about the format | Each object key represents a unique reference ID and the value is another object with the properties described below
+| `localBiblio.ENTRY.href` | String | URL of the reference | `https://w3id.org/`
+| `localBiblio.ENTRY.publisher` | String | Title of the reference | `W3C Permanent Identifier Community Group`
+| `localBiblio.ENTRY.title` | String | Title of the reference | `Permanent Identifiers for the Web`
 | `moduleReference` | String | Defines the module reference identifier. | `core`
-| `ontologyTitleCore` | String | Defines the title for the OWL Core ontology. (dct:title) | `ePO Core core`
-| `ontologyTitleRestrictions` | String | Defines the title for the OWL Restrictions ontology. (dct:title)| `ePO Core restrictions`
-| `ontologyTitleShapes` | String | Defines the title for the SHACL Shapes ontology. (dct:title)  | `ePO Core shapes`
+| `navigation` | Object | Links for navigating between versions of the vocabulary | See description of the object properties below
+| `navigation.next` | String | URL to the next version. Applicable only if a newer version of the documentation exists | `https://example.com/.../releases/6.0.0`
+| `navigation.prev` | String | URL to the previous version | `https://example.com/.../releases/4.2.0`
+| `navigation.self` | String | URL to the current version | `https://example.com/.../releases/5.0.0`
+| `openGithubIssue` | Object | Configuration for displaying a GitHub issue creation option | See description of the object properties below
+| `openGithubIssue.buttonLabel` | String | Tooltip text shown when hovering over the feedback button | `Report an issue or share feedback`
+| `openGithubIssue.columnLabel` | String | Label used for a feedback column | `Feedback`
 | `ontologyDescriptionCore` | String | Provides a detailed description of the eProcurement Ontology Core. (dct:description)| _Some text_
 | `ontologyDescriptionRestrictions` | String | Provides a detailed description of the eProcurement Ontology Restrictions. (dct:description) | _Some text_
 | `ontologyDescriptionShapes` | String | Provides a detailed description of the eProcurement Ontology Shapes. (dct:description) | _Some text_
 | `ontologyLabelCore` | String | Defines the label for the OWL Core ontology. (rdfs:label)| _Some text_
 | `ontologyLabelRestrictions` | String | Defines the label for the OWL Restrictions ontology. (rdfs:label)| _Some text_
 | `ontologyLabelShapes` | String | Defines the label for the SHACL Shapes ontology. (rdfs:label)| _Some text_
-| `issuedDate` | Date | Defines the ontology's issuance date. (dct:issued)| _Automatically set to current date_
-| `createdDate` | Date | Defines the ontology's creation date. (dct:created)| _Automatically set to current date_
-| `ontologyStatus` | String | Defines the status of the ontology. (bibo:status)| `Semantic Specification Release`
-| `versionInfo` | String | Defines the ontology version. (owl:versionInfo)| `3.1.0`
-| `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `3.0.1`
-| `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
+| `ontologyTitleCore` | String | Defines the title for the OWL Core ontology. (dct:title) | `ePO Core core`
+| `ontologyTitleRestrictions` | String | Defines the title for the OWL Restrictions ontology. (dct:title)| `ePO Core restrictions`
+| `ontologyTitleShapes` | String | Defines the title for the SHACL Shapes ontology. (dct:title)  | `ePO Core shapes`
+| `owners` | List[Object] | List of owners of the project | See description of the object properties below
+| `owners.name` | String | Owner name | `Tom Smith`
+| `owners.website` | String | Owner website (optional) | `https://www.ex.com`
 | `preferredNamespacePrefix` | String | Defines the preferred namespace prefix. (vann:preferredNamespacePrefix) | `epo`
-| `licenseLiteral` | String | Defines the licensing terms for the ontology. (dct:license)| `Creative Commons Attribution 4.0 International (CC BY 4.0)`
+| `preferredNamespaceUri` | String | Defines the preferred namespace URI. (vann:preferredNamespaceUri)| `http://data.../a4g/ontology#`
+| `priorVersion` | String | Defines the prior version of the ontology. (owl:priorVersion)| `4.2.0`
+| `projectLocalResources` | List[Object] | Resource files that will be displayed in the `Project resources` section of the ReSpec documentation (see link:./respec-documentation.html#sec:documentation-page-structure[ReSpec documentation page structure]) | See description of the object properties below
+| `projectLocalResources.name` | List[Object] | A name of of the resource  | `SHACL shapes file`
+| `projectLocalResources.path` | List[Object] | A path to a resource in the filesystem, relative to the processed module directory. | `rel/path/to/file`
 | `publisher` | String | Defines the publisher's URI. (dct:publisher)| `http://publications...authority/corporate-body/PUBL`
+| `seeAlsoResources` | Array[String] | List of URLs providing additional resources or references related to the ontology | `['https://ex1.com', 'https://ex2.com']`
+| `status` | String | Defines the status of the ontology. (bibo:status)| `Draft`
+| `title` | String | A human-readable title to be used in the ReSpec document | `My ontology`
+| `versionInfo` | String | Defines the ontology version. (owl:versionInfo)| `5.0.0`
 |===
 
+[[sec:rdf-diffing-configuration]]
+=== **RDF diffing configuration**
+
+This section defines parameters that control **the automated diffing process** implemented in a Github workflow of model2owl-boilerplate project. It's relevant only for the online use of the diffing feature. For details on the workflow options available for manual runs, see the link:rdf-diffing.html#_manual_workflow_dispatch[Manual workflow dispatch] section.
+
+The workflow compares two versions of a model (as described on the link:rdf-diffing.html[Diffing] page).
+Configuration is managed through the `diff-config.env` file in the `.github/workflows` directory.
+Values can also be set as link:https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-variables#creating-configuration-variables-for-a-repository[Github Variables] or passed as workflow inputs.
+Priority: workflow inputs > config file > repository variables > defaults.
+The table below outlines the available configuration options, which may be defined either in the configuration file or as repository variables. An equivalent set of parameters can also be provided when manually triggering a workflow, as described in the link:rdf-diffing.html#_manual_workflow_dispatch[Manual workflow dispatch] section.
+
+[options="header"]
+|===
+| Parameter Name | Data Type | Description | Default Value
+| `REVISION_TO_COMPARE_COMMIT_ID` | String | (Optional) Git revision to compare against (branch, tag or SHA) | `develop`
+| `REVISION_TO_COMPARE_REPO_URL` | String | (Optional) URL of an external public Git repository for the old version. | (empty)
+| `OLD_ONTOLOGY_DIR` | String | Root directory for old OWL/SHACL files. The directory is expected to contain one or more subdirectories for ontology modules. | `implementation`
+| `NEW_ONTOLOGY_DIR` | String | Root directory for new OWL/SHACL files. The directory is expected to contain one or more subdirectories for ontology modules. | `implementation`
+| `MODULES` | String | Comma-separated module names to diff. If left empty, all modules discovered under NEW_ONTOLOGY_DIR will be processed. | (empty)
+| `RDF_DIFF_OUTDIR` | String | Output directory for generated diff reports. | `diff-reports`
+|===
+
+File paths are derived automatically from the module name and directory configuration (e.g., `<OLD_ONTOLOGY_DIR>/<module>/owl_ontology/<module>.ttl`). The old version is resolved based on `REVISION_TO_COMPARE_COMMIT_ID` and `REVISION_TO_COMPARE_REPO_URL`:
+
+* Both specified: files are fetched from the external repository at the given revision.
+* Only revision specified: files are fetched from the same repository at the given revision.
+* Neither specified: files are fetched from the default revision (`develop`).
